@@ -25,7 +25,23 @@ namespace WpfApp1
         public Window1()
         {
             InitializeComponent();
-           
+            Main.Content = new taskpage();
+        }
+        private void TasksClicked(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new taskpage();
+        }
+        private void ProfilesClicked(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new profilepage();
+        }
+        private void ProxyClicked(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new proxypage();
+        }
+        private void CoppedClicked(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new coppedpage();
         }
 
         private void SoleboxClicked(object sender, RoutedEventArgs e)

@@ -1,0 +1,41 @@
+﻿<Page x:Class="WpfApp1.taskpage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfApp1"
+      xmlns:materiaDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:fw ="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1500"
+      Title="taskpage">
+
+    <Grid>
+      
+        <Grid HorizontalAlignment="Left" Height="187" Margin="23,81,0,0" VerticalAlignment="Top" Width="1482">
+            <Button x:Name="Solebox"  Click="SoleboxClicked" BorderBrush="Black"  Background="Black" HorizontalAlignment="Left" Margin="30,10,0,0" VerticalAlignment="Top" Width="199" RenderTransformOrigin="-0.083,0.532" Height="167">
+                <Image Source="C:\Users\luxing\source\repos\NewRepo\WpfApp1\image\box.jpg"></Image>
+            </Button>
+            <Button x:Name="button_Copy"  BorderBrush="Black" Content="Coming Soon" HorizontalAlignment="Left" Margin="255,10,0,0" VerticalAlignment="Top" Width="199" RenderTransformOrigin="-0.083,0.532" Height="167"/>
+            <Button x:Name="button_Copy1" BorderBrush="Black"  Content="Coming Soon" HorizontalAlignment="Left" Margin="490,10,0,0" VerticalAlignment="Top" Width="199" RenderTransformOrigin="-0.083,0.532" Height="167"/>
+            <Button x:Name="button_Copy2"  BorderBrush="Black" Content="Coming Soon" HorizontalAlignment="Left" Margin="737,10,0,0" VerticalAlignment="Top" Width="199" RenderTransformOrigin="-0.083,0.532" Height="167"/>
+            <Button x:Name="button_Copy3"  BorderBrush="Black" Content="Coming Soon" HorizontalAlignment="Left" Margin="973,10,0,0" VerticalAlignment="Top" Width="199" RenderTransformOrigin="-0.083,0.532" Height="167" />
+
+        </Grid>
+
+        <Grid HorizontalAlignment="Left"     Height="399" Margin="90,294,0,0" VerticalAlignment="Top" Width="1275">
+            <Label x:Name="label" FontSize="20"  Content="Create tasks" HorizontalAlignment="Left" Margin="34,28,0,0" VerticalAlignment="Top" Width="141"/>
+            <TextBox x:Name="url" BorderBrush="Black" materiaDesign:HintAssist.Hint="URL"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="34,103,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" />
+            <TextBox x:Name="size" BorderBrush="Black" materiaDesign:HintAssist.Hint="Size"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="419,103,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" />
+            <ComboBox x:Name="Profile" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="Profile"  FontSize="20" BorderThickness="2,2,2,2" Margin="834,103,0,0"  VerticalAlignment="Top" Width="276" Height="40"/>
+            <TextBox x:Name="Quantity" BorderBrush="Black" materiaDesign:HintAssist.Hint="Quantity"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="34,229,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" />
+            <Button x:Name="Create"  BorderBrush="Black" Content="Create" HorizontalAlignment="Left" Margin="34,334,0,0" VerticalAlignment="Top" Width="111"/>
+        </Grid>
+        <Border BorderBrush="Black" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="448" Margin="43,294,0,0" VerticalAlignment="Top" Width="1383"/>
+        <Border BorderBrush="Black" BorderThickness="2,2,2,2" HorizontalAlignment="Left" Height="215" Margin="9,74,0,0" VerticalAlignment="Top" Width="1473">
+
+        </Border>
+
+       
+    </Grid>
+</Page>
