@@ -5,18 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
+        xmlns:materiaDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:fw ="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
+        fw:AcrylicWindow.Enabled="True"
+        fw:AcrylicWindow.ShowTitleBar="False"
         Background="WhiteSmoke"
         WindowStartupLocation="CenterScreen"
         Title="Zen Aio" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="53*"/>
+            <ColumnDefinition Width="739*"/>
         </Grid.ColumnDefinitions>
-        <Border BorderBrush="Black"  Background="GhostWhite" BorderThickness="1" HorizontalAlignment="Left" Height="184" Margin="138,135,0,0" VerticalAlignment="Top" Width="510"/>
+        <Border BorderBrush="Black"  Background="GhostWhite" BorderThickness="1" HorizontalAlignment="Left" Height="184" Margin="85,135,0,0" VerticalAlignment="Top" Width="510" Grid.Column="1"/>
 
-        <Label x:Name="label" Content="Please enter your activation key to gain access to the Zen Aio software." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="170,178,0,0" Width="460"/>
-        <Button x:Name="buttonkey"   BorderBrush="Blue"  BorderThickness="2,2,2,2" Click="ButtonClicked" Content="AUTHORIZE"   HorizontalAlignment="Left" VerticalAlignment="Top" Width="124" Margin="335,274,0,0" Height="26"/>
-        <TextBox x:Name="textBoxkey" HorizontalAlignment="Left" Height="23" Margin="266,229,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" />
+        <Label x:Name="label" Content="Please enter your activation key to gain access to the Zen Aio software." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="117,178,0,0" Width="460" Grid.Column="1"/>
+        <Button x:Name="buttonkey"   BorderBrush="Blue"  BorderThickness="2,2,2,2" Click="ButtonClicked" Content="AUTHORIZE"   HorizontalAlignment="Left" VerticalAlignment="Top" Width="124" Margin="282,274,0,0" Height="26" Grid.Column="1">
+
+        </Button>
+        <TextBox x:Name="textBoxkey" fw:PointerTracker.Enabled="True" HorizontalAlignment="Left" Height="23" Margin="213,229,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.Column="1" />
+        <Image x:Name="image" Source="C:\Users\luxing\source\repos\NewRepo\WpfApp1\image\icon.png" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>

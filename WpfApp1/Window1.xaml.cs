@@ -23,5 +23,10 @@ namespace WpfApp1
         {
             InitializeComponent();
         }
+
+        private void Button_Copy3_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
