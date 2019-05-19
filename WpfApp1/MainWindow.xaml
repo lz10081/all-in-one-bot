@@ -15,7 +15,7 @@
         <Border BorderBrush="Black"  Background="GhostWhite" BorderThickness="1" HorizontalAlignment="Left" Height="184" Margin="138,135,0,0" VerticalAlignment="Top" Width="510"/>
 
         <Label x:Name="label" Content="Please enter your activation key to gain access to the Zen Aio software." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="170,178,0,0" Width="460"/>
-        <Button x:Name="buttonkey"   BorderBrush="Blue"  BorderThickness="2,2,2,2" Click="ButtonClicked" Content="AUTHORIZE"   HorizontalAlignment="Left" VerticalAlignment="Top" Width="87" Margin="351,273,0,0" Height="26"/>
+        <Button x:Name="buttonkey"   BorderBrush="Blue"  BorderThickness="2,2,2,2" Click="ButtonClicked" Content="AUTHORIZE"   HorizontalAlignment="Left" VerticalAlignment="Top" Width="124" Margin="335,274,0,0" Height="26"/>
         <TextBox x:Name="textBoxkey" HorizontalAlignment="Left" Height="23" Margin="266,229,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" />
 
     </Grid>

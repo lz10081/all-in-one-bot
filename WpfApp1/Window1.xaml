@@ -8,6 +8,12 @@
          WindowStartupLocation="CenterScreen"
         Title="Window1" Height="800" Width="1500">
     <Grid>
-        
+        <Grid HorizontalAlignment="Left" Height="52" Margin="10,10,0,0" VerticalAlignment="Top" Width="1482">
+            <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="79,23,0,0" VerticalAlignment="Top" Width="75"/>
+            <Button x:Name="button_Copy" Content="Button" HorizontalAlignment="Left" Margin="390,23,0,0" VerticalAlignment="Top" Width="75"/>
+            <Button x:Name="button_Copy1" Content="Button" HorizontalAlignment="Left" Margin="693,23,0,0" VerticalAlignment="Top" Width="75"/>
+            <Button x:Name="button_Copy2" Content="Button" HorizontalAlignment="Left" Margin="996,23,0,0" VerticalAlignment="Top" Width="75"/>
+        </Grid>
+
     </Grid>
 </Window>
