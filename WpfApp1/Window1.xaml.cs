@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 
 namespace WpfApp1
 {
@@ -22,11 +25,16 @@ namespace WpfApp1
         public Window1()
         {
             InitializeComponent();
+           
         }
 
-        private void Button_Copy3_Click(object sender, RoutedEventArgs e)
+        private void SoleboxClicked(object sender, RoutedEventArgs e)
         {
-
+            Soleboxmain();
+        }
+        public void Soleboxmain()
+        {
+          
         }
     }
 }

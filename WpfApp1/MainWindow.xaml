@@ -23,8 +23,8 @@
         <Button x:Name="buttonkey"   BorderBrush="Blue"  BorderThickness="2,2,2,2" Click="ButtonClicked" Content="AUTHORIZE"   HorizontalAlignment="Left" VerticalAlignment="Top" Width="124" Margin="282,274,0,0" Height="26" Grid.Column="1">
 
         </Button>
-        <TextBox x:Name="textBoxkey" fw:PointerTracker.Enabled="True" HorizontalAlignment="Left" Height="23" Margin="213,229,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.Column="1" />
-        <Image x:Name="image" Source="C:\Users\luxing\source\repos\NewRepo\WpfApp1\image\icon.png" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="textBoxkey"  BorderBrush="Black" fw:PointerTracker.Enabled="True" HorizontalAlignment="Left" BorderThickness="2,2,2,2"  Height="30" Margin="213,229,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.Column="1" FontSize="14" />
+        <Image x:Name="image" Source="C:\Users\luxing\source\repos\NewRepo\WpfApp1\image\icon.png" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2" Opacity="0.5"/>
 
     </Grid>
 </Window>
