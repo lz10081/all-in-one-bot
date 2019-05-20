@@ -19,6 +19,7 @@
             <Button x:Name="Profiles" Click="ProfilesClicked"  BorderBrush="Black" Content="Profiles" HorizontalAlignment="Left" Margin="390,23,0,-3" VerticalAlignment="Top" Width="119"/>
             <Button x:Name="Proxy"  Click="ProxyClicked" BorderBrush="Black" Content="Proxy Tester" HorizontalAlignment="Left" Margin="693,23,0,-3" VerticalAlignment="Top" Width="130"/>
             <Button x:Name="Copped"  Click="CoppedClicked" BorderBrush="Black"  Content="Copped" HorizontalAlignment="Left" Margin="996,23,0,-3" VerticalAlignment="Top" Width="102"/>
+            <Button x:Name="Setting"  Click="SettingClicked" BorderBrush="Black"  Content="Setting" HorizontalAlignment="Left" Margin="1230,24,0,0" VerticalAlignment="Top" Width="102"/>
         </Grid>
        
     </Grid>

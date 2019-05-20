@@ -43,14 +43,10 @@ namespace WpfApp1
         {
             Main.Content = new coppedpage();
         }
+        private void SettingClicked(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new Settingpage();
+        }
 
-        private void SoleboxClicked(object sender, RoutedEventArgs e)
-        {
-            Soleboxmain();
-        }
-        public void Soleboxmain()
-        {
-          
-        }
-    }
+    }     
 }

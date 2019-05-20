@@ -22,10 +22,10 @@
             <TextBox x:Name="First" BorderBrush="Black" materiaDesign:HintAssist.Hint="First Name"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="24,82,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.ColumnSpan="4" />
             <TextBox x:Name="City" BorderBrush="Black" materiaDesign:HintAssist.Hint="City"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="24,192,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="200" Grid.ColumnSpan="3" />
             <ComboBox x:Name="Counrty" Background="White" DropDownClosed="cbValueType_DropDownClosed" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="Counrty"  FontSize="20" BorderThickness="2,2,2,2" Margin="58,28,0,0"  VerticalAlignment="Top" Width="206" Height="40" Grid.Column="2" Grid.ColumnSpan="2">
-                
+
             </ComboBox>
             <TextBox x:Name="Address" BorderBrush="Black" materiaDesign:HintAssist.Hint="Address"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="24,136,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="355" Grid.ColumnSpan="4" />
-            <Button x:Name="Create" Click="Createporfile" BorderBrush="Black" Content="Create" HorizontalAlignment="Left" Margin="719,155,0,0" VerticalAlignment="Top" Width="111" Grid.Column="3"/>
+            <Button x:Name="Create" Click="Createporfile" BorderBrush="Black" Content="Create" HorizontalAlignment="Left" Margin="730,218,0,0" VerticalAlignment="Top" Width="111" Grid.Column="3" Height="40"/>
             <TextBox x:Name="Phone" BorderBrush="Black" materiaDesign:HintAssist.Hint="Phone Number"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="24,247,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.ColumnSpan="4" />
             <TextBox x:Name="Apt" BorderBrush="Black" materiaDesign:HintAssist.Hint="Apt"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="119,136,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="198" Grid.Column="3" />
             <TextBox x:Name="LastB" BorderBrush="Black" materiaDesign:HintAssist.Hint="Last Name"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="41,424,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.Column="3" />
@@ -43,9 +43,14 @@
             <Label x:Name="label_Copy1" FontSize="20"  Content="Payment information" HorizontalAlignment="Left" Margin="430,33,0,0" VerticalAlignment="Top" Width="223" Grid.Column="3"/>
             <TextBox x:Name="Card" BorderBrush="Black" materiaDesign:HintAssist.Hint="Card Number"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="430,82,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.Column="3" />
             <ComboBox x:Name="State" Background="White" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="State"  FontSize="20" BorderThickness="2,2,2,2" Margin="43,192,0,0"  VerticalAlignment="Top" Width="206" Height="40" Grid.Column="2" Grid.ColumnSpan="2"/>
-            <ComboBox x:Name="Month" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="Month"  FontSize="20" BorderThickness="2,2,2,2" Margin="430,150,0,0"  VerticalAlignment="Top" Width="104" Height="40" Grid.Column="3" RenderTransformOrigin="0.5,0.5"/>
-            <ComboBox x:Name="Year" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="Year"  FontSize="20" BorderThickness="2,2,2,2" Margin="571,150,0,0"  VerticalAlignment="Top" Width="104" Height="40" Grid.Column="3" RenderTransformOrigin="0.5,0.5"/>
+            <ComboBox x:Name="Month" Background="White" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="Month"  FontSize="20" BorderThickness="2,2,2,2" Margin="448,150,0,0"  VerticalAlignment="Top" Width="104" Height="40" Grid.Column="3" RenderTransformOrigin="0.5,0.5"/>
+            <ComboBox x:Name="Year"  Background="White" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="Year"  FontSize="20" BorderThickness="2,2,2,2" Margin="602,150,0,0"  VerticalAlignment="Top" Width="104" Height="40" Grid.Column="3" RenderTransformOrigin="0.5,0.5"/>
             <TextBox x:Name="CVV" BorderBrush="Black" materiaDesign:HintAssist.Hint="CVV"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="730,82,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="86" Grid.Column="3" />
+            <Label x:Name="label_Copy2" FontSize="20"  Content="Saved Profile" HorizontalAlignment="Left" Margin="430,364,0,0" VerticalAlignment="Top" Width="223" Grid.Column="3"/>
+            <ComboBox x:Name="State_Copy" Background="White" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="Profile"  FontSize="20" BorderThickness="2,2,2,2" Margin="430,427,0,0"  VerticalAlignment="Top" Width="276" Height="40" Grid.Column="3"/>
+            <Button x:Name="Create_Copy" Click="Loadporfile" BorderBrush="Black" Content="Load" HorizontalAlignment="Left" Margin="730,435,0,0" VerticalAlignment="Top" Width="111" Grid.Column="3"/>
+            <Button x:Name="Create_Copy1" Click="Removeporfile" BorderBrush="Black" Content="Remove" HorizontalAlignment="Left" Margin="730,489,0,0" VerticalAlignment="Top" Width="111" Grid.Column="3"/>
+            <TextBox x:Name="Profilename" BorderBrush="Black" materiaDesign:HintAssist.Hint="Profile Name"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="430,218,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.Column="3" TextChanged="First_Copy_TextChanged" />
         </Grid>
 
     </Grid>

@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Globalization;
+using Newtonsoft.Json;
+using System.Windows.Markup;
+
 namespace WpfApp1
 {
     /// <summary>
@@ -26,7 +29,14 @@ namespace WpfApp1
             Counrty.ItemsSource = GetCountryList();
             State.ItemsSource = StateArray.States();
             StateB.ItemsSource = StateArray.States();
-
+            for (var a = 1; a < 12; a++)
+            {
+                Month.Items.Add(a);
+            }
+            for (var a = 2019 ; a < 2029; a++)
+            {
+                Year.Items.Add(a);
+            }
         }
         private void cbValueType_DropDownClosed(object sender, EventArgs e)
         {
@@ -38,6 +48,7 @@ namespace WpfApp1
             }
             else
             {
+                State.IsEnabled = true;
                 StateB.IsEnabled = true;
             }
                 
@@ -196,8 +207,121 @@ namespace WpfApp1
 
 
         }
-       
+        // userprofile 
+        public class dataWship
+        {
+            public string dFirst { get; set; }
+            public string dLast { get; set; }
+            public string dAddress { get; set; }
+            public string dApt { get; set; }
+            public string dCity { get; set; }
+            public string dState { get; set; }
+            public int dZip { get; set; }
+            public int dPhone { get; set; }
+            public string dEmail { get; set; }
+            public string dFirstb { get; set; }
+            public string dLastb { get; set; }
+            public string dAddressb { get; set; }
+            public string dAptb { get; set; }
+            public string dCityb { get; set; }
+            public string dStateb { get; set; }
+            public int dZipb { get; set; }
+            public int dCard { get; set; }
+            public int dCvv { get; set; }
+            public int dMonth { get; set; }
+            public int dYear { get; set; }
+            public string Name { get; set; }
+
+        }
+        public class dataWoutship
+        {
+            public string dFirst { get; set; }
+            public string dLast { get; set; }
+            public string dAddress { get; set; }
+            public string dApt { get; set; }
+            public string dCity { get; set; }
+            public string dState { get; set; }
+            public int dZip { get; set; }
+            public int dPhone { get; set; }
+            public string dEmail { get; set; } 
+            public int dCard { get; set; }
+            public int dCvv { get; set; }
+            public int dMonth { get; set; }
+            public int dYear { get; set; }
+            public string Name { get; set; }
+        }
+
         private void Createporfile(object sender, RoutedEventArgs e)
+        {
+            //cmd.Parameters.AddWithValue("@country", this.countryComboBox.SelectedItem.ToString()); add country
+
+            //https://stackoverflow.com/questions/16921652/how-to-write-a-json-file-in-c
+            // need to check which data input we use by checking the check box
+            if ((bool)checkBox.IsChecked == true) {
+                // easy case dataWoutship
+                List<dataWoutship> _data = new List<dataWoutship>();
+                _data.Add(new dataWoutship()
+                {
+                    dFirst = First.Text,
+                    dLast = Last.Text,
+                    dAddress = Address.Text,
+                    dApt = First.Text,
+                    dCity = Last.Text,
+                    dState = Address.Text,
+                    dZip = int.Parse(Zip.Text),
+                    dPhone = int.Parse(Phone.Text),
+                    dEmail = Email.Text,
+                    dCard = int.Parse(Card.Text),
+                    dCvv = int.Parse(CVV.Text),
+                    dMonth = int.Parse(Month.Text),
+                    dYear = int.Parse(Year.Text),
+                    Name = Profilename.Text,
+                });
+                string json = JsonConvert.SerializeObject(_data.ToArray());
+
+                //write string to file
+                System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + "user", json); /// need to save to our data file
+            }
+
+            else {
+
+                List<dataWship> _data = new List<dataWship>();
+                _data.Add(new dataWship()
+                {
+                    dFirst = First.Text,
+                    dLast = Last.Text,
+                    dAddress = Address.Text,
+                    dApt = First.Text,
+                    dCity = Last.Text,
+                    dState = Address.Text,
+                    dZip = int.Parse(Zip.Text),
+                    dFirstb = First.Text,
+                    dLastb = LastB.Text,
+                    dAddressb = AddressB.Text,
+                    dAptb = FirstB.Text,
+                    dCityb = LastB.Text,
+                    dStateb = AddressB.Text,
+                    dZipb = int.Parse(ZipB.Text),
+                    Name = Profilename.Text,
+                    dPhone = int.Parse(Phone.Text),
+                    dEmail = Email.Text,
+                    dCard = int.Parse(Card.Text),
+                    dCvv = int.Parse(CVV.Text),
+                    dMonth = int.Parse(Month.Text),
+                    dYear = int.Parse(Year.Text),
+                });
+                string json = JsonConvert.SerializeObject(_data.ToArray());
+
+                //write string to file
+                System.IO.File.WriteAllText(@"data\path.txt", json);
+            }
+          
+        }
+        private void Loadporfile(object sender, RoutedEventArgs e)
+        {
+            //cmd.Parameters.AddWithValue("@country", this.countryComboBox.SelectedItem.ToString()); add country
+        }
+        private void Removeporfile(object sender, RoutedEventArgs e)
         {
             //cmd.Parameters.AddWithValue("@country", this.countryComboBox.SelectedItem.ToString()); add country
         }
@@ -219,8 +343,12 @@ namespace WpfApp1
             cultureList.Sort();
             return cultureList;
         }
-       
+
+        private void First_Copy_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
+    }
     }
 
 
