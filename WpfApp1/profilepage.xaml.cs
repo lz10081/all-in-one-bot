@@ -243,6 +243,48 @@ namespace WpfApp1
            
 
         }
+        public class NotusdataWship
+        {
+            public string dCounrty { get; set; }
+            public string dFirst { get; set; }
+            public string dLast { get; set; }
+            public string dAddress { get; set; }
+            public string dApt { get; set; }
+            public string dCity { get; set; }
+            public long dZip { get; set; }
+            public long dPhone { get; set; }
+            public string dEmail { get; set; }
+            public string dFirstb { get; set; }
+            public string dLastb { get; set; }
+            public string dAddressb { get; set; }
+            public string dAptb { get; set; }
+            public string dCityb { get; set; }
+            public string dStateb { get; set; }
+            public long dZipb { get; set; }
+            public long dCard { get; set; }
+            public long dCvv { get; set; }
+            public int dMonth { get; set; }
+            public int dYear { get; set; }
+
+
+        }
+        public class notusdataWoutship
+        {
+            public string dCounrty { get; set; }
+            public string dFirst { get; set; }
+            public string dLast { get; set; }
+            public string dAddress { get; set; }
+            public string dApt { get; set; }
+            public string dCity { get; set; }
+            public long dZip { get; set; }
+            public long dPhone { get; set; }
+            public string dEmail { get; set; }
+            public long dCard { get; set; }
+            public long dCvv { get; set; }
+            public int dMonth { get; set; }
+            public int dYear { get; set; }
+
+        }
         public class dataWoutship
         {
             public string dCounrty { get; set; }
@@ -268,89 +310,225 @@ namespace WpfApp1
 
             //https://stackoverflow.com/questions/16921652/how-to-write-a-json-file-in-c
             // need to check which data input we use by checking the check box
-            if ((bool)checkBox.IsChecked == true) {
-                // easy case dataWoutship
-                List<dataWoutship> _data = new List<dataWoutship>();
-                try
+            String s = Counrty.Text;
+            if (s != "Canada" && s != "United States")
+            {
+                if ((bool)checkBox.IsChecked == true)
                 {
-                   
-                    _data.Add(new dataWoutship()
+                    // easy case dataWoutship
+                    if (String.IsNullOrEmpty(CVV.Text) || String.IsNullOrEmpty(Card.Text) || String.IsNullOrEmpty(Email.Text) || String.IsNullOrEmpty(Phone.Text) || String.IsNullOrEmpty(Counrty.Text) || String.IsNullOrEmpty(First.Text) || String.IsNullOrEmpty(Last.Text) || String.IsNullOrEmpty(Address.Text) || String.IsNullOrEmpty(City.Text) || String.IsNullOrEmpty(Zip.Text))
                     {
-                        dCounrty = Counrty.Text,
-                        dFirst = First.Text,
-                        dLast = Last.Text,
-                        dAddress = Address.Text,
-                        dApt = Apt.Text,
-                        dCity = City.Text,
-                        dState = State.SelectedItem.ToString(),
-                        dZip = Int64.Parse(Zip.Text),                                                                               
-                        dPhone = Int64.Parse(Phone.Text),                                                                   // fixed
-                        dEmail = Email.Text,
-                        dCard = Int64.Parse(Card.Text),
-                        dCvv = Int64.Parse(CVV.Text),
-                        dMonth = Int32.Parse(Month.Text),
-                        dYear = Int32.Parse(Year.Text),
-                    });
+                        Console.WriteLine("is null");
+                        // Do something...
+                    }
+                    else
+                    {
+                        List<notusdataWoutship> _data = new List<notusdataWoutship>();
+                        try
+                        {
+
+                            _data.Add(new notusdataWoutship()
+                            {
+                                dCounrty = Counrty.Text,
+                                dFirst = First.Text,
+                                dLast = Last.Text,
+                                dAddress = Address.Text,
+                                dApt = Apt.Text,
+                                dCity = City.Text,
+                            
+                                dZip = Int64.Parse(Zip.Text),
+                                dPhone = Int64.Parse(Phone.Text),                                                                   // fixed
+                                dEmail = Email.Text,
+                                dCard = Int64.Parse(Card.Text),
+                                dCvv = Int64.Parse(CVV.Text),
+                                dMonth = Int32.Parse(Month.Text),
+                                dYear = Int32.Parse(Year.Text),
+                            });
+                        }
+                        catch (OverflowException exc)
+                        {
+                            Console.WriteLine(exc);
+                        }
+                        string json = JsonConvert.SerializeObject(_data.ToArray());
+                        PorfileSaved.Items.Add(Profilename.Text);
+                        //write string to file
+                        System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + Profilename.Text + ".json", json); /// need to save to our data file
+                    }
+
+
                 }
-                catch(OverflowException exc)
+
+                else
                 {
-                    Console.WriteLine(exc);
+
+                    List<NotusdataWship> _data = new List<NotusdataWship>();
+                    if (String.IsNullOrEmpty(FirstB.Text) || String.IsNullOrEmpty(LastB.Text) || String.IsNullOrEmpty(CVV.Text) || String.IsNullOrEmpty(Card.Text) || String.IsNullOrEmpty(Email.Text) || String.IsNullOrEmpty(Phone.Text) || String.IsNullOrEmpty(Counrty.Text) || String.IsNullOrEmpty(First.Text) || String.IsNullOrEmpty(Last.Text) || String.IsNullOrEmpty(Address.Text) || String.IsNullOrEmpty(City.Text) || String.IsNullOrEmpty(Zip.Text))
+                    {
+                        Console.WriteLine("is null");
+                        // Do something...
+                    }
+                    else
+                    {
+
+                        try
+                        {
+                            _data.Add(new NotusdataWship()
+                            {
+                                dCounrty = Counrty.Text,
+                                dFirst = First.Text,
+                                dLast = Last.Text,
+                                dAddress = Address.Text,
+                                dApt = Apt.Text,
+                                dCity = City.Text,
+                                dZip = Int64.Parse(Zip.Text),
+                                dFirstb = FirstB.Text,
+                                dLastb = LastB.Text,
+                                dAddressb = AddressB.Text,
+                                dAptb = AptB.Text,
+                                dCityb = CityB.Text,
+                                dStateb = StateB.SelectedItem.ToString(),
+                                dZipb = Int64.Parse(ZipB.Text),
+                                dPhone = Int64.Parse(Phone.Text),                                                                   // fixed
+                                dEmail = Email.Text,
+                                dCard = Int64.Parse(Card.Text),
+                                dCvv = Int64.Parse(CVV.Text),
+                                dMonth = Int32.Parse(Month.Text),
+                                dYear = Int32.Parse(Year.Text),
+
+
+                            });
+                        }
+                        catch (OverflowException exc)
+                        {
+                            Console.WriteLine(exc);
+                        }
+                        string json = JsonConvert.SerializeObject(_data.ToArray());
+                        PorfileSaved.Items.Add(Profilename.Text);
+                        //write string to file
+                        System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + Profilename.Text + ".json", json); /// need to save to our data file
+                    }
                 }
-                string json = JsonConvert.SerializeObject(_data.ToArray());
-
-                //write string to file
-                System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + Profilename.Text+ ".json", json); /// need to save to our data file
             }
-
             else {
-
-                List<dataWship> _data = new List<dataWship>();
-                try
+                if ((bool)checkBox.IsChecked == true)
                 {
-                    _data.Add(new dataWship()
+                    // easy case dataWoutship
+                    if (String.IsNullOrEmpty(CVV.Text) || String.IsNullOrEmpty(Card.Text) || String.IsNullOrEmpty(Email.Text) || String.IsNullOrEmpty(Phone.Text) || String.IsNullOrEmpty(Counrty.Text) || String.IsNullOrEmpty(First.Text) || String.IsNullOrEmpty(Last.Text) || String.IsNullOrEmpty(Address.Text) || String.IsNullOrEmpty(City.Text) || String.IsNullOrEmpty(Zip.Text))
                     {
-                        dCounrty = Counrty.Text,
-                        dFirst = First.Text,
-                        dLast = Last.Text,
-                        dAddress = Address.Text,
-                        dApt = Apt.Text,
-                        dCity = City.Text,
-                        dState = State.SelectedItem.ToString(),
-                        dZip = Int64.Parse(Zip.Text),
-                        dFirstb = FirstB.Text,
-                        dLastb = LastB.Text,
-                        dAddressb = AddressB.Text,
-                        dAptb = AptB.Text,
-                        dCityb = CityB.Text,
-                        dStateb = StateB.SelectedItem.ToString(),
-                        dZipb = Int64.Parse(ZipB.Text),
-                        dPhone = Int64.Parse(Phone.Text),                                                                   // fixed
-                        dEmail = Email.Text,
-                        dCard = Int64.Parse(Card.Text),
-                        dCvv = Int64.Parse(CVV.Text),
-                        dMonth = Int32.Parse(Month.Text),
-                        dYear = Int32.Parse(Year.Text),
+                        Console.WriteLine("is null");
+                        // Do something...
+                    }
+                    else
+                    {
+                        List<dataWoutship> _data = new List<dataWoutship>();
+                        try
+                        {
+
+                            _data.Add(new dataWoutship()
+                            {
+                                dCounrty = Counrty.Text,
+                                dFirst = First.Text,
+                                dLast = Last.Text,
+                                dAddress = Address.Text,
+                                dApt = Apt.Text,
+                                dCity = City.Text,
+                                dState = State.SelectedItem.ToString(),
+                                dZip = Int64.Parse(Zip.Text),
+                                dPhone = Int64.Parse(Phone.Text),                                                                   // fixed
+                                dEmail = Email.Text,
+                                dCard = Int64.Parse(Card.Text),
+                                dCvv = Int64.Parse(CVV.Text),
+                                dMonth = Int32.Parse(Month.Text),
+                                dYear = Int32.Parse(Year.Text),
+                            });
+                        }
+                        catch (OverflowException exc)
+                        {
+                            Console.WriteLine(exc);
+                        }
+                        string json = JsonConvert.SerializeObject(_data.ToArray());
+                        PorfileSaved.Items.Add(Profilename.Text);
+                        //write string to file
+                        System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + Profilename.Text + ".json", json); /// need to save to our data file
+                    }
 
 
-                    });
                 }
-                catch (OverflowException exc)
+
+                else
                 {
-                    Console.WriteLine(exc);
-                }
-                string json = JsonConvert.SerializeObject(_data.ToArray());
 
-                //write string to file
-                System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + Profilename.Text + ".json", json); /// need to save to our data file
+                    List<dataWship> _data = new List<dataWship>();
+                    if (String.IsNullOrEmpty(FirstB.Text) || String.IsNullOrEmpty(LastB.Text) || String.IsNullOrEmpty(CVV.Text) || String.IsNullOrEmpty(Card.Text) || String.IsNullOrEmpty(Email.Text) || String.IsNullOrEmpty(Phone.Text) || String.IsNullOrEmpty(Counrty.Text) || String.IsNullOrEmpty(First.Text) || String.IsNullOrEmpty(Last.Text) || String.IsNullOrEmpty(Address.Text) || String.IsNullOrEmpty(City.Text) || String.IsNullOrEmpty(Zip.Text))
+                    {
+                        Console.WriteLine("is null");
+                        // Do something...
+                    }
+                    else
+                    {
+
+                        try
+                        {
+                            _data.Add(new dataWship()
+                            {
+                                dCounrty = Counrty.Text,
+                                dFirst = First.Text,
+                                dLast = Last.Text,
+                                dAddress = Address.Text,
+                                dApt = Apt.Text,
+                                dCity = City.Text,
+                                dState = State.SelectedItem.ToString(),
+                                dZip = Int64.Parse(Zip.Text),
+                                dFirstb = FirstB.Text,
+                                dLastb = LastB.Text,
+                                dAddressb = AddressB.Text,
+                                dAptb = AptB.Text,
+                                dCityb = CityB.Text,
+                                dStateb = StateB.SelectedItem.ToString(),
+                                dZipb = Int64.Parse(ZipB.Text),
+                                dPhone = Int64.Parse(Phone.Text),                                                                   // fixed
+                                dEmail = Email.Text,
+                                dCard = Int64.Parse(Card.Text),
+                                dCvv = Int64.Parse(CVV.Text),
+                                dMonth = Int32.Parse(Month.Text),
+                                dYear = Int32.Parse(Year.Text),
+                            });
+                        }
+                        catch (OverflowException exc)
+                        {
+                            Console.WriteLine(exc);
+                        }
+                        string json = JsonConvert.SerializeObject(_data.ToArray());
+                        PorfileSaved.Items.Add(Profilename.Text);
+                        //write string to file
+                        System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + Profilename.Text + ".json", json); /// need to save to our data file
+                    }
+
+                }
             }
+         
 
         }
+       
+
         private void Loadporfile(object sender, RoutedEventArgs e)
         {
+        
+                using (StreamReader r = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + @"\" + PorfileSaved.Text))
+                {
+                    string json = r.ReadToEnd();
+                    List<dataWship> items = JsonConvert.DeserializeObject<List<dataWship>>(json);
+                Console.WriteLine(items);
+            }
+          
+
             //cmd.Parameters.AddWithValue("@country", this.countryComboBox.SelectedItem.ToString()); add country
         }
         private void Removeporfile(object sender, RoutedEventArgs e)
+
         {
+            File.Delete(AppDomain.CurrentDomain.BaseDirectory + @"\" + PorfileSaved.Text);
+            PorfileSaved.Items.Remove(PorfileSaved.Text);
             //cmd.Parameters.AddWithValue("@country", this.countryComboBox.SelectedItem.ToString()); add country
         }
         public static List<string> GetCountryList()
