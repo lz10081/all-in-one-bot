@@ -211,14 +211,15 @@ namespace WpfApp1
         // userprofile 
         public class dataWship
         {
+            public string dCounrty { get; set; }
             public string dFirst { get; set; }
             public string dLast { get; set; }
             public string dAddress { get; set; }
             public string dApt { get; set; }
             public string dCity { get; set; }
             public string dState { get; set; }
-            public int dZip { get; set; }
-            public int dPhone { get; set; }
+            public long dZip { get; set; }
+            public long dPhone { get; set; }
             public string dEmail { get; set; }
             public string dFirstb { get; set; }
             public string dLastb { get; set; }
@@ -226,9 +227,9 @@ namespace WpfApp1
             public string dAptb { get; set; }
             public string dCityb { get; set; }
             public string dStateb { get; set; }
-            public int dZipb { get; set; }
-            public int dCard { get; set; }
-            public int dCvv { get; set; }
+            public long dZipb { get; set; }
+            public long dCard { get; set; }
+            public long dCvv { get; set; }
             public int dMonth { get; set; }
             public int dYear { get; set; }
            
@@ -236,17 +237,18 @@ namespace WpfApp1
         }
         public class dataWoutship
         {
+            public string dCounrty { get; set; }
             public string dFirst { get; set; }
             public string dLast { get; set; }
             public string dAddress { get; set; }
             public string dApt { get; set; }
             public string dCity { get; set; }
             public string dState { get; set; }
-            public int dZip { get; set; }
-            public int dPhone { get; set; }
+            public long dZip { get; set; }
+            public long dPhone { get; set; }
             public string dEmail { get; set; } 
-            public int dCard { get; set; }
-            public int dCvv { get; set; }
+            public long dCard { get; set; }
+            public long dCvv { get; set; }
             public int dMonth { get; set; }
             public int dYear { get; set; }
            
@@ -263,22 +265,23 @@ namespace WpfApp1
                 List<dataWoutship> _data = new List<dataWoutship>();
                 try
                 {
+                   
                     _data.Add(new dataWoutship()
                     {
+                        dCounrty = Counrty.Text,
                         dFirst = First.Text,
                         dLast = Last.Text,
                         dAddress = Address.Text,
                         dApt = Apt.Text,
                         dCity = City.Text,
-                        dState = State.ToString(),
-                        dZip = Int32.Parse(Zip.Text),                                                                               
-                        dPhone = Int32.Parse(Phone.Text),                                                                   // too big for int32 need to use int64 fixing tmrw
+                        dState = State.SelectedItem.ToString(),
+                        dZip = Int64.Parse(Zip.Text),                                                                               
+                        dPhone = Int64.Parse(Phone.Text),                                                                   // fixed
                         dEmail = Email.Text,
-                        dCard = Int32.Parse(Card.Text),
-                        dCvv = Int32.Parse(CVV.Text),
+                        dCard = Int64.Parse(Card.Text),
+                        dCvv = Int64.Parse(CVV.Text),
                         dMonth = Int32.Parse(Month.Text),
                         dYear = Int32.Parse(Year.Text),
-                        
                     });
                 }
                 catch(OverflowException exc)
@@ -288,42 +291,51 @@ namespace WpfApp1
                 string json = JsonConvert.SerializeObject(_data.ToArray());
 
                 //write string to file
-                System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + Profilename.Text+ "user.json", json); /// need to save to our data file
+                System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + Profilename.Text+ ".json", json); /// need to save to our data file
             }
 
             else {
 
                 List<dataWship> _data = new List<dataWship>();
-                _data.Add(new dataWship()
+                try
                 {
-                    dFirst = First.Text,
-                    dLast = Last.Text,
-                    dAddress = Address.Text,
-                    dApt = Apt.Text,
-                    dCity = City.Text,
-                    dState = State.ToString(),
-                    dZip = int.Parse(Zip.Text),
-                    dFirstb = FirstB.Text,
-                    dLastb = LastB.Text,
-                    dAddressb = AddressB.Text,
-                    dAptb = AptB.Text,
-                    dCityb = CityB.Text,
-                    dStateb = StateB.ToString(),
-                    dZipb = int.Parse(ZipB.Text),
-                    dPhone = int.Parse(Phone.Text),
-                    dEmail = Email.Text,
-                    dCard = int.Parse(Card.Text),
-                    dCvv = int.Parse(CVV.Text),
-                    dMonth = int.Parse(Month.Text),
-                    dYear = int.Parse(Year.Text),
-                    
-                });
+                    _data.Add(new dataWship()
+                    {
+                        dCounrty = Counrty.Text,
+                        dFirst = First.Text,
+                        dLast = Last.Text,
+                        dAddress = Address.Text,
+                        dApt = Apt.Text,
+                        dCity = City.Text,
+                        dState = State.SelectedItem.ToString(),
+                        dZip = Int64.Parse(Zip.Text),
+                        dFirstb = FirstB.Text,
+                        dLastb = LastB.Text,
+                        dAddressb = AddressB.Text,
+                        dAptb = AptB.Text,
+                        dCityb = CityB.Text,
+                        dStateb = StateB.SelectedItem.ToString(),
+                        dZipb = Int64.Parse(ZipB.Text),
+                        dPhone = Int64.Parse(Phone.Text),                                                                   // fixed
+                        dEmail = Email.Text,
+                        dCard = Int64.Parse(Card.Text),
+                        dCvv = Int64.Parse(CVV.Text),
+                        dMonth = Int32.Parse(Month.Text),
+                        dYear = Int32.Parse(Year.Text),
+
+
+                    });
+                }
+                catch (OverflowException exc)
+                {
+                    Console.WriteLine(exc);
+                }
                 string json = JsonConvert.SerializeObject(_data.ToArray());
 
                 //write string to file
-                System.IO.File.WriteAllText(@"data\path.txt", json);
+                System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + Profilename.Text + ".json", json); /// need to save to our data file
             }
-          
+
         }
         private void Loadporfile(object sender, RoutedEventArgs e)
         {
