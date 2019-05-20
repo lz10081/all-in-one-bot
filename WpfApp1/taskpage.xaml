@@ -25,12 +25,14 @@
         </Grid>
 
         <Grid HorizontalAlignment="Left"  Background="DarkSlateGray"   Height="471" Margin="50,297,0,0" VerticalAlignment="Top" Width="1382">
-            <Label x:Name="label" FontStyle="Italic" Foreground="White" FontSize="20"  Content="Create tasks" HorizontalAlignment="Left" Margin="34,28,0,0" VerticalAlignment="Top" Width="141"/>
-            <TextBox x:Name="url" BorderBrush="Black" Foreground="White" materiaDesign:HintAssist.Hint="URL"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="34,103,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" />
-            <TextBox x:Name="size" BorderBrush="Black" Foreground="White" materiaDesign:HintAssist.Hint="Size"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="400,103,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="295" />
-            <ComboBox x:Name="Profile" HorizontalAlignment="Left"  Foreground="White"  BorderBrush="Black" materiaDesign:HintAssist.Hint="Profile"  FontSize="20" BorderThickness="2,2,2,2" Margin="834,103,0,0"  VerticalAlignment="Top" Width="276" Height="40"/>
-            <TextBox x:Name="Quantity" BorderBrush="Black"  Foreground="White" materiaDesign:HintAssist.Hint="Quantity"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="34,229,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" />
-            <Button x:Name="Create"  BorderBrush="Black" Content="Create" HorizontalAlignment="Left" Margin="1102,389,0,0" VerticalAlignment="Top" Width="146" Height="59" RenderTransformOrigin="0.298,0.525"/>
+
+            <Label x:Name="label" FontStyle="Italic" Foreground="White" FontSize="20"  BorderThickness="2,2,2,2" Content="Create tasks" HorizontalAlignment="Left" Margin="34,28,0,0" VerticalAlignment="Top" Width="141"/>
+
+            <TextBox x:Name="url" Background="White"  BorderBrush="Black"  materiaDesign:HintAssist.Hint="URL"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="34,103,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" />
+            <TextBox x:Name="size" Background="White" BorderBrush="Black" materiaDesign:HintAssist.Hint="Size"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="400,103,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="295" />
+            <ComboBox x:Name="Profile" Background="White" HorizontalAlignment="Left"    BorderBrush="Black" materiaDesign:HintAssist.Hint="Profile"  FontSize="20" BorderThickness="2,2,2,2" Margin="834,103,0,0"  VerticalAlignment="Top" Width="276" Height="40"/>
+            <TextBox x:Name="Quantity" Background="White" BorderBrush="Black"  materiaDesign:HintAssist.Hint="Quantity"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="34,229,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" />
+            <Button x:Name="Create"  BorderBrush="Black" Content="Create" HorizontalAlignment="Left" Margin="964,384,0,0" VerticalAlignment="Top" Width="146" Height="60" RenderTransformOrigin="0.298,0.525"/>
         </Grid>
 
 

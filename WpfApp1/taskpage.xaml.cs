@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using System.IO;
 namespace WpfApp1
 {
     /// <summary>
@@ -23,6 +23,17 @@ namespace WpfApp1
         public taskpage()
         {
             InitializeComponent();
+            DirectoryInfo d = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);//Assuming Test is your Folder
+            FileInfo[] Files = d.GetFiles("*.json"); //Getting Text files
+            string str = "";
+            foreach (FileInfo file in Files)
+            {
+                str = str + ", " + file.Name;
+
+                Profile.Items.Add(file.Name);
+            }
+
+          
         }
         private void SoleboxClicked(object sender, RoutedEventArgs e)
         {

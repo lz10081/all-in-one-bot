@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Globalization;
 using Newtonsoft.Json;
 using System.Windows.Markup;
+using System.IO;
 
 namespace WpfApp1
 {
@@ -37,6 +38,15 @@ namespace WpfApp1
             {
                 Year.Items.Add(a);
             }
+            DirectoryInfo d = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);//Assuming Test is your Folder
+            FileInfo[] Files = d.GetFiles("*.json"); //Getting Text files
+            string str = "";
+            foreach (FileInfo file in Files)
+            {
+                str = str + ", " + file.Name;
+
+                PorfileSaved.Items.Add(file.Name);
+            }
         }
         private void cbValueType_DropDownClosed(object sender, EventArgs e)
         {
@@ -44,15 +54,13 @@ namespace WpfApp1
             if (s != "Canada" && s != "United States")
             {
                 State.IsEnabled = false;
-                StateB.IsEnabled = false;
-               
+                StateB.IsEnabled = false;  
             }
             else
             {
                 State.IsEnabled = true;
                 StateB.IsEnabled = true;
-            }
-                
+            }    
         }
 
      

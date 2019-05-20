@@ -10,8 +10,8 @@
       d:DesignHeight="753" d:DesignWidth="1200"
       Title="profilepage">
 
-    <Grid>
-        <Grid HorizontalAlignment="Left"     Height="637" Margin="10,116,-85,0" VerticalAlignment="Top" Width="1275">
+    <Grid Background="Black">
+        <Grid HorizontalAlignment="Left"     Background="DarkSlateGray"  Height="637" Margin="100,106,-175,0" VerticalAlignment="Top" Width="1275">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="155*"/>
                 <ColumnDefinition Width="49*"/>
@@ -21,29 +21,29 @@
             <ComboBox x:Name="Counrty" Background="White" DropDownClosed="cbValueType_DropDownClosed" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="Counrty"  FontSize="20" BorderThickness="2,2,2,2" Margin="58,28,0,0"  VerticalAlignment="Top" Width="206" Height="40" Grid.Column="2" Grid.ColumnSpan="2">
             </ComboBox>
             <Label x:Name="label" FontSize="20"  Content="Shipping information" HorizontalAlignment="Left" Margin="24,28,0,0" VerticalAlignment="Top" Width="223" Grid.ColumnSpan="3"/>
-            <TextBox x:Name="First" BorderBrush="Black" materiaDesign:HintAssist.Hint="First Name"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="24,82,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.ColumnSpan="4" />
-            <TextBox x:Name="Last" BorderBrush="Black" materiaDesign:HintAssist.Hint="Last Name"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="41,82,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.Column="3" />
-            <TextBox x:Name="Address" BorderBrush="Black" materiaDesign:HintAssist.Hint="Address"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="24,136,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="355" Grid.ColumnSpan="4" />
-            <TextBox x:Name="Apt" BorderBrush="Black" materiaDesign:HintAssist.Hint="Apt"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="119,136,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="198" Grid.Column="3" />
-            <TextBox x:Name="City" BorderBrush="Black" materiaDesign:HintAssist.Hint="City"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="24,192,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="200" Grid.ColumnSpan="3" />
+            <TextBox x:Name="First" BorderBrush="Black" Background="White" materiaDesign:HintAssist.Hint="First Name"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="24,82,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.ColumnSpan="4" />
+            <TextBox x:Name="Last" BorderBrush="Black" Background="White" materiaDesign:HintAssist.Hint="Last Name"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="41,82,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.Column="3" />
+            <TextBox x:Name="Address" BorderBrush="Black" Background="White" materiaDesign:HintAssist.Hint="Address"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="24,136,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="355" Grid.ColumnSpan="4" />
+            <TextBox x:Name="Apt" BorderBrush="Black" Background="White"  materiaDesign:HintAssist.Hint="Apt"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="119,136,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="198" Grid.Column="3" />
+            <TextBox x:Name="City" BorderBrush="Black" Background="White" materiaDesign:HintAssist.Hint="City"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="24,192,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="200" Grid.ColumnSpan="3" />
             <ComboBox x:Name="State" Background="White" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="State"  FontSize="20" BorderThickness="2,2,2,2" Margin="43,192,0,0"  VerticalAlignment="Top" Width="206" Height="40" Grid.Column="2" Grid.ColumnSpan="2"/>
-            <TextBox x:Name="Zip" BorderBrush="Black" materiaDesign:HintAssist.Hint="Zip"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="191,192,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="126" Grid.Column="3" />
-            <TextBox x:Name="Phone" BorderBrush="Black" materiaDesign:HintAssist.Hint="Phone Number"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="24,247,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.ColumnSpan="4" />
-            <TextBox x:Name="Email" BorderBrush="Black" materiaDesign:HintAssist.Hint="Email"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="41,247,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.Column="3" />
+            <TextBox x:Name="Zip" BorderBrush="Black" Background="White" materiaDesign:HintAssist.Hint="Zip"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="191,192,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="126" Grid.Column="3" />
+            <TextBox x:Name="Phone" BorderBrush="Black" Background="White" materiaDesign:HintAssist.Hint="Phone Number"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="24,247,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.ColumnSpan="4" />
+            <TextBox x:Name="Email" BorderBrush="Black" Background="White" materiaDesign:HintAssist.Hint="Email"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="41,247,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.Column="3" />
             <CheckBox x:Name="checkBox" IsChecked="False" Click="Boxclick" Content="Same as shipping information" FontSize="20"  Grid.Column="2" HorizontalAlignment="Left" Margin="43,340,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="338" Height="49"/>
-            <TextBox x:Name="FirstB" BorderBrush="Black" materiaDesign:HintAssist.Hint="First Name"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="24,424,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.ColumnSpan="4" />
-            <TextBox x:Name="LastB" BorderBrush="Black" materiaDesign:HintAssist.Hint="Last Name"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="41,424,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.Column="3" />
-            <TextBox x:Name="AddressB" BorderBrush="Black" materiaDesign:HintAssist.Hint="Address"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="24,489,0,-55" TextWrapping="Wrap"  VerticalAlignment="Top" Width="355" Grid.ColumnSpan="4" />
-            <TextBox x:Name="AptB" BorderBrush="Black" materiaDesign:HintAssist.Hint="APT"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="119,489,0,-55" TextWrapping="Wrap"  VerticalAlignment="Top" Width="198" Grid.Column="3" />
-           
-            <TextBox x:Name="CityB" BorderBrush="Black" materiaDesign:HintAssist.Hint="City"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="24,547,0,-113" TextWrapping="Wrap"  VerticalAlignment="Top" Width="200" Grid.ColumnSpan="3" />
+            <TextBox x:Name="FirstB" BorderBrush="Black" Background="White" materiaDesign:HintAssist.Hint="First Name"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="24,424,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.ColumnSpan="4" />
+            <TextBox x:Name="LastB" BorderBrush="Black" Background="White" materiaDesign:HintAssist.Hint="Last Name"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="41,424,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.Column="3" />
+            <TextBox x:Name="AddressB" BorderBrush="Black" Background="White" materiaDesign:HintAssist.Hint="Address"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="24,489,0,-55" TextWrapping="Wrap"  VerticalAlignment="Top" Width="355" Grid.ColumnSpan="4" />
+            <TextBox x:Name="AptB" BorderBrush="Black" Background="White" materiaDesign:HintAssist.Hint="APT"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="119,489,0,-55" TextWrapping="Wrap"  VerticalAlignment="Top" Width="198" Grid.Column="3" />
+
+            <TextBox x:Name="CityB" BorderBrush="Black" Background="White" materiaDesign:HintAssist.Hint="City"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="24,547,0,-113" TextWrapping="Wrap"  VerticalAlignment="Top" Width="200" Grid.ColumnSpan="3" />
             <ComboBox x:Name="StateB" Background="White" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="State"  FontSize="20" BorderThickness="2,2,2,2" Margin="43,547,0,0"  VerticalAlignment="Top" Width="206" Height="40" Grid.Column="2" Grid.ColumnSpan="2"/>
-            <TextBox x:Name="ZipB" BorderBrush="Black" materiaDesign:HintAssist.Hint="Zip Code"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="191,547,0,-113" TextWrapping="Wrap"  VerticalAlignment="Top" Width="126" Grid.Column="3" />
-            <TextBox x:Name="Card" BorderBrush="Black" materiaDesign:HintAssist.Hint="Card Number"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="430,82,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.Column="3" />
-            <TextBox x:Name="CVV" BorderBrush="Black" materiaDesign:HintAssist.Hint="CVV"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="730,82,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="86" Grid.Column="3" />
-            <ComboBox x:Name="Month" Background="White" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="Month"  FontSize="20" BorderThickness="2,2,2,2" Margin="448,150,0,0"  VerticalAlignment="Top" Width="104" Height="40" Grid.Column="3" RenderTransformOrigin="0.5,0.5"/>
+            <TextBox x:Name="ZipB" BorderBrush="Black" Background="White" materiaDesign:HintAssist.Hint="Zip Code"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="191,547,0,-113" TextWrapping="Wrap"  VerticalAlignment="Top" Width="126" Grid.Column="3" />
+            <TextBox x:Name="Card" BorderBrush="Black"  Background="White"  materiaDesign:HintAssist.Hint="Card Number"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="430,82,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.Column="3" />
+            <TextBox x:Name="CVV" BorderBrush="Black" Background="White" materiaDesign:HintAssist.Hint="CVV"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="730,82,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="86" Grid.Column="3" />
+            <ComboBox x:Name="Month" Background="White" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="Month"  FontSize="20" BorderThickness="2,2,2,2" Margin="430,150,0,0"  VerticalAlignment="Top" Width="104" Height="40" Grid.Column="3" RenderTransformOrigin="0.5,0.5"/>
             <ComboBox x:Name="Year"  Background="White" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="Year"  FontSize="20" BorderThickness="2,2,2,2" Margin="602,150,0,0"  VerticalAlignment="Top" Width="104" Height="40" Grid.Column="3" RenderTransformOrigin="0.5,0.5"/>
-            <TextBox x:Name="Profilename" BorderBrush="Black" materiaDesign:HintAssist.Hint="Profile Name"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="430,218,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.Column="3" TextChanged="First_Copy_TextChanged" />
+            <TextBox x:Name="Profilename" BorderBrush="Black" Background="White"  materiaDesign:HintAssist.Hint="Profile Name"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="430,218,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.Column="3" TextChanged="First_Copy_TextChanged" />
             <Button x:Name="Create" Click="Createporfile" BorderBrush="Black" Content="Create" HorizontalAlignment="Left" Margin="730,218,0,0" VerticalAlignment="Top" Width="111" Grid.Column="3" Height="40"/>
             <Label x:Name="label_Copy2" FontSize="20"  Content="Saved Profile" HorizontalAlignment="Left" Margin="430,364,0,0" VerticalAlignment="Top" Width="223" Grid.Column="3"/>
          
@@ -59,7 +59,8 @@
            
             <Button x:Name="Create_Copy" Click="Loadporfile" BorderBrush="Black" Content="Load" HorizontalAlignment="Left" Margin="730,435,0,0" VerticalAlignment="Top" Width="111" Grid.Column="3"/>
             <Button x:Name="Create_Copy1" Click="Removeporfile" BorderBrush="Black" Content="Remove" HorizontalAlignment="Left" Margin="730,489,0,0" VerticalAlignment="Top" Width="111" Grid.Column="3"/>
-        
+            <ComboBox x:Name="PorfileSaved" Background="White" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="Porfile"  FontSize="20" BorderThickness="2,2,2,2" Margin="430,435,0,0"  VerticalAlignment="Top" Width="255" Height="40" Grid.Column="3" RenderTransformOrigin="0.5,0.5"/>
+
         </Grid>
 
     </Grid>
