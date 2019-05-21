@@ -12,19 +12,18 @@
         Background="WhiteSmoke"
         WindowStartupLocation="CenterScreen"
         Title="Zen Aio" Height="450" Width="800">
-    <Grid>
+    <Grid Background="#FF87404E">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="53*"/>
             <ColumnDefinition Width="739*"/>
         </Grid.ColumnDefinitions>
-        <Border BorderBrush="Black"  Background="GhostWhite" BorderThickness="1" HorizontalAlignment="Left" Height="184" Margin="85,135,0,0" VerticalAlignment="Top" Width="510" Grid.Column="1"/>
+        <Border BorderBrush="Black"  Background="#FFF95979" BorderThickness="1" HorizontalAlignment="Left" Height="184" Margin="85,135,0,0" VerticalAlignment="Top" Width="510" Grid.Column="1"/>
 
-        <Label x:Name="label" Content="Please enter your activation key to gain access to the Zen Aio software." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="117,178,0,0" Width="460" Grid.Column="1"/>
-        <Button x:Name="buttonkey"   BorderBrush="Blue"  BorderThickness="2,2,2,2" Click="ButtonClicked" Content="AUTHORIZE"   HorizontalAlignment="Left" VerticalAlignment="Top" Width="124" Margin="282,274,0,0" Height="26" Grid.Column="1">
+        <Label x:Name="label" Content="Please enter your activation key to gain access to the Zen Aio software." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="117,178,0,0" Width="460" Grid.Column="1" Background="#FFF95979"/>
+        <Button x:Name="buttonkey"   BorderBrush="Blue"  BorderThickness="2,2,2,2" Click="ButtonClicked" Content="AUTHORIZE"   HorizontalAlignment="Left" VerticalAlignment="Top" Width="124" Margin="282,274,0,0" Height="26" Grid.Column="1" Background="#FF785D5D">
 
         </Button>
-        <TextBox x:Name="textBoxkey" BorderBrush="Black" fw:PointerTracker.Enabled="True" HorizontalAlignment="Left" BorderThickness="2,2,2,2"  Height="30" Margin="213,229,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.Column="1" FontSize="14" />
-        <Image x:Name="image" Source="C:\Users\luxing\source\repos\NewRepo\WpfApp1\image\icon.png" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2" Opacity="0.5"/>
+        <TextBox x:Name="textBoxkey" BorderBrush="Black" fw:PointerTracker.Enabled="True" HorizontalAlignment="Left" BorderThickness="2,2,2,2"  Height="30" Margin="213,229,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.Column="1" FontSize="14" Background="#FFDAA4A4" />
 
     </Grid>
 </Window>
