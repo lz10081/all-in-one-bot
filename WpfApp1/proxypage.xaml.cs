@@ -23,6 +23,19 @@ namespace WpfApp1
         public proxypage()
         {
             InitializeComponent();
+            
+        }
+        private void Save(object sender, RoutedEventArgs e)
+        {
+            
+        }
+        private void Remove(object sender, RoutedEventArgs e)
+        {
+           
+        }
+        private void Test(object sender, RoutedEventArgs e)
+        {
+         
         }
     }
 }

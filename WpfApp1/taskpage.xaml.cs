@@ -33,6 +33,7 @@ namespace WpfApp1
                 Profile.Items.Add(file.Name);
             }
 
+
           
         }
         private void SoleboxClicked(object sender, RoutedEventArgs e)
@@ -41,6 +42,7 @@ namespace WpfApp1
         }
         public void Soleboxmain()
         {
+            //https://stackoverflow.com/questions/7198005/c-sharp-httpwebrequest-website-sign-in set up CookieContainer 
 
         }
     }
