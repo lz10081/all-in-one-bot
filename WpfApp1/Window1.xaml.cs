@@ -29,7 +29,7 @@ namespace WpfApp1
         }
         private void TasksClicked(object sender, RoutedEventArgs e)
         {
-            Main.Content = new taskpage();
+           Main.Content = new taskpage();
         }
         private void ProfilesClicked(object sender, RoutedEventArgs e)
         {

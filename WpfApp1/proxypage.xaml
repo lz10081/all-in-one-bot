@@ -11,14 +11,14 @@
       Title="proxypage">
 
     <Grid Background="Black" Margin="0,0,-226,-41">
-        <Grid HorizontalAlignment="Left"     Background="DarkSlateGray"  Height="637" Margin="100,106,-175,0" VerticalAlignment="Top" Width="1275">
-            <Label x:Name="label" FontStyle="Italic" Foreground="White" FontSize="20"  BorderThickness="2,2,2,2" Content="Create Proxies" HorizontalAlignment="Left" Margin="42,40,0,0" VerticalAlignment="Top" Width="162"/>
-            <Button x:Name="Create" Click="Remove" BorderBrush="Black" Content="Remove" HorizontalAlignment="Left" Margin="981,205,0,0" VerticalAlignment="Top" Width="111" Height="40"/>
-            <Button x:Name="Create_Copy" Click="Save" BorderBrush="Black" Content="Save" HorizontalAlignment="Left" Margin="980,110,0,0" VerticalAlignment="Top" Width="112" Height="40"/>
-            <Button x:Name="Create_Copy1" Click="Test" BorderBrush="Black" Content="Test" HorizontalAlignment="Left" Margin="980,316,0,0" VerticalAlignment="Top" Width="111" Height="40" RenderTransformOrigin="0.401,2.5"/>
-            <RichTextBox  x:Name="proxy" Background="White"  FontSize="20" HorizontalAlignment="Left" Height="504" Margin="42,110,0,0"   VerticalAlignment="Top" Width="397" />
-            <RichTextBox   x:Name="proxytest" FontSize="20" Background="White"  HorizontalAlignment="Left" Height="504" Margin="528,110,0,0"  VerticalAlignment="Top" Width="397" />
-            <Label x:Name="label_Copy" FontStyle="Italic" Foreground="White" FontSize="20"  BorderThickness="2,2,2,2" Content="Proxies Test" HorizontalAlignment="Left" Margin="500,40,0,0" VerticalAlignment="Top" Width="141"/>
+        <Grid HorizontalAlignment="Left"     Background="#FF0F2525"  Height="628" Margin="94,83,0,0" VerticalAlignment="Top" Width="1276">
+            <Label x:Name="label" FontStyle="Italic" Foreground="White" FontSize="20"  BorderThickness="2,2,2,2" Content="Create Proxies" HorizontalAlignment="Left" Margin="42,13,0,0" VerticalAlignment="Top" Width="162"/>
+            <Button x:Name="Create" Click="Remove" BorderBrush="Black" Content="Remove" HorizontalAlignment="Left" Margin="981,205,0,0" VerticalAlignment="Top" Width="111" Height="40" Background="#FFA03939"/>
+            <Button x:Name="Create_Copy" Click="Save" BorderBrush="Black" Content="Save" HorizontalAlignment="Left" Margin="980,110,0,0" VerticalAlignment="Top" Width="112" Height="40" Background="#FFB87474"/>
+            <Button x:Name="Create_Copy1" Click="Test" BorderBrush="Black" Content="Test" HorizontalAlignment="Left" Margin="980,316,0,0" VerticalAlignment="Top" Width="111" Height="40" RenderTransformOrigin="0.401,2.5" Background="#FF896060"/>
+            <RichTextBox  x:Name="proxy" Background="White"  FontSize="20" HorizontalAlignment="Left" Height="542" Margin="42,72,0,0"   VerticalAlignment="Top" Width="400" />
+            <RichTextBox   x:Name="proxytest" FontSize="20" Background="White"  HorizontalAlignment="Left" Height="542" Margin="528,72,0,0"  VerticalAlignment="Top" Width="400" />
+            <Label x:Name="label_Copy" FontStyle="Italic" Foreground="White" FontSize="20"  BorderThickness="2,2,2,2" Content="Proxies Test" HorizontalAlignment="Left" Margin="528,13,0,0" VerticalAlignment="Top" Width="141" Background="#FF0F2525"/>
 
         </Grid>
     </Grid>
