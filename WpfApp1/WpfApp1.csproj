@@ -88,6 +88,9 @@
     <Compile Include="taskpage.xaml.cs">
       <DependentUpon>taskpage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="viewpage.xaml.cs">
+      <DependentUpon>viewpage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
@@ -120,6 +123,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="taskpage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="viewpage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

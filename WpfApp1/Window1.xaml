@@ -15,11 +15,12 @@
     <Grid>
         <Frame x:Name="Main" NavigationUIVisibility="Hidden"></Frame>
         <Grid HorizontalAlignment="Left" Height="66"   Background="DarkGray" VerticalAlignment="Top" Width="1503" Margin="0,0,-11,0">
-            <Button x:Name="Tasks"  Click="TasksClicked" Background="LightBlue" BorderBrush="Black" Content="Tasks" HorizontalAlignment="Left" Margin="79,23,0,-3" VerticalAlignment="Top" Width="111"/>
-            <Button x:Name="Profiles" Click="ProfilesClicked"   Background="LightBlue" BorderBrush="Black" Content="Profiles" HorizontalAlignment="Left" Margin="390,23,0,-3" VerticalAlignment="Top" Width="119"/>
-            <Button x:Name="Proxy"  Click="ProxyClicked"  Background="LightBlue" BorderBrush="Black" Content="Proxy Tester" HorizontalAlignment="Left" Margin="693,23,0,-3" VerticalAlignment="Top" Width="130"/>
-            <Button x:Name="Copped"  Click="CoppedClicked" Background="LightBlue"  BorderBrush="Black"  Content="Copped" HorizontalAlignment="Left" Margin="996,23,0,-3" VerticalAlignment="Top" Width="102"/>
-            <Button x:Name="Setting"  Click="SettingClicked"  Background="LightBlue" BorderBrush="Black"  Content="Setting" HorizontalAlignment="Left" Margin="1230,24,0,0" VerticalAlignment="Top" Width="102"/>
+            <Button x:Name="Tasks"  Click="TasksClicked" Background="LightBlue" BorderBrush="Black" Content="Tasks" HorizontalAlignment="Left" Margin="33,24,0,0" VerticalAlignment="Top" Width="111"/>
+            <Button x:Name="Profiles" Click="ProfilesClicked"   Background="LightBlue" BorderBrush="Black" Content="Profiles" HorizontalAlignment="Left" Margin="560,24,0,0" VerticalAlignment="Top" Width="119"/>
+            <Button x:Name="Proxy"  Click="ProxyClicked"  Background="LightBlue" BorderBrush="Black" Content="Proxy Tester" HorizontalAlignment="Left" Margin="849,24,0,0" VerticalAlignment="Top" Width="130"/>
+            <Button x:Name="Copped"  Click="CoppedClicked" Background="LightBlue"  BorderBrush="Black"  Content="Copped" HorizontalAlignment="Left" Margin="1110,24,0,0" VerticalAlignment="Top" Width="102"/>
+            <Button x:Name="Setting"  Click="SettingClicked"  Background="LightBlue" BorderBrush="Black"  Content="Setting" HorizontalAlignment="Left" Margin="1360,24,0,0" VerticalAlignment="Top" Width="102"/>
+            <Button x:Name="View"  Click="ViewClicked" Background="LightBlue" BorderBrush="Black" Content="View Tasks" HorizontalAlignment="Left" Margin="278,24,0,0" VerticalAlignment="Top" Width="111"/>
         </Grid>
        
     </Grid>

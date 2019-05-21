@@ -17,9 +17,15 @@
             <Button x:Name="Solebox"  Click="SoleboxClicked" BorderBrush="Black"  Background="Black" HorizontalAlignment="Left" Margin="30,10,0,0" VerticalAlignment="Top" Width="199" RenderTransformOrigin="-0.083,0.532" Height="167">
                 <Image Source="C:\Users\luxing\source\repos\NewRepo\WpfApp1\image\box.jpg"></Image>
             </Button>
-            <Button x:Name="button_Copy"  BorderBrush="Black" Content="Coming Soon" HorizontalAlignment="Left" Margin="255,10,0,0" VerticalAlignment="Top" Width="199" RenderTransformOrigin="-0.083,0.532" Height="167"/>
-            <Button x:Name="button_Copy1" BorderBrush="Black"  Content="Coming Soon" HorizontalAlignment="Left" Margin="490,10,0,0" VerticalAlignment="Top" Width="199" RenderTransformOrigin="-0.083,0.532" Height="167"/>
-            <Button x:Name="button_Copy2"  BorderBrush="Black" Content="Coming Soon" HorizontalAlignment="Left" Margin="737,10,0,0" VerticalAlignment="Top" Width="199" RenderTransformOrigin="-0.083,0.532" Height="167"/>
+            <Button x:Name="button_Copy"  BorderBrush="Black" HorizontalAlignment="Left" Background="Black"  Margin="255,10,0,0" VerticalAlignment="Top" Width="199" RenderTransformOrigin="-0.083,0.532" Height="167">
+                <Image Source="C:\Users\luxing\source\repos\NewRepo\WpfApp1\image\sns.jpg" Width="189"></Image>
+            </Button>
+            <Button x:Name="button_Copy1" BorderBrush="Black"   HorizontalAlignment="Left" Margin="490,10,0,0" VerticalAlignment="Top" Width="199" RenderTransformOrigin="-0.083,0.532" Height="167" Padding="0" Grid.IsSharedSizeScope="True">
+                <Image Source="C:\Users\luxing\source\repos\NewRepo\WpfApp1\image\svd.png" Width="199" Height="167" Stretch="UniformToFill"/>
+            </Button>
+            <Button x:Name="button_Copy2"  BorderBrush="Black"  HorizontalAlignment="Left" Margin="737,10,0,0" VerticalAlignment="Top" Width="199" RenderTransformOrigin="-0.083,0.532" Height="167" Padding="0,-5,0,0">
+                <Image Source="C:\Users\luxing\source\repos\NewRepo\WpfApp1\image\Caliroots.png" Width="199" Stretch="UniformToFill"/>
+            </Button>
             <Button x:Name="button_Copy3"  BorderBrush="Black" Content="Coming Soon" HorizontalAlignment="Left" Margin="973,10,0,0" VerticalAlignment="Top" Width="199" RenderTransformOrigin="-0.083,0.532" Height="167" />
 
         </Grid>

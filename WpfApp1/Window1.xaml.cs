@@ -43,6 +43,10 @@ namespace WpfApp1
         {
             Main.Content = new coppedpage();
         }
+        private void ViewClicked(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new viewpage();
+        }
         private void SettingClicked(object sender, RoutedEventArgs e)
         {
             Main.Content = new Settingpage();
