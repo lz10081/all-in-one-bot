@@ -45,6 +45,15 @@ namespace WpfApp1
             /// new to add the code to sent to backend server for the login
             
         }
+        private void MinusClicked(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        private void CloseClicked(object sender, RoutedEventArgs e)
+        {
+            System.Environment.Exit(1);
+        }
+
         public class CookieAwareWebClient : WebClient
         {
             private CookieContainer cookieContainer = new CookieContainer();

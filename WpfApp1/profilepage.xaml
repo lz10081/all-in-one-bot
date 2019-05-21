@@ -20,7 +20,9 @@
             </Grid.ColumnDefinitions>
             <ComboBox x:Name="Counrty" Background="White" DropDownClosed="cbValueType_DropDownClosed" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="Counrty"  FontSize="20" BorderThickness="2,2,2,2" Margin="58,28,0,0"  VerticalAlignment="Top" Width="206" Height="40" Grid.Column="2" Grid.ColumnSpan="2">
             </ComboBox>
-            <Label x:Name="label" FontStyle="Italic" Foreground="White" FontSize="20"  Content="Shipping information" HorizontalAlignment="Left" Margin="24,28,0,0" VerticalAlignment="Top" Width="223" Grid.ColumnSpan="3"/>
+            <Label x:Name="label" FontStyle="Italic" Foreground="White" FontSize="20"  Content="Shipping information" HorizontalAlignment="Left" Margin="24,28,0,0" VerticalAlignment="Top" Width="223" Grid.ColumnSpan="3">
+                
+            </Label>
             <TextBox x:Name="First" BorderBrush="Black" Background="White" materiaDesign:HintAssist.Hint="First Name"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="24,82,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.ColumnSpan="4" />
             <TextBox x:Name="Last" BorderBrush="Black" Background="White" materiaDesign:HintAssist.Hint="Last Name"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="41,82,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.Column="3" />
             <TextBox x:Name="Address" BorderBrush="Black" Background="White" materiaDesign:HintAssist.Hint="Address"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="24,136,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="355" Grid.ColumnSpan="4" />

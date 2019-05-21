@@ -51,6 +51,13 @@ namespace WpfApp1
         {
             Main.Content = new Settingpage();
         }
-
+        private void MinusClicked(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        private void CloseClicked(object sender, RoutedEventArgs e)
+        {
+            System.Environment.Exit(1);
+        }
     }     
 }

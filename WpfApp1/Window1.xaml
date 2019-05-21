@@ -4,9 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
-        xmlns:materiaDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:fw ="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
-  
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         fw:AcrylicWindow.ShowTitleBar="False"
         mc:Ignorable="d"
         fw:AcrylicWindow.Enabled="True"
@@ -20,9 +19,17 @@
             <Button x:Name="Tasks"  Click="TasksClicked" Foreground="White"  Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9" BorderBrush="Black" Content="Tasks" HorizontalAlignment="Left" Margin="40,24,0,0" VerticalAlignment="Top" Width="111"/>
             <Button x:Name="Profiles" Click="ProfilesClicked"  Foreground="White"  Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"  BorderBrush="Black" Content="Profiles" HorizontalAlignment="Left" Margin="560,24,0,0" VerticalAlignment="Top" Width="119"/>
             <Button x:Name="Proxy"  Click="ProxyClicked" Foreground="White"  Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"  BorderBrush="Black" Content="Proxy Tester" HorizontalAlignment="Left" Margin="849,24,0,0" VerticalAlignment="Top" Width="130"/>
-            <Button x:Name="Copped"  Click="CoppedClicked" Foreground="White" Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"   BorderBrush="Black"  Content="Copped" HorizontalAlignment="Left" Margin="1110,24,0,0" VerticalAlignment="Top" Width="102"/>
-            <Button x:Name="Setting"  Click="SettingClicked" Foreground="White" Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"  BorderBrush="Black"  Content="Setting" HorizontalAlignment="Left" Margin="1360,24,0,0" VerticalAlignment="Top" Width="102"/>
+            <Button x:Name="Copped" Click="CoppedClicked" Foreground="White" Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"   BorderBrush="Black"  Content="Copped" HorizontalAlignment="Left" Margin="1110,24,0,0" VerticalAlignment="Top" Width="102"/>
+            <Button x:Name="Setting"  Click="SettingClicked" Foreground="White" Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"  BorderBrush="Black"  HorizontalAlignment="Left" Margin="1247,24,0,0" VerticalAlignment="Top" Width="102">
+                <materialDesign:PackIcon Kind="Settings" Height="29" Width="41"/>
+            </Button>
             <Button x:Name="View"  Click="ViewClicked" Foreground="White" Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9" BorderBrush="Black" Content="View Tasks" HorizontalAlignment="Left" Margin="278,24,0,0" VerticalAlignment="Top" Width="111"/>
+            <Button x:Name="Minus"  Click="MinusClicked" Foreground="White" Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"  BorderBrush="Black"  HorizontalAlignment="Left" Margin="1354,24,0,0" VerticalAlignment="Top" Width="70">
+                <materialDesign:PackIcon Kind="Minus" Height="29" Width="41"/>
+            </Button>
+            <Button x:Name="Close"  Click="CloseClicked" Foreground="White" Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"  BorderBrush="Black"  HorizontalAlignment="Left" Margin="1429,24,0,0" VerticalAlignment="Top" Width="61">
+                <materialDesign:PackIcon Kind="Close" Height="29" Width="41"/>
+            </Button>
         </Grid>
         <Grid HorizontalAlignment="Left" Height="45"   Background="#FF0F2525" VerticalAlignment="Top" Width="1500" Margin="0,750,-8,-26">
             <Label x:Name="label" FontStyle="Normal" Foreground="White" FontSize="12"  BorderThickness="2,2,2,2" Content="Zen AIO Version 1.0" HorizontalAlignment="Left" Margin="1352,12,0,0" VerticalAlignment="Top" Width="141"/>

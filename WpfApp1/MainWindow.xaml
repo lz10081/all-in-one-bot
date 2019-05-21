@@ -17,6 +17,8 @@
             <ColumnDefinition Width="53*"/>
             <ColumnDefinition Width="739*"/>
         </Grid.ColumnDefinitions>
+
+
         <Border BorderBrush="Black"  Background="#FFF95979" BorderThickness="1" HorizontalAlignment="Left" Height="184" Margin="85,135,0,0" VerticalAlignment="Top" Width="510" Grid.Column="1"/>
 
         <Label x:Name="label" Content="Please enter your activation key to gain access to the Zen Aio software." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="117,178,0,0" Width="460" Grid.Column="1" Background="#FFF95979"/>
@@ -24,6 +26,11 @@
 
         </Button>
         <TextBox x:Name="textBoxkey" BorderBrush="Black" fw:PointerTracker.Enabled="True" HorizontalAlignment="Left" BorderThickness="2,2,2,2"  Height="30" Margin="213,229,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" Grid.Column="1" FontSize="14" Background="#FFDAA4A4" />
-
+        <Button x:Name="Minus"  Click="MinusClicked" Foreground="White" Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"  BorderBrush="Black"  HorizontalAlignment="Left" Margin="584,10,0,0" VerticalAlignment="Top" Width="70" Grid.Column="1">
+            <materiaDesign:PackIcon Kind="Minus" Height="29" Width="41"/>
+        </Button>
+        <Button x:Name="Close"  Click="CloseClicked" Foreground="White" Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"  BorderBrush="Black"  HorizontalAlignment="Left" Margin="668,10,0,0" VerticalAlignment="Top" Width="61" RenderTransformOrigin="1.082,0.531" Grid.Column="1">
+            <materiaDesign:PackIcon Kind="Close" Height="29" Width="41"/>
+        </Button>
     </Grid>
 </Window>
