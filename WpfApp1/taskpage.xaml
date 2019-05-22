@@ -30,7 +30,7 @@
 
         </Grid>
 
-        <Grid HorizontalAlignment="Left"  Background="#FF0F2525"   Height="401" Margin="50,297,0,0" VerticalAlignment="Top" Width="1382">
+        <Grid HorizontalAlignment="Left" Background="#FF0F2525"   Height="401" Margin="50,297,0,0" VerticalAlignment="Top" Width="1382">
 
             <Label x:Name="label" FontStyle="Italic" Foreground="White" FontSize="20"  BorderThickness="2,2,2,2" Content="Create tasks" HorizontalAlignment="Left" Margin="34,28,0,0" VerticalAlignment="Top" Width="141"/>
 

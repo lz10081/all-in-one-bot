@@ -23,6 +23,7 @@ namespace WpfApp1
         public taskpage()
         {
             InitializeComponent();
+           this.KeepAlive = true;
             DirectoryInfo d = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);//Assuming Test is your Folder
             FileInfo[] Files = d.GetFiles("*.json"); //Getting Text files
             string str = "";

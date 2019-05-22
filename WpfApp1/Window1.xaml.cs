@@ -15,6 +15,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Configuration;
+using System.Windows.Navigation;
 
 namespace WpfApp1
 {
@@ -30,9 +31,15 @@ namespace WpfApp1
             Main.Content = new taskpage();
 
         }
+        private void mouse(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        }
         private void TasksClicked(object sender, RoutedEventArgs e)
         {
-           Main.Content = new taskpage();
+            Main.NavigationService.Navigate(new taskpage());
+            // Main.Content = new taskpage();
         }
         private void ProfilesClicked(object sender, RoutedEventArgs e)
         {
