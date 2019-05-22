@@ -30,7 +30,7 @@
             <materiaDesign:PackIcon Kind="Minus" Height="29" Width="41"/>
         </Button>
         <Button x:Name="Close"  Click="CloseClicked" Foreground="White" Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"  BorderBrush="Black"  HorizontalAlignment="Left" Margin="668,10,0,0" VerticalAlignment="Top" Width="61" RenderTransformOrigin="1.082,0.531" Grid.Column="1">
-            <materiaDesign:PackIcon Kind="Close" Height="29" Width="41"/>
+            <materiaDesign:PackIcon Kind="Close" Height="29" Width="41" HorizontalAlignment="Right"/>
         </Button>
     </Grid>
 </Window>

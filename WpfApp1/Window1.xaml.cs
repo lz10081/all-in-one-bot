@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Configuration;
 
 namespace WpfApp1
 {
@@ -25,7 +26,9 @@ namespace WpfApp1
         public Window1()
         {
             InitializeComponent();
+          
             Main.Content = new taskpage();
+
         }
         private void TasksClicked(object sender, RoutedEventArgs e)
         {

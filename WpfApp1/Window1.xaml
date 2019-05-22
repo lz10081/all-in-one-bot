@@ -14,9 +14,17 @@
          WindowStartupLocation="CenterScreen"
         Title="Zen Aio" Height="800" Width="1500">
     <Grid>
+        
         <Frame x:Name="Main" NavigationUIVisibility="Hidden" Margin="0,0,0,-36"></Frame>
-        <Grid HorizontalAlignment="Left" Height="66"   Background="#FF975757" VerticalAlignment="Top" Width="1500">
-            <Button x:Name="Tasks"  Click="TasksClicked" Foreground="White"  Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9" BorderBrush="Black" Content="Tasks" HorizontalAlignment="Left" Margin="40,24,0,0" VerticalAlignment="Top" Width="111"/>
+        <Grid   HorizontalAlignment="Left" Height="66"   Background="#FF975757" VerticalAlignment="Top" Width="1500">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+                <Button x:Name="Tasks"  Click="TasksClicked" Foreground="White"  Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9" BorderBrush="Black" Content="Tasks" HorizontalAlignment="Left" Margin="40,24,0,0" VerticalAlignment="Top" Width="111"/>
             <Button x:Name="Profiles" Click="ProfilesClicked"  Foreground="White"  Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"  BorderBrush="Black" Content="Profiles" HorizontalAlignment="Left" Margin="560,24,0,0" VerticalAlignment="Top" Width="119"/>
             <Button x:Name="Proxy"  Click="ProxyClicked" Foreground="White"  Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"  BorderBrush="Black" Content="Proxy Tester" HorizontalAlignment="Left" Margin="849,24,0,0" VerticalAlignment="Top" Width="130"/>
             <Button x:Name="Copped" Click="CoppedClicked" Foreground="White" Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"   BorderBrush="Black"  Content="Copped" HorizontalAlignment="Left" Margin="1110,24,0,0" VerticalAlignment="Top" Width="102"/>
@@ -31,7 +39,15 @@
                 <materialDesign:PackIcon Kind="Close" Height="29" Width="41"/>
             </Button>
         </Grid>
-        <Grid HorizontalAlignment="Left" Height="45"   Background="#FF0F2525" VerticalAlignment="Top" Width="1500" Margin="0,750,-8,-26">
+        <Grid HorizontalAlignment="Left" Height="45"   Background="#FF0F2525" VerticalAlignment="Bottom" Width="1500" Margin="0,0,-8,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+
+            </Grid.ColumnDefinitions>
             <Label x:Name="label" FontStyle="Normal" Foreground="White" FontSize="12"  BorderThickness="2,2,2,2" Content="Zen AIO Version 1.0" HorizontalAlignment="Left" Margin="1352,12,0,0" VerticalAlignment="Top" Width="141"/>
 
             <Button x:Name="Proxy1"  Foreground="White"  Content="Support" HorizontalAlignment="Left" Margin="511,10,0,0" VerticalAlignment="Top" Width="130" Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"/>

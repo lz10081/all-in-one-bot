@@ -5,10 +5,27 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfApp1"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+   
+    xmlns:materiaDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:fw ="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
+      d:DesignHeight="753" d:DesignWidth="1200"
       Title="Settingpage">
 
-    <Grid>
-        
+    <Grid Background="Black" Margin="0,0,-226,-41">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="86*"/>
+            <ColumnDefinition Width="1341*"/>
+        </Grid.ColumnDefinitions>
+        <Grid HorizontalAlignment="Left"     Background="#FF0F2525"  Height="628" Margin="8.5,83,0,0" VerticalAlignment="Top" Width="1276" Grid.Column="1">
+            <Label x:Name="label" FontStyle="Italic" Foreground="White" FontSize="20"  BorderThickness="2,2,2,2" Content="Webhook" HorizontalAlignment="Left" Margin="42,13,0,0" VerticalAlignment="Top" Width="162"/>
+            <Button x:Name="Create" Click="Remove" BorderBrush="Black" Content="Remove" HorizontalAlignment="Left" Margin="981,158,0,0" VerticalAlignment="Top" Width="111" Height="40" Background="#FFA03939"/>
+            <Button x:Name="Create_Copy" Click="Save" BorderBrush="Black" Content="Save" HorizontalAlignment="Left" Margin="210,158,0,0" VerticalAlignment="Top" Width="112" Height="40" Background="#FFB87474"/>
+            <Button x:Name="Create_Copy1" Click="Test" BorderBrush="Black" Content="Test" HorizontalAlignment="Left" Margin="42,158,0,0" VerticalAlignment="Top" Width="111" Height="40" RenderTransformOrigin="0.401,2.5" Background="#FF896060"/>
+            <TextBox  x:Name="hook" Background="White"  FontSize="20" HorizontalAlignment="Left" Height="44" Margin="42,72,0,0"   VerticalAlignment="Top" Width="400" />
+            <RichTextBox   x:Name="proxytest" FontSize="20" Background="White"  HorizontalAlignment="Left" Height="542" Margin="528,72,0,0"  VerticalAlignment="Top" Width="400" />
+            <Label x:Name="label_Copy" FontStyle="Italic" Foreground="White" FontSize="20"  BorderThickness="2,2,2,2" Content="Account Pool" HorizontalAlignment="Left" Margin="528,13,0,0" VerticalAlignment="Top" Width="171" Background="#FF0F2525"/>
+            <Button x:Name="Create_Copy2" Click="Save" BorderBrush="Black" Content="Save" HorizontalAlignment="Left" Margin="981,91,0,0" VerticalAlignment="Top" Width="112" Height="40" Background="#FFB87474"/>
+
+        </Grid>
     </Grid>
 </Page>

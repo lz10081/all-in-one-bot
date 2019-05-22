@@ -25,6 +25,7 @@ namespace WpfApp1
         {
          
             InitializeComponent();
+            textBoxkey.Text = "bate";
         }
         void ButtonClicked(object sender, RoutedEventArgs e)
         {
