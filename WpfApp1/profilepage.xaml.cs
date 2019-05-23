@@ -16,7 +16,7 @@ using System.Globalization;
 using Newtonsoft.Json;
 using System.Windows.Markup;
 using System.IO;
-
+using System.Text.RegularExpressions;
 namespace WpfApp1
 {
     /// <summary>
@@ -48,6 +48,8 @@ namespace WpfApp1
                 PorfileSaved.Items.Add(file.Name);
             }
         }
+       
+
         private void cbValueType_DropDownClosed(object sender, EventArgs e)
         {
             String s = Counrty.Text;
@@ -62,9 +64,14 @@ namespace WpfApp1
                 StateB.IsEnabled = true;
             }    
         }
+       
+    private void PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
 
-     
-        static class StateArray
+    static class StateArray
         {
 
             static List<US_State> states;

@@ -30,11 +30,16 @@ namespace WpfApp1
         public proxypage()
         {
             InitializeComponent();
-            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\" + "proxy.txt"))
+            TextRange range;
+            FileStream fStream;
+            if (System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\" + "proxy.txt"))
             {
-                string text = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + "proxy.txt");
-               // proxy.Document = text;
+                range = new TextRange(proxy.Document.ContentStart, proxy.Document.ContentEnd);
+                fStream = new System.IO.FileStream(AppDomain.CurrentDomain.BaseDirectory + @"\" + "proxy.txt", System.IO.FileMode.OpenOrCreate);
+                range.Load(fStream, System.Windows.DataFormats.Text);
+                fStream.Close();
             }
+
         }
         private void Save(object sender, RoutedEventArgs e)
         {
@@ -43,7 +48,9 @@ namespace WpfApp1
         }
         private void Remove(object sender, RoutedEventArgs e)
         {
-           
+            TextRange range;
+            range = new TextRange(proxytest.Document.ContentStart, proxytest.Document.ContentEnd);
+            range.Text = "";
         }
         private void Test(object sender, RoutedEventArgs e)
         {
