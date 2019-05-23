@@ -48,69 +48,35 @@ namespace WpfApp1
         private void Test(object sender, RoutedEventArgs e)
         {
        
-            int counter = 0;
-            int total = 0;
-            int good = 0;
             Console.WriteLine("Grabbing proxies from proxies.txt file");
             List<string> goodProxies = new List<string>();
             FileStream fileStream = new FileStream(AppDomain.CurrentDomain.BaseDirectory + @"\" + "proxy.txt", FileMode.Open, FileAccess.Read);
 
             Console.WriteLine("Checking proxies at 1000 threads");
-            StreamReader sr = new StreamReader(fileStream);
-
-            DateTime date = DateTime.Now;
-
-            int threads = 0;
-            while (!sr.EndOfStream)
+            List<string> proxies = new List<string>();
+            using (StreamReader sr = new StreamReader(fileStream))
             {
-                while (threads >= 1000) Thread.Sleep(100);
-                counter++;
-                string temp = sr.ReadLine();
-                new Thread(() =>
+                while (!sr.EndOfStream)
                 {
-                    threads++;
-                    if (CheckProxy(temp))
-                    {
-                        good++;
-                        using (StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + @"\" + "goodProxies.txt"))
-                            sw.WriteLine(temp);
-                    }
-                    threads--;
-                    Console.Write("\rTested: {0}, threads: {2}, for {1}", ++total, (DateTime.Now - date).ToString(), threads);
-                }).Start();
+                    proxies.Add(sr.ReadLine());
+                }
             }
+            HttpWebRequest myWebRequest = (HttpWebRequest)WebRequest.Create("http://www.microsoft.com");
 
-            while (total != counter)
-                Thread.Sleep(1000);
-            TimeSpan took = DateTime.Now - date;
-            sr.Close();
-            fileStream.Close();
-            //System.IO.File.WriteAllLines(@"goodProxies.txt", goodProxies.ToArray());
-            Console.WriteLine("\nDone. Good proxies: " + good + " in total of " + total + ", took " + (DateTime.Now - date).ToString());
-            Console.Read();
+            WebProxy ProxyString = new WebProxy("http://94.131.113.200:5123", true);
+            //set network credentials may be optional
+            NetworkCredential proxyCredential = new NetworkCredential("xxne", "gten");
+            ProxyString.Credentials = proxyCredential;
+            WebRequest req = WebRequest.Create("https://www.youtube.com/");
+            req.Timeout = 5000;
+            req.GetResponse();
+
+            Console.WriteLine(  req.GetResponse());
+
+
 
         }
-        static bool CheckProxy(string proxy)
-        {
-            try
-            {
-                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://www.google.com/");
-                httpWebRequest.Proxy = (IWebProxy)new WebProxy(proxy);
-                httpWebRequest.Method = "GET";
-                httpWebRequest.Timeout = 2000;
-                httpWebRequest.ReadWriteTimeout = 5000;
-                DateTime now1 = DateTime.Now;
-                Task<WebResponse> responseAsync = httpWebRequest.GetResponseAsync();
-                while ((responseAsync.Status == TaskStatus.WaitingForActivation || responseAsync.Status == TaskStatus.WaitingToRun) && (now1.AddSeconds(10.0) > DateTime.Now))
-                    Thread.Sleep(500);
-                DateTime now2 = DateTime.Now;
-                while (responseAsync.Status == TaskStatus.Running && (now2.AddSeconds(2.0) > DateTime.Now))
-                    Thread.Sleep(500);
-                return responseAsync.Status == TaskStatus.RanToCompletion;
-            }
-            catch { }
-            return false;
-        }
+
     }
 }
 

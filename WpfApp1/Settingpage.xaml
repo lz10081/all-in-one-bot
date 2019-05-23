@@ -22,9 +22,9 @@
             <Button x:Name="Create_Copy" Click="Save" BorderBrush="Black" Content="Save" HorizontalAlignment="Left" Margin="210,158,0,0" VerticalAlignment="Top" Width="112" Height="40" Background="#FFB87474"/>
             <Button x:Name="Create_Copy1" Click="Test" BorderBrush="Black" Content="Test" HorizontalAlignment="Left" Margin="42,158,0,0" VerticalAlignment="Top" Width="111" Height="40" RenderTransformOrigin="0.401,2.5" Background="#FF896060"/>
             <TextBox  x:Name="hook" Background="White"  FontSize="20" HorizontalAlignment="Left" Height="44" Margin="42,72,0,0"   VerticalAlignment="Top" Width="400" />
-            <RichTextBox   x:Name="proxytest" FontSize="20" Background="White"  HorizontalAlignment="Left" Height="542" Margin="528,72,0,0"  VerticalAlignment="Top" Width="400" />
+            <RichTextBox   x:Name="account" FontSize="20" Background="White"  materiaDesign:HintAssist.Hint="First Name"  HorizontalAlignment="Left" Height="542" Margin="528,72,0,0"  VerticalAlignment="Top" Width="400" />
             <Label x:Name="label_Copy" FontStyle="Italic" Foreground="White" FontSize="20"  BorderThickness="2,2,2,2" Content="Account Pool" HorizontalAlignment="Left" Margin="528,13,0,0" VerticalAlignment="Top" Width="171" Background="#FF0F2525"/>
-            <Button x:Name="Create_Copy2" Click="Save" BorderBrush="Black" Content="Save" HorizontalAlignment="Left" Margin="981,91,0,0" VerticalAlignment="Top" Width="112" Height="40" Background="#FFB87474"/>
+            <Button x:Name="Create_Copy2" Click="Saveaccount" BorderBrush="Black" Content="Save" HorizontalAlignment="Left" Margin="981,91,0,0" VerticalAlignment="Top" Width="112" Height="40" Background="#FFB87474"/>
 
         </Grid>
     </Grid>
