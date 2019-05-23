@@ -12,7 +12,7 @@
         Background="WhiteSmoke"
         WindowStartupLocation="CenterScreen"
         Title="Zen Aio" Height="450" Width="800">
-    <Grid Background="#FF87404E">
+    <Grid  MouseDown="mouse" Background="#FF87404E">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="53*"/>
             <ColumnDefinition Width="739*"/>

@@ -27,6 +27,11 @@ namespace WpfApp1
             InitializeComponent();
             textBoxkey.Text = "bate";
         }
+        private void mouse(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        }
         void ButtonClicked(object sender, RoutedEventArgs e)
         {
             Window1 user = new Window1();
