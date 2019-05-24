@@ -79,13 +79,21 @@ namespace WpfApp1
             String s = Counrty.Text;
             if (s != "Canada" && s != "United States")
             {
+                
                 State.IsEnabled = false;
                 StateB.IsEnabled = false;  
             }
             else
             {
-                State.IsEnabled = true;
-                StateB.IsEnabled = true;
+                if ((bool)checkBox.IsChecked == true)
+                
+                    State.IsEnabled = true;
+                else
+                {
+                    State.IsEnabled = true;
+                    StateB.IsEnabled = true;
+                }
+               
             }    
         }
        
