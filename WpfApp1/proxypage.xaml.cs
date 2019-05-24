@@ -19,6 +19,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
+using System.Net.Sockets;
 
 namespace WpfApp1
 {
@@ -54,35 +55,45 @@ namespace WpfApp1
         }
         private void Test(object sender, RoutedEventArgs e)
         {
-       
-            Console.WriteLine("Grabbing proxies from proxies.txt file");
-            List<string> goodProxies = new List<string>();
-            FileStream fileStream = new FileStream(AppDomain.CurrentDomain.BaseDirectory + @"\" + "proxy.txt", FileMode.Open, FileAccess.Read);
 
-            Console.WriteLine("Checking proxies at 1000 threads");
-            List<string> proxies = new List<string>();
-            using (StreamReader sr = new StreamReader(fileStream))
-            {
-                while (!sr.EndOfStream)
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.supremenewyork.com/shop");
+            WebProxy myproxy = sent("http://94.131.113.199", 5123, "elgv", "xyeb");
+            request.Proxy = myproxy;   // set proxy here
+            request.Timeout = 10000;
+            request.Method = "HEAD";
+            Stopwatch sw = Stopwatch.StartNew();
+            try {
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
-                    proxies.Add(sr.ReadLine());
+
+                    Console.WriteLine(response.StatusCode);
                 }
+                sw.Stop();
+                Console.WriteLine("Request took {0}", sw.Elapsed.Milliseconds);
             }
-            HttpWebRequest myWebRequest = (HttpWebRequest)WebRequest.Create("http://www.microsoft.com");
-
-            WebProxy ProxyString = new WebProxy("http://94.131.113.200:5123", true);
-            //set network credentials may be optional
-            NetworkCredential proxyCredential = new NetworkCredential("xxne", "gten");
-            ProxyString.Credentials = proxyCredential;
-            WebRequest req = WebRequest.Create("https://www.youtube.com/");
-            req.Timeout = 5000;
-            req.GetResponse();
-
-            Console.WriteLine(  req.GetResponse());
-
-
-
+            catch
+            {
+                Console.WriteLine("404");
+            }
+          
         }
+
+        public WebProxy sent(String proxyURL, int port, String username, String password)
+        {
+            //Validate proxy address
+            var proxyURI = new Uri(string.Format("{0}:{1}", proxyURL, port));
+
+            //Set credentials
+            ICredentials credentials = new NetworkCredential(username, password);
+
+            //Set proxy
+            WebProxy proxy = new WebProxy(proxyURI, true, null, credentials);
+            return proxy;
+        }
+
+
+
+
 
     }
 }
