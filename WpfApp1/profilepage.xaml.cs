@@ -17,6 +17,8 @@ using Newtonsoft.Json;
 using System.Windows.Markup;
 using System.IO;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq;
+
 namespace WpfApp1
 {
     /// <summary>
@@ -28,24 +30,46 @@ namespace WpfApp1
         {
             InitializeComponent();
             Counrty.ItemsSource = GetCountryList();
+            Counrty.SelectedIndex = 134; // set to us
             State.ItemsSource = StateArray.States();
             StateB.ItemsSource = StateArray.States();
             for (var a = 1; a < 12; a++)
             {
                 Month.Items.Add(a);
+               
             }
             for (var a = 2019 ; a < 2029; a++)
             {
                 Year.Items.Add(a);
             }
-            DirectoryInfo d = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);//Assuming Test is your Folder
-            FileInfo[] Files = d.GetFiles("*.json"); //Getting Text files
-            string str = "";
-            foreach (FileInfo file in Files)
+            var lines = File.ReadLines(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json");
+            //var playerList = JsonConvert.DeserializeObject<List<NotusdataWship>>(json);
+            foreach (var line in lines)
             {
-                str = str + ", " + file.Name;
+                    if (line.Contains("1type"))
+                    {
+                        var playerList = JsonConvert.DeserializeObject<List<dataWoutship>>(line);
+                        PorfileSaved.Items.Add(playerList[0].nanme); 
+                    }else if(line.Contains("2type"))
+                    {
+                        var playerList = JsonConvert.DeserializeObject<List<dataWship>>(line);
+                         PorfileSaved.Items.Add(playerList[0].nanme);
+                     }
+                    else if (line.Contains("3type"))
+                    {
+                         var playerList = JsonConvert.DeserializeObject<List<notusdataWoutship>>(line);
+                          PorfileSaved.Items.Add(playerList[0].nanme);
+                     }
+                    else if (line.Contains("4type"))
+                    {
+                        var playerList = JsonConvert.DeserializeObject<List<NotusdataWship>>(line);
+                         PorfileSaved.Items.Add(playerList[0].nanme);
+                     }
+                    else
+                    {
 
-                PorfileSaved.Items.Add(file.Name);
+                    }
+
             }
         }
        
@@ -226,6 +250,8 @@ namespace WpfApp1
         // userprofile 
         public class dataWship
         {
+            public string nanme { get; set; }
+            public string type { get; set; }
             public string dCounrty { get; set; }
             public string dFirst { get; set; }
             public string dLast { get; set; }
@@ -252,6 +278,8 @@ namespace WpfApp1
         }
         public class NotusdataWship
         {
+            public string nanme { get; set; }
+            public string type { get; set; }
             public string dCounrty { get; set; }
             public string dFirst { get; set; }
             public string dLast { get; set; }
@@ -266,7 +294,6 @@ namespace WpfApp1
             public string dAddressb { get; set; }
             public string dAptb { get; set; }
             public string dCityb { get; set; }
-            public string dStateb { get; set; }
             public long dZipb { get; set; }
             public long dCard { get; set; }
             public long dCvv { get; set; }
@@ -277,6 +304,8 @@ namespace WpfApp1
         }
         public class notusdataWoutship
         {
+            public string nanme { get; set; }
+            public string type { get; set; }
             public string dCounrty { get; set; }
             public string dFirst { get; set; }
             public string dLast { get; set; }
@@ -294,6 +323,8 @@ namespace WpfApp1
         }
         public class dataWoutship
         {
+            public string nanme { get; set; }
+            public string type { get; set; }
             public string dCounrty { get; set; }
             public string dFirst { get; set; }
             public string dLast { get; set; }
@@ -336,13 +367,15 @@ namespace WpfApp1
 
                             _data.Add(new notusdataWoutship()
                             {
+                                nanme = Profilename.Text,
+                                type = "3type",
                                 dCounrty = Counrty.Text,
                                 dFirst = First.Text,
                                 dLast = Last.Text,
                                 dAddress = Address.Text,
                                 dApt = Apt.Text,
                                 dCity = City.Text,
-                            
+
                                 dZip = Int64.Parse(Zip.Text),
                                 dPhone = Int64.Parse(Phone.Text),                                                                   // fixed
                                 dEmail = Email.Text,
@@ -356,12 +389,44 @@ namespace WpfApp1
                         {
                             Console.WriteLine(exc);
                         }
-                        string json = JsonConvert.SerializeObject(_data.ToArray());
-                        PorfileSaved.Items.Add(Profilename.Text);
-                        //write string to file
-                        System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + Profilename.Text + ".json", json); /// need to save to our data file
-                    }
+                        var a = true;
+                        foreach (var item in PorfileSaved.Items)
+                        {
+                            if (item.ToString() == Profilename.Text)
+                            {
+                                MessageBox.Show("Profilename can't be the same");
+                                a = false;
+                                break;
 
+                            }
+                            else
+                            {
+                                a = true;
+                            }
+
+                            // do something with your item
+                        }
+                        if (a)
+                        {
+                            string json = JsonConvert.SerializeObject(_data.ToArray());
+                            PorfileSaved.Items.Add(Profilename.Text);
+                            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json"))
+                            {
+                                StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json", true);
+                                sw.Write("\n");
+                                sw.Write(json);
+
+                                sw.Dispose();
+                            }
+                            else
+                            {
+                                System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json", json); /// need to save to our data file
+                            }
+                        }
+
+                        //write string to file
+
+                    }
 
                 }
 
@@ -381,6 +446,8 @@ namespace WpfApp1
                         {
                             _data.Add(new NotusdataWship()
                             {
+                                nanme = Profilename.Text,
+                                type = "4type",
                                 dCounrty = Counrty.Text,
                                 dFirst = First.Text,
                                 dLast = Last.Text,
@@ -393,7 +460,6 @@ namespace WpfApp1
                                 dAddressb = AddressB.Text,
                                 dAptb = AptB.Text,
                                 dCityb = CityB.Text,
-                                dStateb = StateB.SelectedItem.ToString(),
                                 dZipb = Int64.Parse(ZipB.Text),
                                 dPhone = Int64.Parse(Phone.Text),                                                                   // fixed
                                 dEmail = Email.Text,
@@ -409,14 +475,45 @@ namespace WpfApp1
                         {
                             Console.WriteLine(exc);
                         }
-                        string json = JsonConvert.SerializeObject(_data.ToArray());
-                        PorfileSaved.Items.Add(Profilename.Text);
-                        //write string to file
-                        System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + Profilename.Text + ".json", json); /// need to save to our data file
+                        var a = true;
+                        foreach (var item in PorfileSaved.Items)
+                        {
+                            if (item.ToString() == Profilename.Text)
+                            {
+                                MessageBox.Show("Profilename can't be the same");
+                                a = false;
+                                break;
+
+                            }
+                            else
+                            {
+                                a = true;
+                            }
+
+                            // do something with your item
+                        }
+                        if (a)
+                        {
+                            string json = JsonConvert.SerializeObject(_data.ToArray());
+                            PorfileSaved.Items.Add(Profilename.Text);
+                            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json"))
+                            {
+                                StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json", true);
+                                sw.Write("\n");
+                                sw.Write(json);
+
+                                sw.Dispose();
+                            }
+                            else
+                            {
+                                System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json", json); /// need to save to our data file
+                            }
+                        }
                     }
                 }
             }
-            else {
+            else
+            {
                 if ((bool)checkBox.IsChecked == true)
                 {
                     // easy case dataWoutship
@@ -433,6 +530,8 @@ namespace WpfApp1
 
                             _data.Add(new dataWoutship()
                             {
+                                nanme = Profilename.Text,
+                                type = "1type",
                                 dCounrty = Counrty.Text,
                                 dFirst = First.Text,
                                 dLast = Last.Text,
@@ -453,10 +552,41 @@ namespace WpfApp1
                         {
                             Console.WriteLine(exc);
                         }
-                        string json = JsonConvert.SerializeObject(_data.ToArray());
-                        PorfileSaved.Items.Add(Profilename.Text);
-                        //write string to file
-                        System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + Profilename.Text + ".json", json); /// need to save to our data file
+                        var a = true;
+                        foreach (var item in PorfileSaved.Items)
+                        {
+                            if (item.ToString() == Profilename.Text)
+                            {
+                                MessageBox.Show("Profilename can't be the same");
+                                a = false;
+                                break;
+
+                            }
+                            else
+                            {
+                                a = true;
+                            }
+
+                            // do something with your item
+                        }
+                        if (a)
+                        {
+                            string json = JsonConvert.SerializeObject(_data.ToArray());
+                            PorfileSaved.Items.Add(Profilename.Text);
+                            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json"))
+                            {
+                                StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json", true);
+                                sw.Write("\n");
+                                sw.Write(json);
+
+                                sw.Dispose();
+                            }
+                            else
+                            {
+                                System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json", json); /// need to save to our data file
+                            }
+                        }
+                        
                     }
 
 
@@ -478,6 +608,8 @@ namespace WpfApp1
                         {
                             _data.Add(new dataWship()
                             {
+                                nanme = Profilename.Text,
+                                type = "2type",
                                 dCounrty = Counrty.Text,
                                 dFirst = First.Text,
                                 dLast = Last.Text,
@@ -505,37 +637,249 @@ namespace WpfApp1
                         {
                             Console.WriteLine(exc);
                         }
-                        string json = JsonConvert.SerializeObject(_data.ToArray());
-                        PorfileSaved.Items.Add(Profilename.Text);
-                        //write string to file
-                        System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + Profilename.Text + ".json", json); /// need to save to our data file
+                        var a = true;
+                        foreach (var item in PorfileSaved.Items)
+                        {
+                            if (item.ToString() == Profilename.Text)
+                            {
+                                MessageBox.Show("Profilename can't be the same");
+                                a = false;
+                                break;
+
+                            }
+                            else
+                            {
+                                a = true;
+                            }
+
+                            // do something with your item
+                        }
+                        if (a)
+                        {
+                            string json = JsonConvert.SerializeObject(_data.ToArray());
+                            PorfileSaved.Items.Add(Profilename.Text);
+                            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json"))
+                            {
+                                StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json", true);
+                                sw.Write("\n");
+                                sw.Write(json);
+
+                                sw.Dispose();
+                            }
+                            else
+                            {
+                                System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json", json); /// need to save to our data file
+                            }
+                        }
                     }
 
                 }
             }
-         
 
-        }
+
+            }
+        
        
 
         private void Loadporfile(object sender, RoutedEventArgs e)
         {
-        
-                using (StreamReader r = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + @"\" + PorfileSaved.Text))
+            var lines = File.ReadLines(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json");
+            //var playerList = JsonConvert.DeserializeObject<List<NotusdataWship>>(json);
+            foreach (var line in lines)
+            {
+             
+                if (line.Contains(PorfileSaved.Text))
                 {
-                    string json = r.ReadToEnd();
-                    List<dataWship> items = JsonConvert.DeserializeObject<List<dataWship>>(json);
-                Console.WriteLine(items);
+                    if (line.Contains("1type"))
+                    {
+
+                        var playerList = JsonConvert.DeserializeObject<List<dataWoutship>>(line);
+                        Profilename.Text = playerList[0].nanme;
+                        Counrty.Text = playerList[0].dCounrty;
+                        First.Text = playerList[0].dFirst;
+                        Last.Text = playerList[0].dLast;
+                        Address.Text = playerList[0].dAddress;
+                        State.Text = playerList[0].dState;
+                        Apt.Text = playerList[0].dApt;
+                        City.Text = playerList[0].dCity;
+                        Zip.Text = playerList[0].dZip.ToString();
+                        Phone.Text = playerList[0].dPhone.ToString();
+                        Email.Text = playerList[0].dEmail;
+                        Card.Text = playerList[0].dCard.ToString();
+                        CVV.Text = playerList[0].dCvv.ToString();
+                        Month.Text = playerList[0].dMonth.ToString(); ;
+                        Year.Text = playerList[0].dYear.ToString();
+                        checkBox.IsChecked = true;
+                        FirstB.IsEnabled = false;
+                        LastB.IsEnabled = false;
+                        AptB.IsEnabled = false;
+                        CityB.IsEnabled = false;
+                        StateB.IsEnabled = false;
+                        ZipB.IsEnabled = false;
+                        AddressB.IsEnabled = false;
+                    }
+                    else if (line.Contains("2type"))
+                    {
+
+                        var playerList = JsonConvert.DeserializeObject<List<dataWship>>(line);
+                        Profilename.Text = playerList[0].nanme;
+                        Counrty.Text = playerList[0].dCounrty;
+                        First.Text = playerList[0].dFirst;
+                        Last.Text = playerList[0].dLast;
+                        Address.Text = playerList[0].dAddress;
+                        State.Text = playerList[0].dState;
+                        Apt.Text = playerList[0].dApt;
+                        City.Text = playerList[0].dCity;
+                        Zip.Text = playerList[0].dZip.ToString();
+                        Phone.Text = playerList[0].dPhone.ToString();
+                        Email.Text = playerList[0].dEmail;
+                        Card.Text = playerList[0].dCard.ToString();
+                        CVV.Text = playerList[0].dCvv.ToString();
+                        Month.Text = playerList[0].dMonth.ToString(); ;
+                        Year.Text = playerList[0].dYear.ToString();
+                        checkBox.IsChecked = false;
+                        FirstB.Text = playerList[0].dFirstb;
+                        LastB.Text = playerList[0].dLastb;
+                        AddressB.Text = playerList[0].dAddressb;
+                        AptB.Text = playerList[0].dAptb;
+                        CityB.Text = playerList[0].dCityb;
+                        StateB.Text = playerList[0].dStateb;
+                        ZipB.Text = playerList[0].dZipb.ToString();
+                        FirstB.IsEnabled = true;
+                        LastB.IsEnabled = true;
+                        AptB.IsEnabled = true;
+                        CityB.IsEnabled = true;
+                        StateB.IsEnabled = true;
+                        ZipB.IsEnabled = true;
+                        AddressB.IsEnabled = true;
+
+                    }
+                    else if (line.Contains("3type"))
+                    {
+
+                        var playerList = JsonConvert.DeserializeObject<List<notusdataWoutship>>(line);
+                        Profilename.Text = playerList[0].nanme;
+                        Counrty.Text = playerList[0].dCounrty;
+                        First.Text = playerList[0].dFirst;
+                        Last.Text = playerList[0].dLast;
+                        State.IsEnabled = false;
+                        Address.Text = playerList[0].dAddress;
+                        Apt.Text = playerList[0].dApt;
+                        City.Text = playerList[0].dCity;
+                        Zip.Text = playerList[0].dZip.ToString();
+                        Phone.Text = playerList[0].dPhone.ToString();
+                        Email.Text = playerList[0].dEmail;
+                        Card.Text = playerList[0].dCard.ToString();
+                        CVV.Text = playerList[0].dCvv.ToString();
+                        Month.Text = playerList[0].dMonth.ToString(); ;
+                        Year.Text = playerList[0].dYear.ToString();
+                        checkBox.IsChecked = true;
+                        FirstB.IsEnabled = false;
+                        LastB.IsEnabled = false;
+                        AptB.IsEnabled = false;
+                        CityB.IsEnabled = false;
+                        StateB.IsEnabled = false;
+                        ZipB.IsEnabled = false;
+                        AddressB.IsEnabled = false;
+                    }
+                    else if (line.Contains("4type"))
+                    {
+
+                        var playerList = JsonConvert.DeserializeObject<List<NotusdataWship>>(line);
+                        Profilename.Text = playerList[0].nanme;
+                        Counrty.Text = playerList[0].dCounrty;
+                        First.Text = playerList[0].dFirst;
+                        Last.Text = playerList[0].dLast;
+                        Address.Text = playerList[0].dAddress;
+                        State.IsEnabled = false;
+                        Apt.Text = playerList[0].dApt;
+                        City.Text = playerList[0].dCity;
+                        Zip.Text = playerList[0].dZip.ToString();
+                        Phone.Text = playerList[0].dPhone.ToString();
+                        Email.Text = playerList[0].dEmail;
+                        Card.Text = playerList[0].dCard.ToString();
+                        CVV.Text = playerList[0].dCvv.ToString();
+                        Month.Text = playerList[0].dMonth.ToString(); ;
+                        Year.Text = playerList[0].dYear.ToString();
+            
+                        FirstB.Text = playerList[0].dFirstb;
+                        LastB.Text = playerList[0].dLastb;
+                        AddressB.Text = playerList[0].dAddressb;
+                        AptB.Text = playerList[0].dAptb;
+                        CityB.Text = playerList[0].dCityb;
+
+                        ZipB.Text = playerList[0].dZipb.ToString();
+                        FirstB.IsEnabled = true;
+                        LastB.IsEnabled = true;
+                        AptB.IsEnabled = true;
+                        CityB.IsEnabled = true;
+                        StateB.IsEnabled = false;
+                        ZipB.IsEnabled = true;
+                        AddressB.IsEnabled = true;
+                    }
+                    else
+                    {
+
+                    }
+                }
+                
+
             }
+        }
           
 
             //cmd.Parameters.AddWithValue("@country", this.countryComboBox.SelectedItem.ToString()); add country
-        }
         private void Removeporfile(object sender, RoutedEventArgs e)
 
         {
-            File.Delete(AppDomain.CurrentDomain.BaseDirectory + @"\" + PorfileSaved.Text);
-            PorfileSaved.Items.Remove(PorfileSaved.Text);
+            var lines = File.ReadLines(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json");
+            //var playerList = JsonConvert.DeserializeObject<List<NotusdataWship>>(json);
+            var a = 0;
+            foreach (var line in lines)
+            {
+
+                if (line.Contains(PorfileSaved.Text))
+                {
+                    if (line.Contains("1type"))
+                    {
+                        var playerList = JsonConvert.DeserializeObject<List<dataWoutship>>(line);
+                        PorfileSaved.Items.Remove(playerList[0].nanme);
+                    }
+                    else if (line.Contains("2type"))
+                    {
+                        var playerList = JsonConvert.DeserializeObject<List<dataWship>>(line);
+                        PorfileSaved.Items.Remove(playerList[0].nanme);
+                    }
+                    else if (line.Contains("3type"))
+                    {
+                        var playerList = JsonConvert.DeserializeObject<List<notusdataWoutship>>(line);
+                        PorfileSaved.Items.Remove(playerList[0].nanme);
+                    }
+                    else if (line.Contains("4type"))
+                    {
+                        var playerList = JsonConvert.DeserializeObject<List<NotusdataWship>>(line);
+                        PorfileSaved.Items.Remove(playerList[0].nanme);
+                    }
+                    else
+                    {
+
+                    }
+                    Console.WriteLine(a);
+                    break;
+                }
+                else
+                {
+                    a = a+1;
+                }
+                
+
+            }
+            List<string> quotelist = File.ReadAllLines(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json").ToList();
+            quotelist.RemoveAt(a);
+            File.WriteAllLines(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json", quotelist.ToArray());
+           
+
+
             //cmd.Parameters.AddWithValue("@country", this.countryComboBox.SelectedItem.ToString()); add country
         }
         public static List<string> GetCountryList()
