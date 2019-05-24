@@ -55,30 +55,82 @@ namespace WpfApp1
         }
         private void Test(object sender, RoutedEventArgs e)
         {
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.supremenewyork.com/shop");
-            WebProxy myproxy = sent("http://94.131.113.199", 5123, "elgv", "xyeb");
-            request.Proxy = myproxy;   // set proxy here
-            request.Timeout = 10000;
-            request.Method = "HEAD";
-            Stopwatch sw = Stopwatch.StartNew();
-            try {
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-
-                    Console.WriteLine(response.StatusCode);
-                }
-                sw.Stop();
-                Console.WriteLine("Request took {0}", sw.Elapsed.Milliseconds);
-            }
-            catch
+            string richText = new TextRange(proxytest.Document.ContentStart, proxytest.Document.ContentEnd).Text;
+            var lines = richText.Split('\n').ToList();
+            
+            foreach (var line in lines) // read text line by line
             {
-                Console.WriteLine("404");
+                Console.WriteLine("wtf is the line" + line);
+                var linenumber = line.Split(':').ToList();  // 4  is user with pass word 2 just ip + port
+                Console.WriteLine("wtf is the line"+linenumber.Count);
+                if (linenumber.Count == 2)
+                {
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.supremenewyork.com/shop");
+                    WebProxy myproxy = proxysent("http://" + linenumber[0], Int32.Parse(linenumber[1]));
+
+                    request.Proxy = myproxy;   // set proxy here
+                    request.Timeout = 10000;
+                    request.Method = "HEAD";
+                    Stopwatch sw = Stopwatch.StartNew();
+                    try
+                    {
+                        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                        {
+
+                             Console.WriteLine(response.StatusCode);
+                        }
+                        sw.Stop();
+                        //  Console.WriteLine("Request took {0}", sw.Elapsed.Milliseconds);
+                    }
+                    catch
+                    {
+                         Console.WriteLine("404");
+                    }
+                    // Do something.
+                }
+                else if (linenumber.Count == 4)
+                {
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.supremenewyork.com/shop");
+                    Console.WriteLine(linenumber[0]);
+                    Console.WriteLine(linenumber[1]);
+                    Console.WriteLine(linenumber[2]);
+                    Console.WriteLine(linenumber[3]);
+                    WebProxy myproxy = upsent("http://" + linenumber[0].ToString(), Int32.Parse(linenumber[1].ToString()), linenumber[2].ToString(), "xyeb"); /// linenumber[3].ToString() it doesn't like this for some unknow reason 
+                    // WebProxy myproxy = upsent("http://" + linenumber[0].ToString(), Int32.Parse(linenumber[1].ToString()), linenumber[2].ToString(), linenumber[3].ToString());
+
+                    request.Proxy = myproxy;   // set proxy here
+                    request.Timeout = 10000;
+                    request.Method = "HEAD";
+                    Stopwatch sw = Stopwatch.StartNew();
+                    try
+                    {
+                        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                        {
+
+                             Console.WriteLine(response.StatusCode + "we are good");
+                        }
+                        sw.Stop();
+                        //  Console.WriteLine("Request took {0}", sw.Elapsed.Milliseconds);
+                    }
+                    catch
+                    {
+                         Console.WriteLine("404");
+                    }
+                }
+                // we want to check the type of proxy first 
+                //Console.WriteLine(line);
+                // access a line, evaluate it, etc.
             }
+
+          
+             
+            
+           
+          
           
         }
 
-        public WebProxy sent(String proxyURL, int port, String username, String password)
+        public WebProxy upsent(String proxyURL, int port, String username, String password) // set up username password proxy
         {
             //Validate proxy address
             var proxyURI = new Uri(string.Format("{0}:{1}", proxyURL, port));
@@ -88,6 +140,15 @@ namespace WpfApp1
 
             //Set proxy
             WebProxy proxy = new WebProxy(proxyURI, true, null, credentials);
+            return proxy;
+        }
+        public WebProxy proxysent(String proxyURL, int port) // set up non  username password  proxy
+        {
+            //Validate proxy address
+            var proxyURI = new Uri(string.Format("{0}:{1}", proxyURL, port));
+
+            //Set proxy
+            WebProxy proxy = new WebProxy(proxyURI, true, null, null);
             return proxy;
         }
 
