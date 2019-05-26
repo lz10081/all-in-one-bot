@@ -16,6 +16,7 @@
             <ColumnDefinition Width="1341*"/>
         </Grid.ColumnDefinitions>
         <Grid HorizontalAlignment="Left"     Background="#FF0F2525"  Height="628" Margin="8.5,83,0,0" VerticalAlignment="Top" Width="1276" Grid.Column="1">
+            <TextBox x:Name="url" BorderBrush="Black" Background="White" materiaDesign:HintAssist.Hint="https://www.supremenewyork.com/"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="708,13,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="359" />
             <Label x:Name="label" FontStyle="Italic" Foreground="White" FontSize="20"  BorderThickness="2,2,2,2" Content="Create Proxies" HorizontalAlignment="Left" Margin="42,13,0,0" VerticalAlignment="Top" Width="162"/>
             <Button x:Name="Create" Click="Remove" BorderBrush="Black" Content="Remove" HorizontalAlignment="Left" Margin="981,163,0,0" VerticalAlignment="Top" Width="111" Height="40" Background="#FFA03939"/>
             <Button x:Name="Create_Copy" Click="Save" BorderBrush="Black" Content="Save" HorizontalAlignment="Left" Margin="285,13,0,0" VerticalAlignment="Top" Width="112" Height="40" Background="#FFB87474"/>

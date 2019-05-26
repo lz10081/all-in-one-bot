@@ -60,13 +60,19 @@ namespace WpfApp1
             
             foreach (var line in lines) // read text line by line
             {
-                Console.WriteLine("wtf is the line" + line);
+                if (url.Text == "")
+                {
+                    MessageBox.Show("Must enter url to test");
+                    break;
+                }
                 var linenumber = line.Split(':').ToList();  // 4  is user with pass word 2 just ip + port
-                Console.WriteLine("wtf is the line"+linenumber.Count);
+                
+             
                 if (linenumber.Count == 2)
                 {
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.supremenewyork.com/shop");
-                    WebProxy myproxy = proxysent("http://" + linenumber[0], Int32.Parse(linenumber[1]));
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url.Text);
+                    string replacement = Regex.Replace(linenumber[1].ToString(), @"\t|\n|\r", "");
+                    WebProxy myproxy = proxysent("http://" + linenumber[0], Int32.Parse(replacement));
 
                     request.Proxy = myproxy;   // set proxy here
                     request.Timeout = 10000;
@@ -90,11 +96,11 @@ namespace WpfApp1
                 }
                 else if (linenumber.Count == 4)
                 {
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.supremenewyork.com/shop");
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url.Text);
                  
                     if(linenumber[3].ToString() != "")
                     {
-                        Console.WriteLine(linenumber.ToString() + "here is ");
+                      
 
 
                         string replacement = Regex.Replace(linenumber[3].ToString(), @"\t|\n|\r", ""); 
@@ -110,7 +116,7 @@ namespace WpfApp1
                             using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                             {
 
-                                Console.WriteLine(response.StatusCode + "we are good");
+                                Console.WriteLine(response.StatusCode );                                    // it show it the cmd now just need to think how we can show it to the user and retrun in ms 
                             }
                             sw.Stop();
                             //  Console.WriteLine("Request took {0}", sw.Elapsed.Milliseconds);
