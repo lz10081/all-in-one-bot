@@ -91,31 +91,36 @@ namespace WpfApp1
                 else if (linenumber.Count == 4)
                 {
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://www.supremenewyork.com/shop");
-                    Console.WriteLine(linenumber[0]);
-                    Console.WriteLine(linenumber[1]);
-                    Console.WriteLine(linenumber[2]);
-                    Console.WriteLine(linenumber[3]);
-                    WebProxy myproxy = upsent("http://" + linenumber[0].ToString(), Int32.Parse(linenumber[1].ToString()), linenumber[2].ToString(), "xyeb"); /// linenumber[3].ToString() it doesn't like this for some unknow reason 
-                    // WebProxy myproxy = upsent("http://" + linenumber[0].ToString(), Int32.Parse(linenumber[1].ToString()), linenumber[2].ToString(), linenumber[3].ToString());
-
-                    request.Proxy = myproxy;   // set proxy here
-                    request.Timeout = 10000;
-                    request.Method = "HEAD";
-                    Stopwatch sw = Stopwatch.StartNew();
-                    try
+                 
+                    if(linenumber[3].ToString() != "")
                     {
-                        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                        Console.WriteLine(linenumber.ToString() + "here is ");
+
+
+                        string replacement = Regex.Replace(linenumber[3].ToString(), @"\t|\n|\r", ""); 
+                        WebProxy myproxy = upsent("http://" + linenumber[0].ToString(), Int32.Parse(linenumber[1].ToString()), linenumber[2].ToString(), replacement); ///"xyeb"   fixed the the reason didn't work was new line didn't get remove
+                        // WebProxy myproxy = upsent("http://" + linenumber[0].ToString(), Int32.Parse(linenumber[1].ToString()), linenumber[2].ToString(), linenumber[3].ToString());
+
+                        request.Proxy = myproxy;   // set proxy here
+                        request.Timeout = 10000;
+                        request.Method = "HEAD";
+                        Stopwatch sw = Stopwatch.StartNew();
+                        try
                         {
+                            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                            {
 
-                             Console.WriteLine(response.StatusCode + "we are good");
+                                Console.WriteLine(response.StatusCode + "we are good");
+                            }
+                            sw.Stop();
+                            //  Console.WriteLine("Request took {0}", sw.Elapsed.Milliseconds);
                         }
-                        sw.Stop();
-                        //  Console.WriteLine("Request took {0}", sw.Elapsed.Milliseconds);
+                        catch
+                        {
+                            Console.WriteLine("404");
+                        }
                     }
-                    catch
-                    {
-                         Console.WriteLine("404");
-                    }
+                
                 }
                 // we want to check the type of proxy first 
                 //Console.WriteLine(line);
