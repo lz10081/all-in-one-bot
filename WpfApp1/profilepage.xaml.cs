@@ -26,84 +26,135 @@ namespace WpfApp1
     /// </summary>
     public partial class profilepage : Page
     {
+
+        private static readonly int currentYear = DateTime.Now.Year;
+
         public profilepage()
         {
             InitializeComponent();
-            Counrty.ItemsSource = GetCountryList();
-            Counrty.SelectedIndex = 134; // set to us
+            Country.ItemsSource = GetCountryList();
+            Country.SelectedIndex = 134; // set to us
             State.ItemsSource = StateArray.States();
             StateB.ItemsSource = StateArray.States();
-            for (var a = 1; a < 12; a++)
+
+            for (var a = 1; a <= 12; a++)
             {
                 Month.Items.Add(a);
-               
             }
-            for (var a = 2019 ; a < 2029; a++)
+
+            for (var a = currentYear; a <= currentYear + 10; a++)
             {
                 Year.Items.Add(a);
             }
-            var lines = File.ReadLines(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json");
+
+            string path = GetPath("Profile.json");
+
+            // Checks if a profile exists or not. If not, will create a default profile.
+            // Else (does exist) prompts us to read the file in like normal.
+            if (CreateDefaultProfile(ref path))
+                ReadProfile(ref path);
+        }
+
+        /// <summary>
+        /// Gets the file from the app's base directory.
+        /// 
+        /// Note: This gets called a lot, consider moving this to a static variable or seperate utility class.
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns>string path</returns>
+        private static string GetPath(string file)
+        {
+            return System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, file);
+        }
+
+        /// <summary>
+        /// Checks if profile exists, if not
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private bool CreateDefaultProfile(ref string path)
+        {
+            if (!File.Exists(path))
+            {
+                using (FileStream stream = File.Create(path))
+                {
+                    stream.Close();
+                }
+
+                // After we create the file, we need to fill it with default data
+                // or ask the user to fill it in for us.
+
+                return false;
+            }
+
+            return true;
+        }
+
+        private void ReadProfile(ref string path)
+        {
+            var lines = File.ReadAllLines(path);
             //var playerList = JsonConvert.DeserializeObject<List<NotusdataWship>>(json);
             foreach (var line in lines)
             {
-                    if (line.Contains("1type"))
-                    {
-                        var playerList = JsonConvert.DeserializeObject<List<dataWoutship>>(line);
-                        PorfileSaved.Items.Add(playerList[0].nanme); 
-                    }else if(line.Contains("2type"))
-                    {
-                        var playerList = JsonConvert.DeserializeObject<List<dataWship>>(line);
-                         PorfileSaved.Items.Add(playerList[0].nanme);
-                     }
-                    else if (line.Contains("3type"))
-                    {
-                         var playerList = JsonConvert.DeserializeObject<List<notusdataWoutship>>(line);
-                          PorfileSaved.Items.Add(playerList[0].nanme);
-                     }
-                    else if (line.Contains("4type"))
-                    {
-                        var playerList = JsonConvert.DeserializeObject<List<NotusdataWship>>(line);
-                         PorfileSaved.Items.Add(playerList[0].nanme);
-                     }
-                    else
-                    {
+                // I'm not sure what this is doing
+                if (line.Contains("1type"))
+                {
+                    var playerList = JsonConvert.DeserializeObject<List<DataWithoutShip>>(line);
+                    PorfileSaved.Items.Add(playerList[0].nanme);
+                }
+                else if (line.Contains("2type"))
+                {
+                    var playerList = JsonConvert.DeserializeObject<List<DataWithShip>>(line);
+                    PorfileSaved.Items.Add(playerList[0].nanme);
+                }
+                else if (line.Contains("3type"))
+                {
+                    var playerList = JsonConvert.DeserializeObject<List<NonUSDataWithoutShip>>(line);
+                    PorfileSaved.Items.Add(playerList[0].nanme);
+                }
+                else if (line.Contains("4type"))
+                {
+                    var playerList = JsonConvert.DeserializeObject<List<NotUSDataWithShip>>(line);
+                    PorfileSaved.Items.Add(playerList[0].nanme);
+                }
+                else
+                {
 
-                    }
+                }
 
             }
         }
-       
 
         private void cbValueType_DropDownClosed(object sender, EventArgs e)
         {
-            String s = Counrty.Text;
+            String s = Country.Text;
             if (s != "Canada" && s != "United States")
             {
-                
+
                 State.IsEnabled = false;
-                StateB.IsEnabled = false;  
+                StateB.IsEnabled = false;
             }
             else
             {
                 if ((bool)checkBox.IsChecked == true)
-                
+
                     State.IsEnabled = true;
                 else
                 {
                     State.IsEnabled = true;
                     StateB.IsEnabled = true;
                 }
-               
-            }    
+
+            }
         }
-       
-    private void PreviewTextInput(object sender, TextCompositionEventArgs e)
+
+        private void PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
-    static class StateArray
+        static class StateArray
         {
 
             static List<US_State> states;
@@ -175,7 +226,7 @@ namespace WpfApp1
                 states.Add(new US_State("QC", "Quebec"));
                 states.Add(new US_State("SK", "Saskatchewan"));
                 states.Add(new US_State("YT", "Yukon"));
-               
+
             }
 
             public static string[] Abbreviations()
@@ -256,11 +307,11 @@ namespace WpfApp1
 
         }
         // userprofile 
-        public class dataWship
+        public class DataWithShip
         {
             public string nanme { get; set; }
             public string type { get; set; }
-            public string dCounrty { get; set; }
+            public string dCountry { get; set; }
             public string dFirst { get; set; }
             public string dLast { get; set; }
             public string dAddress { get; set; }
@@ -281,14 +332,14 @@ namespace WpfApp1
             public long dCvv { get; set; }
             public int dMonth { get; set; }
             public int dYear { get; set; }
-           
+
 
         }
-        public class NotusdataWship
+        public class NotUSDataWithShip
         {
             public string nanme { get; set; }
             public string type { get; set; }
-            public string dCounrty { get; set; }
+            public string dCountry { get; set; }
             public string dFirst { get; set; }
             public string dLast { get; set; }
             public string dAddress { get; set; }
@@ -310,11 +361,11 @@ namespace WpfApp1
 
 
         }
-        public class notusdataWoutship
+        public class NonUSDataWithoutShip
         {
             public string nanme { get; set; }
             public string type { get; set; }
-            public string dCounrty { get; set; }
+            public string dCountry { get; set; }
             public string dFirst { get; set; }
             public string dLast { get; set; }
             public string dAddress { get; set; }
@@ -329,11 +380,11 @@ namespace WpfApp1
             public int dYear { get; set; }
 
         }
-        public class dataWoutship
+        public class DataWithoutShip
         {
             public string nanme { get; set; }
             public string type { get; set; }
-            public string dCounrty { get; set; }
+            public string dCountry { get; set; }
             public string dFirst { get; set; }
             public string dLast { get; set; }
             public string dAddress { get; set; }
@@ -342,42 +393,44 @@ namespace WpfApp1
             public string dState { get; set; }
             public long dZip { get; set; }
             public long dPhone { get; set; }
-            public string dEmail { get; set; } 
+            public string dEmail { get; set; }
             public long dCard { get; set; }
             public long dCvv { get; set; }
             public int dMonth { get; set; }
             public int dYear { get; set; }
-           
+
         }
 
         private void Createporfile(object sender, RoutedEventArgs e)
         {
+            string path = GetPath("Profile.json");
+
             //cmd.Parameters.AddWithValue("@country", this.countryComboBox.SelectedItem.ToString()); add country
 
             //https://stackoverflow.com/questions/16921652/how-to-write-a-json-file-in-c
             // need to check which data input we use by checking the check box
-            String s = Counrty.Text;
+            String s = Country.Text;
             if (s != "Canada" && s != "United States")
             {
                 if ((bool)checkBox.IsChecked == true)
                 {
                     // easy case dataWoutship
-                    if (String.IsNullOrEmpty(CVV.Text) || String.IsNullOrEmpty(Card.Text) || String.IsNullOrEmpty(Email.Text) || String.IsNullOrEmpty(Phone.Text) || String.IsNullOrEmpty(Counrty.Text) || String.IsNullOrEmpty(First.Text) || String.IsNullOrEmpty(Last.Text) || String.IsNullOrEmpty(Address.Text) || String.IsNullOrEmpty(City.Text) || String.IsNullOrEmpty(Zip.Text))
+                    if (String.IsNullOrEmpty(CVV.Text) || String.IsNullOrEmpty(Card.Text) || String.IsNullOrEmpty(Email.Text) || String.IsNullOrEmpty(Phone.Text) || String.IsNullOrEmpty(Country.Text) || String.IsNullOrEmpty(First.Text) || String.IsNullOrEmpty(Last.Text) || String.IsNullOrEmpty(Address.Text) || String.IsNullOrEmpty(City.Text) || String.IsNullOrEmpty(Zip.Text))
                     {
                         Console.WriteLine("is null");
                         // Do something...
                     }
                     else
                     {
-                        List<notusdataWoutship> _data = new List<notusdataWoutship>();
+                        List<NonUSDataWithoutShip> _data = new List<NonUSDataWithoutShip>();
                         try
                         {
 
-                            _data.Add(new notusdataWoutship()
+                            _data.Add(new NonUSDataWithoutShip()
                             {
                                 nanme = Profilename.Text,
                                 type = "3type",
-                                dCounrty = Counrty.Text,
+                                dCountry = Country.Text,
                                 dFirst = First.Text,
                                 dLast = Last.Text,
                                 dAddress = Address.Text,
@@ -418,9 +471,9 @@ namespace WpfApp1
                         {
                             string json = JsonConvert.SerializeObject(_data.ToArray());
                             PorfileSaved.Items.Add(Profilename.Text);
-                            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json"))
+                            if (File.Exists(path))
                             {
-                                StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json", true);
+                                StreamWriter sw = new StreamWriter(path, true);
                                 sw.Write("\n");
                                 sw.Write(json);
 
@@ -428,7 +481,7 @@ namespace WpfApp1
                             }
                             else
                             {
-                                System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json", json); /// need to save to our data file
+                                System.IO.File.WriteAllText(path, json); /// need to save to our data file
                             }
                         }
 
@@ -441,8 +494,11 @@ namespace WpfApp1
                 else
                 {
 
-                    List<NotusdataWship> _data = new List<NotusdataWship>();
-                    if (String.IsNullOrEmpty(FirstB.Text) || String.IsNullOrEmpty(LastB.Text) || String.IsNullOrEmpty(CVV.Text) || String.IsNullOrEmpty(Card.Text) || String.IsNullOrEmpty(Email.Text) || String.IsNullOrEmpty(Phone.Text) || String.IsNullOrEmpty(Counrty.Text) || String.IsNullOrEmpty(First.Text) || String.IsNullOrEmpty(Last.Text) || String.IsNullOrEmpty(Address.Text) || String.IsNullOrEmpty(City.Text) || String.IsNullOrEmpty(Zip.Text))
+                    List<NotUSDataWithShip> _data = new List<NotUSDataWithShip>();
+
+                    if (String.IsNullOrEmpty(FirstB.Text) || String.IsNullOrEmpty(LastB.Text) || String.IsNullOrEmpty(CVV.Text) || String.IsNullOrEmpty(Card.Text) || 
+                        String.IsNullOrEmpty(Email.Text) || String.IsNullOrEmpty(Phone.Text) || String.IsNullOrEmpty(Country.Text) || String.IsNullOrEmpty(First.Text) || 
+                        String.IsNullOrEmpty(Last.Text) || String.IsNullOrEmpty(Address.Text) || String.IsNullOrEmpty(City.Text) || String.IsNullOrEmpty(Zip.Text))
                     {
                         Console.WriteLine("is null");
                         // Do something...
@@ -452,11 +508,11 @@ namespace WpfApp1
 
                         try
                         {
-                            _data.Add(new NotusdataWship()
+                            _data.Add(new NotUSDataWithShip()
                             {
                                 nanme = Profilename.Text,
                                 type = "4type",
-                                dCounrty = Counrty.Text,
+                                dCountry = Country.Text,
                                 dFirst = First.Text,
                                 dLast = Last.Text,
                                 dAddress = Address.Text,
@@ -504,17 +560,19 @@ namespace WpfApp1
                         {
                             string json = JsonConvert.SerializeObject(_data.ToArray());
                             PorfileSaved.Items.Add(Profilename.Text);
-                            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json"))
+
+                            if (File.Exists(path))
                             {
-                                StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json", true);
+                                StreamWriter sw = new StreamWriter(path, true);
                                 sw.Write("\n");
                                 sw.Write(json);
 
                                 sw.Dispose();
                             }
+
                             else
                             {
-                                System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json", json); /// need to save to our data file
+                                System.IO.File.WriteAllText(path, json); /// need to save to our data file
                             }
                         }
                     }
@@ -525,22 +583,24 @@ namespace WpfApp1
                 if ((bool)checkBox.IsChecked == true)
                 {
                     // easy case dataWoutship
-                    if (String.IsNullOrEmpty(CVV.Text) || String.IsNullOrEmpty(Card.Text) || String.IsNullOrEmpty(Email.Text) || String.IsNullOrEmpty(Phone.Text) || String.IsNullOrEmpty(Counrty.Text) || String.IsNullOrEmpty(First.Text) || String.IsNullOrEmpty(Last.Text) || String.IsNullOrEmpty(Address.Text) || String.IsNullOrEmpty(City.Text) || String.IsNullOrEmpty(Zip.Text))
+                    if (String.IsNullOrEmpty(CVV.Text) || String.IsNullOrEmpty(Card.Text) || String.IsNullOrEmpty(Email.Text) || String.IsNullOrEmpty(Phone.Text) || 
+                        String.IsNullOrEmpty(Country.Text) || String.IsNullOrEmpty(First.Text) || String.IsNullOrEmpty(Last.Text) || String.IsNullOrEmpty(Address.Text) || 
+                        String.IsNullOrEmpty(City.Text) || String.IsNullOrEmpty(Zip.Text))
                     {
                         Console.WriteLine("is null");
                         // Do something...
                     }
                     else
                     {
-                        List<dataWoutship> _data = new List<dataWoutship>();
+                        List<DataWithoutShip> _data = new List<DataWithoutShip>();
                         try
                         {
 
-                            _data.Add(new dataWoutship()
+                            _data.Add(new DataWithoutShip()
                             {
                                 nanme = Profilename.Text,
                                 type = "1type",
-                                dCounrty = Counrty.Text,
+                                dCountry = Country.Text,
                                 dFirst = First.Text,
                                 dLast = Last.Text,
                                 dAddress = Address.Text,
@@ -581,9 +641,9 @@ namespace WpfApp1
                         {
                             string json = JsonConvert.SerializeObject(_data.ToArray());
                             PorfileSaved.Items.Add(Profilename.Text);
-                            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json"))
+                            if (File.Exists(path))
                             {
-                                StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json", true);
+                                StreamWriter sw = new StreamWriter(path, true);
                                 sw.Write("\n");
                                 sw.Write(json);
 
@@ -591,10 +651,10 @@ namespace WpfApp1
                             }
                             else
                             {
-                                System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json", json); /// need to save to our data file
+                                System.IO.File.WriteAllText(path, json); /// need to save to our data file
                             }
                         }
-                        
+
                     }
 
 
@@ -603,8 +663,11 @@ namespace WpfApp1
                 else
                 {
 
-                    List<dataWship> _data = new List<dataWship>();
-                    if (String.IsNullOrEmpty(FirstB.Text) || String.IsNullOrEmpty(LastB.Text) || String.IsNullOrEmpty(CVV.Text) || String.IsNullOrEmpty(Card.Text) || String.IsNullOrEmpty(Email.Text) || String.IsNullOrEmpty(Phone.Text) || String.IsNullOrEmpty(Counrty.Text) || String.IsNullOrEmpty(First.Text) || String.IsNullOrEmpty(Last.Text) || String.IsNullOrEmpty(Address.Text) || String.IsNullOrEmpty(City.Text) || String.IsNullOrEmpty(Zip.Text))
+                    List<DataWithShip> _data = new List<DataWithShip>();
+
+                    if (String.IsNullOrEmpty(FirstB.Text) || String.IsNullOrEmpty(LastB.Text) || String.IsNullOrEmpty(CVV.Text) || String.IsNullOrEmpty(Card.Text) || 
+                        String.IsNullOrEmpty(Email.Text) || String.IsNullOrEmpty(Phone.Text) || String.IsNullOrEmpty(Country.Text) || String.IsNullOrEmpty(First.Text) || 
+                        String.IsNullOrEmpty(Last.Text) || String.IsNullOrEmpty(Address.Text) || String.IsNullOrEmpty(City.Text) || String.IsNullOrEmpty(Zip.Text))
                     {
                         Console.WriteLine("is null");
                         // Do something...
@@ -614,11 +677,11 @@ namespace WpfApp1
 
                         try
                         {
-                            _data.Add(new dataWship()
+                            _data.Add(new DataWithShip()
                             {
                                 nanme = Profilename.Text,
                                 type = "2type",
-                                dCounrty = Counrty.Text,
+                                dCountry = Country.Text,
                                 dFirst = First.Text,
                                 dLast = Last.Text,
                                 dAddress = Address.Text,
@@ -666,9 +729,9 @@ namespace WpfApp1
                         {
                             string json = JsonConvert.SerializeObject(_data.ToArray());
                             PorfileSaved.Items.Add(Profilename.Text);
-                            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json"))
+                            if (File.Exists(path))
                             {
-                                StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json", true);
+                                StreamWriter sw = new StreamWriter(path, true);
                                 sw.Write("\n");
                                 sw.Write(json);
 
@@ -676,7 +739,7 @@ namespace WpfApp1
                             }
                             else
                             {
-                                System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json", json); /// need to save to our data file
+                                System.IO.File.WriteAllText(path, json); /// need to save to our data file
                             }
                         }
                     }
@@ -685,9 +748,9 @@ namespace WpfApp1
             }
 
 
-            }
-        
-       
+        }
+
+
 
         private void Loadporfile(object sender, RoutedEventArgs e)
         {
@@ -695,15 +758,15 @@ namespace WpfApp1
             //var playerList = JsonConvert.DeserializeObject<List<NotusdataWship>>(json);
             foreach (var line in lines)
             {
-             
+
                 if (line.Contains(PorfileSaved.Text))
                 {
                     if (line.Contains("1type"))
                     {
 
-                        var playerList = JsonConvert.DeserializeObject<List<dataWoutship>>(line);
+                        var playerList = JsonConvert.DeserializeObject<List<DataWithoutShip>>(line);
                         Profilename.Text = playerList[0].nanme;
-                        Counrty.Text = playerList[0].dCounrty;
+                        Country.Text = playerList[0].dCountry;
                         First.Text = playerList[0].dFirst;
                         Last.Text = playerList[0].dLast;
                         Address.Text = playerList[0].dAddress;
@@ -729,9 +792,9 @@ namespace WpfApp1
                     else if (line.Contains("2type"))
                     {
 
-                        var playerList = JsonConvert.DeserializeObject<List<dataWship>>(line);
+                        var playerList = JsonConvert.DeserializeObject<List<DataWithShip>>(line);
                         Profilename.Text = playerList[0].nanme;
-                        Counrty.Text = playerList[0].dCounrty;
+                        Country.Text = playerList[0].dCountry;
                         First.Text = playerList[0].dFirst;
                         Last.Text = playerList[0].dLast;
                         Address.Text = playerList[0].dAddress;
@@ -765,9 +828,9 @@ namespace WpfApp1
                     else if (line.Contains("3type"))
                     {
 
-                        var playerList = JsonConvert.DeserializeObject<List<notusdataWoutship>>(line);
+                        var playerList = JsonConvert.DeserializeObject<List<NonUSDataWithoutShip>>(line);
                         Profilename.Text = playerList[0].nanme;
-                        Counrty.Text = playerList[0].dCounrty;
+                        Country.Text = playerList[0].dCountry;
                         First.Text = playerList[0].dFirst;
                         Last.Text = playerList[0].dLast;
                         State.IsEnabled = false;
@@ -793,9 +856,9 @@ namespace WpfApp1
                     else if (line.Contains("4type"))
                     {
 
-                        var playerList = JsonConvert.DeserializeObject<List<NotusdataWship>>(line);
+                        var playerList = JsonConvert.DeserializeObject<List<NotUSDataWithShip>>(line);
                         Profilename.Text = playerList[0].nanme;
-                        Counrty.Text = playerList[0].dCounrty;
+                        Country.Text = playerList[0].dCountry;
                         First.Text = playerList[0].dFirst;
                         Last.Text = playerList[0].dLast;
                         Address.Text = playerList[0].dAddress;
@@ -809,7 +872,7 @@ namespace WpfApp1
                         CVV.Text = playerList[0].dCvv.ToString();
                         Month.Text = playerList[0].dMonth.ToString(); ;
                         Year.Text = playerList[0].dYear.ToString();
-            
+
                         FirstB.Text = playerList[0].dFirstb;
                         LastB.Text = playerList[0].dLastb;
                         AddressB.Text = playerList[0].dAddressb;
@@ -830,17 +893,18 @@ namespace WpfApp1
 
                     }
                 }
-                
+
 
             }
         }
-          
 
-            //cmd.Parameters.AddWithValue("@country", this.countryComboBox.SelectedItem.ToString()); add country
+
+        //cmd.Parameters.AddWithValue("@country", this.countryComboBox.SelectedItem.ToString()); add country
         private void Removeporfile(object sender, RoutedEventArgs e)
-
         {
-            var lines = File.ReadLines(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json");
+            string path = GetPath("Profile.json");
+
+            var lines = File.ReadLines(path);
             //var playerList = JsonConvert.DeserializeObject<List<NotusdataWship>>(json);
             var a = 0;
             foreach (var line in lines)
@@ -850,22 +914,22 @@ namespace WpfApp1
                 {
                     if (line.Contains("1type"))
                     {
-                        var playerList = JsonConvert.DeserializeObject<List<dataWoutship>>(line);
+                        var playerList = JsonConvert.DeserializeObject<List<DataWithoutShip>>(line);
                         PorfileSaved.Items.Remove(playerList[0].nanme);
                     }
                     else if (line.Contains("2type"))
                     {
-                        var playerList = JsonConvert.DeserializeObject<List<dataWship>>(line);
+                        var playerList = JsonConvert.DeserializeObject<List<DataWithShip>>(line);
                         PorfileSaved.Items.Remove(playerList[0].nanme);
                     }
                     else if (line.Contains("3type"))
                     {
-                        var playerList = JsonConvert.DeserializeObject<List<notusdataWoutship>>(line);
+                        var playerList = JsonConvert.DeserializeObject<List<NonUSDataWithoutShip>>(line);
                         PorfileSaved.Items.Remove(playerList[0].nanme);
                     }
                     else if (line.Contains("4type"))
                     {
-                        var playerList = JsonConvert.DeserializeObject<List<NotusdataWship>>(line);
+                        var playerList = JsonConvert.DeserializeObject<List<NotUSDataWithShip>>(line);
                         PorfileSaved.Items.Remove(playerList[0].nanme);
                     }
                     else
@@ -877,15 +941,15 @@ namespace WpfApp1
                 }
                 else
                 {
-                    a = a+1;
+                    a = a + 1;
                 }
-                
+
 
             }
-            List<string> quotelist = File.ReadAllLines(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json").ToList();
+            List<string> quotelist = File.ReadAllLines(path).ToList();
             quotelist.RemoveAt(a);
-            File.WriteAllLines(AppDomain.CurrentDomain.BaseDirectory + @"\ Profile.json", quotelist.ToArray());
-           
+            File.WriteAllLines(path, quotelist.ToArray());
+
 
 
             //cmd.Parameters.AddWithValue("@country", this.countryComboBox.SelectedItem.ToString()); add country
@@ -914,6 +978,6 @@ namespace WpfApp1
 
         }
     }
-    }
+}
 
 
