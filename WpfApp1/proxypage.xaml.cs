@@ -446,8 +446,7 @@ namespace WpfApp1
 
             public bool check(out long elapsedMS)
             {
-                Stopwatch s = new Stopwatch();
-                s.Start();
+                
 
                 bool status = false;
 
@@ -457,17 +456,18 @@ namespace WpfApp1
                 if (!string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password))
                     client.Proxy.Credentials = new NetworkCredential(Username, Password);
 
+                Stopwatch s = new Stopwatch();
+                s.Start();
+
                 var response = client.Execute(new RestRequest());
-                //  Console.WriteLine(response.ResponseStatus);
+
+                s.Stop();
+                elapsedMS = s.ElapsedMilliseconds;
 
                 if (response.ResponseStatus.ToString() == "Completed")
                 {
                     status = true;
                 }
-
-                s.Stop();
-
-                elapsedMS = s.ElapsedMilliseconds;
 
                 return status;
             }
