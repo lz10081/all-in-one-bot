@@ -32,13 +32,13 @@ namespace WpfApp1
     {
         ObservableCollection<Ip> MyList = new ObservableCollection<Ip>();
         List<String> IPList = new List<String>();
-        
+
         public proxypage()
         {
             InitializeComponent();
             TextRange range;
             FileStream fStream;
-            
+
             if (System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\" + "proxy.txt"))
             {
                 range = new TextRange(proxy.Document.ContentStart, proxy.Document.ContentEnd);
@@ -95,10 +95,22 @@ namespace WpfApp1
 
         }
 
+        /// <summary>
+        /// Gets the file from the app's base directory.
+        /// 
+        /// Note: This gets called a lot, consider moving this to a static variable or seperate utility class.
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns>string path</returns>
+        private static string GetPath(string file)
+        {
+            return System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, file);
+        }
+
         private void Save(object sender, RoutedEventArgs e)
         {
             string richText = new TextRange(proxy.Document.ContentStart, proxy.Document.ContentEnd).Text;
-            System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + "proxy.txt", richText);
+            System.IO.File.WriteAllText(GetPath("proxy.txt"), richText);
         }
         private void Remove(object sender, RoutedEventArgs e)
         {
@@ -110,12 +122,12 @@ namespace WpfApp1
         public bool check2(String proxyURL, int port, String username, String password, String testurl) // RestSharp Client
         {
             bool status = false;
-           
+
             var client = new RestClient(testurl);
             client.Proxy = new WebProxy(proxyURL + ":" + port, false);
             if (username != null && password != null) client.Proxy.Credentials = new NetworkCredential(username, password);
-            var response =  client.Execute(new RestRequest());
-          //  Console.WriteLine(response.ResponseStatus);
+            var response = client.Execute(new RestRequest());
+            //  Console.WriteLine(response.ResponseStatus);
             if (response.ResponseStatus.ToString() == "Completed")
             {
                 status = true;
@@ -124,29 +136,27 @@ namespace WpfApp1
         }
         private void Export(object sender, RoutedEventArgs e)
         {
+            string path = GetPath("workingproxy.txt");
             var list = MyList.ToList();
-            System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + "workingproxy.txt", "");
-        
+            System.IO.File.WriteAllText(path, "");
+
             foreach (var item in list)
             {
-               
-                    StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + @"\" + "workingproxy.txt", true);
-                
-                    if (item.Password != null)
-                        sw.Write(item.IP + ":" + item.Port + ":" + item.Username + ":" + item.Password);
-                    else
-                        sw.Write( item.IP + ":" + item.Port);
-                    sw.Write("\n");
-                    sw.Dispose();
-                
+
+                StreamWriter sw = new StreamWriter(path, true);
+
+                if (item.Password != null)
+                    sw.Write(item.IP + ":" + item.Port + ":" + item.Username + ":" + item.Password);
+                else
+                    sw.Write(item.IP + ":" + item.Port);
+                sw.Write("\n");
+                sw.Dispose();
+
             }
 
-           
-            
-           
-          //  System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + "workingproxy.txt", list.ToString());
+            //  System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + "workingproxy.txt", list.ToString());
         }
-       
+
         public async Task<bool> check(String proxyURL, int port, String username, String password, String testurl) // HttpClient didn't work on some site move on to RestSharp now
         {
             bool status = false;
@@ -208,7 +218,7 @@ namespace WpfApp1
             {
                 if (!parseProxy(line))
                 {
-              
+
                     break;
                 }
             }
@@ -248,18 +258,18 @@ namespace WpfApp1
             {
                 Console.WriteLine(ex);
             }
-          
+
             Ip playerList = new Ip();
             playerList.IP = ip;
             playerList.Port = port;
             playerList.Username = username;
-            playerList.Password = password; 
+            playerList.Password = password;
             MyList.Add(playerList);
             dataGridProxies.ItemsSource = MyList;
             return true;
 
         }
-       
+
 
         private void buttonRemoveFalse_Click(object sender, RoutedEventArgs e)
         {
@@ -276,7 +286,7 @@ namespace WpfApp1
                 }
                 if (list[x].Status == "Bad")
                     continue;
-                else  
+                else
                     change.Add(list[x]);
             }
             if (!isnull)
@@ -285,58 +295,80 @@ namespace WpfApp1
                 dataGridProxies.ItemsSource = MyList;
                 IPList.Clear();
             }
-          
+
         }
 
-        private  void proxyCheckWorker()
+        private void proxyCheckWorker()
         {
             string richText = new TextRange(proxytest.Document.ContentStart, proxytest.Document.ContentEnd).Text;
-            var lines = richText.Split('\n').ToList();
-            
+            var lines = richText.Split('\r', '\n').ToList();
+
+            if (string.IsNullOrEmpty(url.Text))
+            {
+                MessageBox.Show("Must enter url to test");
+                return;
+            }
+
+            ProxyCheck proxyCheck = new ProxyCheck();
+            proxyCheck.TestURL = url.Text;
+
             foreach (var line in lines) // read text line by line
             {
-                if (url.Text == "")
-                {
-                    MessageBox.Show("Must enter url to test");
-                    break;
-                }
+                // Only process lines with information!
+                if (string.IsNullOrEmpty(line))
+                    continue;
+
                 var linenumber = line.Split(':').ToList();  // 4  is user with pass word 2 just ip + port
 
+                proxyCheck.ProxyURL = linenumber[0];
 
                 if (linenumber.Count == 2)
                 {
                     string replacement = Regex.Replace(linenumber[1].ToString(), @"\t|\n|\r", "");
-                    bool status = false;
-                    Stopwatch s = new Stopwatch();
-                    s.Start();
-                    status =  check2(linenumber[0], Int32.Parse(replacement), null, null, url.Text);
-                    s.Stop();
-                    if(status)
-                         IPList.Add(s.ElapsedMilliseconds.ToString() + "ms");
-                    else
-                         IPList.Add("Bad");
+                    int port = 0;
 
+                    if (!int.TryParse(replacement, out port))
+                    {
+                        Console.WriteLine("Failed to parse port number \"{0}\"", replacement);
+                        continue;
+                    }
+
+                    proxyCheck.Port = port;
+                    proxyCheck.Username = null;
+                    proxyCheck.Password = null;
                 }
+
                 else if (linenumber.Count == 4)
                 {
+                    string replacement = Regex.Replace(linenumber[3].ToString(), @"\t|\n|\r", "");
+                    int port = 0;
 
-                        string replacement = Regex.Replace(linenumber[3].ToString(), @"\t|\n|\r", "");
-                        bool status = false;
-                        Stopwatch s = new Stopwatch();
-                        s.Start();
-                        status =  check2(linenumber[0], Int32.Parse(linenumber[1].ToString()), linenumber[2].ToString(), replacement, url.Text);
-                        s.Stop();
-                        if (status)
-                            IPList.Add(s.ElapsedMilliseconds.ToString() + "ms");
-                        else
-                            IPList.Add("Bad");
+                    if (!int.TryParse(replacement, out port))
+                    {
+                        Console.WriteLine("Failed to parse port number \"{0}\"", replacement);
+                        continue;
+                    }
 
+                    proxyCheck.Port = port;
+                    proxyCheck.Username = linenumber[2].ToString();
+                    proxyCheck.Password = replacement;
                 }
 
+                else
+                {
+                    continue;
+                }
+
+                long elapsedMS = 0;
+                bool status = proxyCheck.check(out elapsedMS);
+
+                if (status)
+                    IPList.Add(elapsedMS + "ms");
+                else
+                    IPList.Add("Bad");
             }
 
         }
-     
 
         private void Test(object sender, RoutedEventArgs e)
         {
@@ -344,22 +376,98 @@ namespace WpfApp1
             proxyCheckWorker();
 
             var list = MyList.ToList();
-            var change = new ObservableCollection<Ip>();
-            if (url.Text != "")
+
+            // Only track changes if the lists match, otherwise an out of bounds exception will be thrown!
+            if (list.Count == IPList.Count)
             {
+                var change = new ObservableCollection<Ip>();
                 for (var x = 0; x < list.Count; x++)
                 {
+
                     list[x].Status = IPList[x];
                     change.Add(list[x]);
                 }
+
                 MyList = change;
                 dataGridProxies.ItemsSource = MyList;
                 IPList.Clear();
+            }
+        }
+
+        private class ProxyCheck
+        {
+
+            /// <summary>
+            /// Default constructor.
+            /// </summary>
+            public ProxyCheck() : this(null, -1, null, null, null)
+            {
 
             }
 
-        }
+            public ProxyCheck(string proxyURL, int port, string username, string password, string testURL)
+            {
+                ProxyURL = proxyURL;
+                Port = port;
+                Username = username;
+                Password = password;
+                TestURL = testURL;
+            }
 
+            public string ProxyURL
+            {
+                get; set;
+            }
+
+            public int Port
+            {
+                get; set;
+            }
+
+            public string Username
+            {
+                get; set;
+            }
+
+            public string Password
+            {
+                get; set;
+            }
+
+            public string TestURL
+            {
+                get; set;
+            }
+
+            public bool check(out long elapsedMS)
+            {
+                Stopwatch s = new Stopwatch();
+                s.Start();
+
+                bool status = false;
+
+                var client = new RestClient(TestURL);
+                client.Proxy = new WebProxy(ProxyURL + ":" + Port, false);
+
+                if (!string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password))
+                    client.Proxy.Credentials = new NetworkCredential(Username, Password);
+
+                var response = client.Execute(new RestRequest());
+                //  Console.WriteLine(response.ResponseStatus);
+
+                if (response.ResponseStatus.ToString() == "Completed")
+                {
+                    status = true;
+                }
+
+                s.Stop();
+
+                elapsedMS = s.ElapsedMilliseconds;
+
+                return status;
+            }
+
+        }
 
     }
 }
