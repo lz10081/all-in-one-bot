@@ -278,7 +278,7 @@ namespace WpfApp1
             bool isnull = false;
             for (var x = 0; x < list.Count; x++)
             {
-                if (IPList.Count == 0)
+                if (list.Count == 0)
                 {
                     MessageBox.Show("Mast check before you can remove");
                     isnull = true;
