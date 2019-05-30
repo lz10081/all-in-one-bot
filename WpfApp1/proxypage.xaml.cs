@@ -340,13 +340,13 @@ namespace WpfApp1
 
                 else if (linenumber.Count == 4)
                 {
-                    string replacement = Regex.Replace(linenumber[3].ToString(), @"\t|\n|\r", "");
+                    string replacement = Regex.Replace(linenumber[1].ToString(), @"\t|\n|\r", ""); // fixed the error replacement was now linenumber[3]
                     int port = 0;
 
                     if (!int.TryParse(replacement, out port))
                     {
-                        Console.WriteLine("Failed to parse port number \"{0}\"", replacement);
-                        continue;
+                       Console.WriteLine("Failed to parse port number \"{0}\"", replacement);
+                       continue;
                     }
 
                     proxyCheck.Port = port;
