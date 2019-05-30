@@ -31,12 +31,14 @@ namespace WpfApp1
     public partial class proxypage : Page
     {
         ObservableCollection<Ip> MyList = new ObservableCollection<Ip>();
+        List<String> IPList = new List<String>();
+        
         public proxypage()
         {
             InitializeComponent();
             TextRange range;
             FileStream fStream;
-           
+            
             if (System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\" + "proxy.txt"))
             {
                 range = new TextRange(proxy.Document.ContentStart, proxy.Document.ContentEnd);
@@ -107,25 +109,25 @@ namespace WpfApp1
         public bool check2(String proxyURL, int port, String username, String password, String testurl) // RestSharp Client
         {
             bool status = false;
+           
             var client = new RestClient(testurl);
             client.Proxy = new WebProxy(proxyURL + ":" + port, false);
             if (username != null && password != null) client.Proxy.Credentials = new NetworkCredential(username, password);
             var response =  client.Execute(new RestRequest());
-           
-            Console.WriteLine(response.ResponseStatus);
+          //  Console.WriteLine(response.ResponseStatus);
             if (response.ResponseStatus.ToString() == "Completed")
             {
                 status = true;
             }
-              
-
-            Ip playerList = new Ip();
-            playerList.Status = status.ToString();
-            MyList.Add(playerList);
-
             return status;
         }
-
+        private void Export(object sender, RoutedEventArgs e)
+        {
+            var list = MyList.ToList();
+           
+            System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + "workingproxy.txt", list.ToString());
+        }
+       
         public async Task<bool> check(String proxyURL, int port, String username, String password, String testurl) // HttpClient didn't work on some site move on to RestSharp now
         {
             bool status = false;
@@ -233,6 +235,7 @@ namespace WpfApp1
             playerList.Username = username;
             playerList.Password = password; 
             MyList.Add(playerList);
+          
             return true;
 
         }
@@ -247,7 +250,7 @@ namespace WpfApp1
         {
             string richText = new TextRange(proxytest.Document.ContentStart, proxytest.Document.ContentEnd).Text;
             var lines = richText.Split('\n').ToList();
-
+            
             foreach (var line in lines) // read text line by line
             {
                 if (url.Text == "")
@@ -262,9 +265,14 @@ namespace WpfApp1
                 {
                     string replacement = Regex.Replace(linenumber[1].ToString(), @"\t|\n|\r", "");
                     bool status = false;
+                    Stopwatch s = new Stopwatch();
+                    s.Start();
                     status =  check2(linenumber[0], Int32.Parse(replacement), null, null, url.Text);
-                    Console.WriteLine(status);
-                    addLable(status.ToString());
+                    s.Stop();
+                    if(status)
+                         IPList.Add(s.ElapsedMilliseconds.ToString() + "ms");
+                    else
+                        IPList.Add("Bad");
 
                 }
                 else if (linenumber.Count == 4)
@@ -274,40 +282,45 @@ namespace WpfApp1
                         bool status = false;
                         Stopwatch s = new Stopwatch();
                         s.Start();
-                         status =  check2(linenumber[0], Int32.Parse(linenumber[1].ToString()), linenumber[2].ToString(), replacement, url.Text);
-                    s.Stop();
-                    Console.WriteLine(status);
-                    Console.WriteLine(s.ElapsedMilliseconds.ToString() + "ms"
-                        );
-                    addLable(status.ToString());
+                        status =  check2(linenumber[0], Int32.Parse(linenumber[1].ToString()), linenumber[2].ToString(), replacement, url.Text);
+                        s.Stop();
+                        if (status)
+                            IPList.Add(s.ElapsedMilliseconds.ToString() + "ms");
+                        else
+                            IPList.Add("Bad");
+
                 }
 
             }
 
         }
-
+     
 
         private void Test(object sender, RoutedEventArgs e)
         {
 
             proxyCheckWorker();
-            
+
+            var list = MyList.ToList();
+            var change = new ObservableCollection<Ip>();
+            for (var x = 0;  x < list.Count; x++)
+            {
+               
+                    list[x].Status = IPList[x];
+                    change.Add(list[x]);
+                
+             
+               
+            }
+            MyList = change;
+            dataGridProxies.ItemsSource = MyList;
+            IPList.Clear();
+           
+
+
         }
 
-        public System.Windows.Controls.Label addLable(String text) /// set next to proxy tester not working yet
-        {
-            System.Windows.Controls.Label label = new System.Windows.Controls.Label();
-            label.Content = text;
-            var x = 74;
-            label.Margin = new Thickness(933, 100, 0, 0);
-            x = x + 10;
-            return label;
-        }
 
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }
 

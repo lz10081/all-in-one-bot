@@ -22,7 +22,7 @@
 
             <TextBox x:Name="url" BorderBrush="Black" Background="White" materiaDesign:HintAssist.Hint="https://www.supremenewyork.com/"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="708,13,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="359" />
             <Label x:Name="label" FontStyle="Italic" Foreground="White" FontSize="20"  BorderThickness="2,2,2,2" Content="Create Proxies" HorizontalAlignment="Left" Margin="42,13,0,0" VerticalAlignment="Top" Width="162"/>
-            <Button x:Name="Create" Click="Remove" BorderBrush="Black" Content="Remove" HorizontalAlignment="Left" Margin="1100,155,0,0" VerticalAlignment="Top" Width="111" Height="40" Background="#FFA03939"/>
+            <Button x:Name="Create" Click="Remove" BorderBrush="Black" Content="Remove All" HorizontalAlignment="Left" Margin="1100,155,0,0" VerticalAlignment="Top" Width="111" Height="40" Background="#FFA03939"/>
             <Button x:Name="Create_Copy" Click="Save" BorderBrush="Black" Content="Save" HorizontalAlignment="Left" Margin="285,13,0,0" VerticalAlignment="Top" Width="112" Height="40" Background="#FFB87474"/>
             <Button x:Name="Create_Copy1" Click="Test" BorderBrush="Black" Content="Test" HorizontalAlignment="Left" Margin="1100,72,0,0" VerticalAlignment="Top" Width="111" Height="40" RenderTransformOrigin="0.401,2.5" Background="#FF896060"/>
             <RichTextBox  x:Name="proxy" Background="White"  FontSize="20" HorizontalAlignment="Left" Height="542" Margin="42,72,0,0"   VerticalAlignment="Top" Width="400" />
@@ -51,8 +51,9 @@
                 <Button x:Name="buttonImportProxies" Content="Import" Grid.Row="1" Grid.Column="0" Height="Auto" Click="buttonImportProxies_Click" Margin="8,10,0,11"/>
                 <Button x:Name="buttonRemoveFalse" Content="Remove Dead Proxies" Grid.Row="1" Grid.Column="2" Width="194" Height="Auto" HorizontalAlignment="Left" Click="buttonRemoveFalse_Click" Margin="97,11,0,10" Grid.ColumnSpan="2"/>
                 <TextBlock x:Name="textBlockProxyCheckThreads" Text="{Binding ElementName=sliderThreadsNumber, Path=Value}"  Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" TextWrapping="NoWrap" VerticalAlignment="Bottom" Height="15" Margin="75,0" Width="8"/>
-               
+
                 <DataGrid x:Name="dataGridProxies" Grid.Row="2" Grid.ColumnSpan="4" Margin="10,20,10,10"/>
+                <Button x:Name="buttonxport" Content="Export" Grid.Row="1" Grid.Column="1" Height="Auto" Click="Export" Margin="8,11,0,10"/>
 
             </Grid>
         </Grid>
