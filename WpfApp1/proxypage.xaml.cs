@@ -115,7 +115,8 @@ namespace WpfApp1
             client.Proxy = new WebProxy(proxyURL + ":" + port, false);
             if (username != null && password != null) client.Proxy.Credentials = new NetworkCredential(username, password);
             var response =  client.Execute(new RestRequest());
-          //  Console.WriteLine(response.ResponseStatus);
+            
+               Console.WriteLine(client.Proxy.Credentials.ToString());
             if (response.ResponseStatus.ToString() == "Completed")
             {
                 status = true;
@@ -268,7 +269,7 @@ namespace WpfApp1
             bool isnull = false;
             for (var x = 0; x < list.Count; x++)
             {
-                if (IPList.Count == 0)
+                if (list.Count == 0)
                 {
                     MessageBox.Show("Mast check before you can remove");
                     isnull = true;
