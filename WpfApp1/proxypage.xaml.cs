@@ -105,6 +105,7 @@ namespace WpfApp1
             TextRange range;
             range = new TextRange(proxytest.Document.ContentStart, proxytest.Document.ContentEnd);
             range.Text = "";
+            dataGridProxies.ItemsSource = "";
         }
         public bool check2(String proxyURL, int port, String username, String password, String testurl) // RestSharp Client
         {
@@ -124,8 +125,26 @@ namespace WpfApp1
         private void Export(object sender, RoutedEventArgs e)
         {
             var list = MyList.ToList();
+            System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + "workingproxy.txt", "");
+        
+            foreach (var item in list)
+            {
+               
+                    StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + @"\" + "workingproxy.txt", true);
+                
+                    if (item.Password != null)
+                        sw.Write(item.IP + ":" + item.Port + ":" + item.Username + ":" + item.Password);
+                    else
+                        sw.Write( item.IP + ":" + item.Port);
+                    sw.Write("\n");
+                    sw.Dispose();
+                
+            }
+
            
-            System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + "workingproxy.txt", list.ToString());
+            
+           
+          //  System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + "workingproxy.txt", list.ToString());
         }
        
         public async Task<bool> check(String proxyURL, int port, String username, String password, String testurl) // HttpClient didn't work on some site move on to RestSharp now
@@ -175,7 +194,7 @@ namespace WpfApp1
 
         private void buttonImportProxies_Click(object sender, RoutedEventArgs e)
         {
-
+            MyList = new ObservableCollection<Ip>();
             import.Visibility = Visibility.Visible;
 
 
@@ -229,13 +248,14 @@ namespace WpfApp1
             {
                 Console.WriteLine(ex);
             }
+          
             Ip playerList = new Ip();
             playerList.IP = ip;
             playerList.Port = port;
             playerList.Username = username;
             playerList.Password = password; 
             MyList.Add(playerList);
-          
+            dataGridProxies.ItemsSource = MyList;
             return true;
 
         }
@@ -243,6 +263,28 @@ namespace WpfApp1
 
         private void buttonRemoveFalse_Click(object sender, RoutedEventArgs e)
         {
+            var list = MyList.ToList();
+            var change = new ObservableCollection<Ip>();
+            bool isnull = false;
+            for (var x = 0; x < list.Count; x++)
+            {
+                if (IPList.Count == 0)
+                {
+                    MessageBox.Show("Mast check before you can remove");
+                    isnull = true;
+                    break;
+                }
+                if (list[x].Status == "Bad")
+                    continue;
+                else  
+                    change.Add(list[x]);
+            }
+            if (!isnull)
+            {
+                MyList = change;
+                dataGridProxies.ItemsSource = MyList;
+                IPList.Clear();
+            }
           
         }
 
@@ -272,7 +314,7 @@ namespace WpfApp1
                     if(status)
                          IPList.Add(s.ElapsedMilliseconds.ToString() + "ms");
                     else
-                        IPList.Add("Bad");
+                         IPList.Add("Bad");
 
                 }
                 else if (linenumber.Count == 4)
@@ -303,20 +345,18 @@ namespace WpfApp1
 
             var list = MyList.ToList();
             var change = new ObservableCollection<Ip>();
-            for (var x = 0;  x < list.Count; x++)
+            if (url.Text != "")
             {
-               
+                for (var x = 0; x < list.Count; x++)
+                {
                     list[x].Status = IPList[x];
                     change.Add(list[x]);
-                
-             
-               
-            }
-            MyList = change;
-            dataGridProxies.ItemsSource = MyList;
-            IPList.Clear();
-           
+                }
+                MyList = change;
+                dataGridProxies.ItemsSource = MyList;
+                IPList.Clear();
 
+            }
 
         }
 
