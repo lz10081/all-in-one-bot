@@ -20,7 +20,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Net.Sockets;
-
+using System.Collections.ObjectModel;
 
 namespace WpfApp1
 {
@@ -29,11 +29,13 @@ namespace WpfApp1
     /// </summary>
     public partial class proxypage : Page
     {
+        ObservableCollection<Ip> MyList = new ObservableCollection<Ip>();
         public proxypage()
         {
             InitializeComponent();
             TextRange range;
             FileStream fStream;
+           
             if (System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\" + "proxy.txt"))
             {
                 range = new TextRange(proxy.Document.ContentStart, proxy.Document.ContentEnd);
@@ -41,8 +43,55 @@ namespace WpfApp1
                 range.Load(fStream, System.Windows.DataFormats.Text);
                 fStream.Close();
             }
+            #region dataGridProxies Settings
+            dataGridProxies.ItemsSource = MyList;
+            dataGridProxies.AutoGenerateColumns = false;
+            dataGridProxies.IsReadOnly = true;
+            dataGridProxies.SelectionMode = DataGridSelectionMode.Single;
+            DataGridTextColumn c = new DataGridTextColumn();
+            c = new DataGridTextColumn();
+            c.Header = "IP";
+            c.Binding = new Binding("IP");
+            c.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            dataGridProxies.Columns.Add(c);
+
+            c = new DataGridTextColumn();
+            c.Header = "Port";
+            c.Binding = new Binding("Port");
+            c.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            dataGridProxies.Columns.Add(c);
+
+            c = new DataGridTextColumn();
+            c.Header = "Username";
+            c.Binding = new Binding("Username");
+            c.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            dataGridProxies.Columns.Add(c);
+
+            c = new DataGridTextColumn();
+            c.Header = "Password";
+            c.Binding = new Binding("Password");
+            c.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            dataGridProxies.Columns.Add(c);
+
+            c = new DataGridTextColumn();
+            c.Header = "Status";
+            c.Binding = new Binding("Status");
+            c.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            dataGridProxies.Columns.Add(c);
+            #endregion
 
         }
+        public class Ip
+        {
+            public string IP { get; set; }
+            public string Port { get; set; }
+            public string Username { get; set; }
+            public string Password { get; set; }
+
+            public string Status { get; set; }
+
+        }
+
         private void Save(object sender, RoutedEventArgs e)
         {
             string richText = new TextRange(proxy.Document.ContentStart, proxy.Document.ContentEnd).Text;
@@ -92,10 +141,84 @@ namespace WpfApp1
 
             }
 
-
+            Ip playerList = new Ip();
+            playerList.Status = status.ToString();
+            MyList.Add(playerList);
 
             return status;
         }
+        private void buttonImportProxies_Click(object sender, RoutedEventArgs e)
+        {
+
+            import.Visibility = Visibility.Visible;
+
+
+        }
+        private void OKButton_Click(object sender, RoutedEventArgs e)
+        {
+            string richText = new TextRange(proxytest.Document.ContentStart, proxytest.Document.ContentEnd).Text;
+            var lines = richText.Split('\n').ToList();
+
+            foreach (string line in lines)
+            {
+                if (!parseProxy(line))
+                {
+              
+                    break;
+                }
+            }
+
+            import.Visibility = Visibility.Hidden;
+        }
+        private bool parseProxy(string proxy)
+        {
+            string[] proxyParts = null;
+            string ip;
+            string port;
+            try
+            {
+                proxyParts = proxy.Split(':');
+                ip = proxyParts[0];
+                string replacement = Regex.Replace(proxyParts[1].ToString(), @"\t|\n|\r", "");
+                port = replacement;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            string username = null;
+            string password = null;
+
+            try
+            {
+                if (proxyParts.Length == 4)
+                {
+                    username = proxyParts[2];
+                    string replacement = Regex.Replace(proxyParts[3].ToString(), @"\t|\n|\r", "");
+                    password = replacement;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            Ip playerList = new Ip();
+            playerList.IP = ip;
+            playerList.Port = port;
+            playerList.Username = username;
+            playerList.Password = password; 
+            MyList.Add(playerList);
+            return true;
+
+        }
+       
+
+        private void buttonRemoveFalse_Click(object sender, RoutedEventArgs e)
+        {
+          
+        }
+
         private async void proxyCheckWorker()
         {
             string richText = new TextRange(proxytest.Document.ContentStart, proxytest.Document.ContentEnd).Text;
@@ -125,9 +248,14 @@ namespace WpfApp1
 
                         string replacement = Regex.Replace(linenumber[3].ToString(), @"\t|\n|\r", "");
                         bool status = false;
-                        status = await check(linenumber[0], Int32.Parse(linenumber[1].ToString()), linenumber[2].ToString(), replacement, url.Text);
-                        Console.WriteLine(status);
-                        addLable(status.ToString());
+                        Stopwatch s = new Stopwatch();
+                        s.Start();
+                         status = await check(linenumber[0], Int32.Parse(linenumber[1].ToString()), linenumber[2].ToString(), replacement, url.Text);
+                    s.Stop();
+                    Console.WriteLine(status);
+                    Console.WriteLine(s.ElapsedMilliseconds.ToString() + "ms"
+                        );
+                    addLable(status.ToString());
                 }
 
             }
@@ -139,7 +267,7 @@ namespace WpfApp1
         {
 
             proxyCheckWorker();
-
+            
         }
 
         public System.Windows.Controls.Label addLable(String text) /// set next to proxy tester not working yet
@@ -152,6 +280,10 @@ namespace WpfApp1
             return label;
         }
 
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
 
