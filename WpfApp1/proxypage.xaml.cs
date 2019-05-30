@@ -21,6 +21,7 @@ using System.Net.Http.Headers;
 using System.Threading;
 using System.Net.Sockets;
 using System.Collections.ObjectModel;
+using RestSharp;
 
 namespace WpfApp1
 {
@@ -103,7 +104,29 @@ namespace WpfApp1
             range = new TextRange(proxytest.Document.ContentStart, proxytest.Document.ContentEnd);
             range.Text = "";
         }
-        public async Task<bool> check(String proxyURL, int port, String username, String password, String testurl)
+        public bool check2(String proxyURL, int port, String username, String password, String testurl) // RestSharp Client
+        {
+            bool status = false;
+            var client = new RestClient(testurl);
+            client.Proxy = new WebProxy(proxyURL + ":" + port, false);
+            if (username != null && password != null) client.Proxy.Credentials = new NetworkCredential(username, password);
+            var response =  client.Execute(new RestRequest());
+           
+            Console.WriteLine(response.ResponseStatus);
+            if (response.ResponseStatus.ToString() == "Completed")
+            {
+                status = true;
+            }
+              
+
+            Ip playerList = new Ip();
+            playerList.Status = status.ToString();
+            MyList.Add(playerList);
+
+            return status;
+        }
+
+        public async Task<bool> check(String proxyURL, int port, String username, String password, String testurl) // HttpClient didn't work on some site move on to RestSharp now
         {
             bool status = false;
 
@@ -147,6 +170,7 @@ namespace WpfApp1
 
             return status;
         }
+
         private void buttonImportProxies_Click(object sender, RoutedEventArgs e)
         {
 
@@ -219,7 +243,7 @@ namespace WpfApp1
           
         }
 
-        private async void proxyCheckWorker()
+        private  void proxyCheckWorker()
         {
             string richText = new TextRange(proxytest.Document.ContentStart, proxytest.Document.ContentEnd).Text;
             var lines = richText.Split('\n').ToList();
@@ -238,7 +262,7 @@ namespace WpfApp1
                 {
                     string replacement = Regex.Replace(linenumber[1].ToString(), @"\t|\n|\r", "");
                     bool status = false;
-                    status = await check(linenumber[0], Int32.Parse(replacement), null, null, url.Text);
+                    status =  check2(linenumber[0], Int32.Parse(replacement), null, null, url.Text);
                     Console.WriteLine(status);
                     addLable(status.ToString());
 
@@ -250,7 +274,7 @@ namespace WpfApp1
                         bool status = false;
                         Stopwatch s = new Stopwatch();
                         s.Start();
-                         status = await check(linenumber[0], Int32.Parse(linenumber[1].ToString()), linenumber[2].ToString(), replacement, url.Text);
+                         status =  check2(linenumber[0], Int32.Parse(linenumber[1].ToString()), linenumber[2].ToString(), replacement, url.Text);
                     s.Stop();
                     Console.WriteLine(status);
                     Console.WriteLine(s.ElapsedMilliseconds.ToString() + "ms"
