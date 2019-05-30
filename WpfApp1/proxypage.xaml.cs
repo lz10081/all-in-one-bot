@@ -21,6 +21,7 @@ using System.Net.Http.Headers;
 using System.Threading;
 using System.Net.Sockets;
 
+
 namespace WpfApp1
 {
     /// <summary>
@@ -53,11 +54,53 @@ namespace WpfApp1
             range = new TextRange(proxytest.Document.ContentStart, proxytest.Document.ContentEnd);
             range.Text = "";
         }
-        private void Test(object sender, RoutedEventArgs e)
+        public async Task<bool> check(String proxyURL, int port, String username, String password, String testurl)
+        {
+            bool status = false;
+
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.UseProxy = true;
+            WebProxy proxy = new WebProxy(proxyURL + ":" + port, false);
+            if (username != null && password != null) proxy.Credentials = new NetworkCredential(username, password);
+            handler.Proxy = proxy;
+            handler.ClientCertificateOptions = ClientCertificateOption.Automatic;
+
+            using (HttpClient client = new HttpClient(handler))
+            {
+                // timeout - make it cutomizable
+                client.Timeout = TimeSpan.FromSeconds(60);
+
+                try
+                {
+                    using (HttpResponseMessage response = await client.GetAsync(testurl))
+                    {
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            //Console.WriteLine("Proxy cool");
+                            status = true;
+                        }
+                        else
+                        {
+                            //Console.WriteLine(response.StatusCode.ToString());
+                        }
+                    }
+                }
+                catch
+                {
+                    status = false;
+                }
+
+            }
+
+
+
+            return status;
+        }
+        private async void proxyCheckWorker()
         {
             string richText = new TextRange(proxytest.Document.ContentStart, proxytest.Document.ContentEnd).Text;
             var lines = richText.Split('\n').ToList();
-            
+
             foreach (var line in lines) // read text line by line
             {
                 if (url.Text == "")
@@ -66,106 +109,48 @@ namespace WpfApp1
                     break;
                 }
                 var linenumber = line.Split(':').ToList();  // 4  is user with pass word 2 just ip + port
-                
-             
+
+
                 if (linenumber.Count == 2)
                 {
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url.Text);
                     string replacement = Regex.Replace(linenumber[1].ToString(), @"\t|\n|\r", "");
-                    WebProxy myproxy = proxysent("http://" + linenumber[0], Int32.Parse(replacement));
+                    bool status = false;
+                    status = await check(linenumber[0], Int32.Parse(replacement), null, null, url.Text);
+                    Console.WriteLine(status);
+                    addLable(status.ToString());
 
-                    request.Proxy = myproxy;   // set proxy here
-                    request.Timeout = 10000;
-                    request.Method = "HEAD";
-                    Stopwatch sw = Stopwatch.StartNew();
-                    try
-                    {
-                        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                        {
-
-                             Console.WriteLine(response.StatusCode);
-                        }
-                        sw.Stop();
-                        //  Console.WriteLine("Request took {0}", sw.Elapsed.Milliseconds);
-                    }
-                    catch
-                    {
-                         Console.WriteLine("404");
-                    }
-                    // Do something.
                 }
                 else if (linenumber.Count == 4)
                 {
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url.Text);
-                 
-                    if(linenumber[3].ToString() != "")
-                    {
-                      
 
-
-                        string replacement = Regex.Replace(linenumber[3].ToString(), @"\t|\n|\r", ""); 
-                        WebProxy myproxy = upsent("http://" + linenumber[0].ToString(), Int32.Parse(linenumber[1].ToString()), linenumber[2].ToString(), replacement); ///"xyeb"   fixed the the reason didn't work was new line didn't get remove
-                        // WebProxy myproxy = upsent("http://" + linenumber[0].ToString(), Int32.Parse(linenumber[1].ToString()), linenumber[2].ToString(), linenumber[3].ToString());
-
-                        request.Proxy = myproxy;   // set proxy here
-                        request.Timeout = 10000;
-                        request.Method = "HEAD";
-                        Stopwatch sw = Stopwatch.StartNew();
-                        try
-                        {
-                            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                            {
-
-                                Console.WriteLine(response.StatusCode );                                    // it show it the cmd now just need to think how we can show it to the user and retrun in ms 
-                            }
-                            sw.Stop();
-                            //  Console.WriteLine("Request took {0}", sw.Elapsed.Milliseconds);
-                        }
-                        catch
-                        {
-                            Console.WriteLine("404");
-                        }
-                    }
-                
+                        string replacement = Regex.Replace(linenumber[3].ToString(), @"\t|\n|\r", "");
+                        bool status = false;
+                        status = await check(linenumber[0], Int32.Parse(linenumber[1].ToString()), linenumber[2].ToString(), replacement, url.Text);
+                        Console.WriteLine(status);
+                        addLable(status.ToString());
                 }
-                // we want to check the type of proxy first 
-                //Console.WriteLine(line);
-                // access a line, evaluate it, etc.
+
             }
 
-          
-             
-            
-           
-          
-          
         }
 
-        public WebProxy upsent(String proxyURL, int port, String username, String password) // set up username password proxy
+
+        private void Test(object sender, RoutedEventArgs e)
         {
-            //Validate proxy address
-            var proxyURI = new Uri(string.Format("{0}:{1}", proxyURL, port));
 
-            //Set credentials
-            ICredentials credentials = new NetworkCredential(username, password);
+            proxyCheckWorker();
 
-            //Set proxy
-            WebProxy proxy = new WebProxy(proxyURI, true, null, credentials);
-            return proxy;
         }
-        public WebProxy proxysent(String proxyURL, int port) // set up non  username password  proxy
+
+        public System.Windows.Controls.Label addLable(String text) /// set next to proxy tester not working yet
         {
-            //Validate proxy address
-            var proxyURI = new Uri(string.Format("{0}:{1}", proxyURL, port));
-
-            //Set proxy
-            WebProxy proxy = new WebProxy(proxyURI, true, null, null);
-            return proxy;
+            System.Windows.Controls.Label label = new System.Windows.Controls.Label();
+            label.Content = text;
+            var x = 74;
+            label.Margin = new Thickness(933, 100, 0, 0);
+            x = x + 10;
+            return label;
         }
-
-
-
-
 
     }
 }

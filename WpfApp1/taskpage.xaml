@@ -38,7 +38,7 @@
             <TextBox x:Name="size" Background="White" BorderBrush="Black" materiaDesign:HintAssist.Hint="Size"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="400,103,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="295" />
             <ComboBox x:Name="Profile" Background="White" HorizontalAlignment="Left"    BorderBrush="Black" materiaDesign:HintAssist.Hint="Profile"  FontSize="20" BorderThickness="2,2,2,2" Margin="834,103,0,0"  VerticalAlignment="Top" Width="276" Height="40"/>
             <TextBox x:Name="Quantity" Background="White" BorderBrush="Black"  materiaDesign:HintAssist.Hint="Quantity"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="34,229,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" />
-            <Button x:Name="Create"  BorderBrush="Black" Content="Create" HorizontalAlignment="Left" Margin="940,303,0,0" VerticalAlignment="Top" Width="146" Height="60" RenderTransformOrigin="0.298,0.525"/>
+            <Button x:Name="Create"  BorderBrush="Black" Click="Start" Content="Create" HorizontalAlignment="Left" Margin="940,303,0,0" VerticalAlignment="Top" Width="146" Height="60" RenderTransformOrigin="0.298,0.525"/>
         </Grid>
 
 
