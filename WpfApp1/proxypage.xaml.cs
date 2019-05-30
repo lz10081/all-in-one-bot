@@ -233,12 +233,17 @@ namespace WpfApp1
             try
             {
                 proxyParts = proxy.Split(':');
+
+                if (proxyParts == null || proxyParts.Length <= 1)
+                    return false;
+
                 ip = proxyParts[0];
                 string replacement = Regex.Replace(proxyParts[1].ToString(), @"\t|\n|\r", "");
                 port = replacement;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return false;
             }
 
