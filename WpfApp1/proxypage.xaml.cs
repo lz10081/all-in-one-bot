@@ -22,6 +22,7 @@ using System.Threading;
 using System.Net.Sockets;
 using System.Collections.ObjectModel;
 using RestSharp;
+using ZenAIO;
 
 namespace WpfApp1
 {
@@ -95,22 +96,10 @@ namespace WpfApp1
 
         }
 
-        /// <summary>
-        /// Gets the file from the app's base directory.
-        /// 
-        /// Note: This gets called a lot, consider moving this to a static variable or seperate utility class.
-        /// </summary>
-        /// <param name="file"></param>
-        /// <returns>string path</returns>
-        private static string GetPath(string file)
-        {
-            return System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, file);
-        }
-
         private void Save(object sender, RoutedEventArgs e)
         {
             string richText = new TextRange(proxy.Document.ContentStart, proxy.Document.ContentEnd).Text;
-            System.IO.File.WriteAllText(GetPath("proxy.txt"), richText);
+            System.IO.File.WriteAllText(Utils.GetPath("proxy.txt"), richText);
         }
         private void Remove(object sender, RoutedEventArgs e)
         {
@@ -136,7 +125,7 @@ namespace WpfApp1
         }
         private void Export(object sender, RoutedEventArgs e)
         {
-            string path = GetPath("workingproxy.txt");
+            string path = Utils.GetPath("workingproxy.txt");
             var list = MyList.ToList();
             System.IO.File.WriteAllText(path, "");
 
@@ -350,8 +339,8 @@ namespace WpfApp1
 
                     if (!int.TryParse(replacement, out port))
                     {
-                       Console.WriteLine("Failed to parse port number \"{0}\"", replacement);
-                       continue;
+                        Console.WriteLine("Failed to parse port number \"{0}\"", replacement);
+                        continue;
                     }
 
                     proxyCheck.Port = port;
@@ -446,8 +435,6 @@ namespace WpfApp1
 
             public bool check(out long elapsedMS)
             {
-                
-
                 bool status = false;
 
                 var client = new RestClient(TestURL);

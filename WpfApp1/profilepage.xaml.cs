@@ -18,6 +18,7 @@ using System.Windows.Markup;
 using System.IO;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
+using ZenAIO;
 
 namespace WpfApp1
 {
@@ -47,24 +48,12 @@ namespace WpfApp1
                 Year.Items.Add(a);
             }
 
-            string path = GetPath("Profile.json");
+            string path = Utils.GetPath("Profile.json");
 
             // Checks if a profile exists or not. If not, will create a default profile.
             // Else (does exist) prompts us to read the file in like normal.
             if (CreateDefaultProfile(ref path))
                 ReadProfile(ref path);
-        }
-
-        /// <summary>
-        /// Gets the file from the app's base directory.
-        /// 
-        /// Note: This gets called a lot, consider moving this to a static variable or seperate utility class.
-        /// </summary>
-        /// <param name="file"></param>
-        /// <returns>string path</returns>
-        private static string GetPath(string file)
-        {
-            return System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, file);
         }
 
         /// <summary>
@@ -403,7 +392,7 @@ namespace WpfApp1
 
         private void Createporfile(object sender, RoutedEventArgs e)
         {
-            string path = GetPath("Profile.json");
+            string path = Utils.GetPath("Profile.json");
 
             //cmd.Parameters.AddWithValue("@country", this.countryComboBox.SelectedItem.ToString()); add country
 
@@ -902,7 +891,7 @@ namespace WpfApp1
         //cmd.Parameters.AddWithValue("@country", this.countryComboBox.SelectedItem.ToString()); add country
         private void Removeporfile(object sender, RoutedEventArgs e)
         {
-            string path = GetPath("Profile.json");
+            string path = Utils.GetPath("Profile.json");
 
             var lines = File.ReadLines(path);
             //var playerList = JsonConvert.DeserializeObject<List<NotusdataWship>>(json);
