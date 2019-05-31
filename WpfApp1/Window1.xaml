@@ -112,7 +112,7 @@
                 </Grid>
             </Controls:MetroTabItem>
 
-            <Controls:MetroTabItem Header="page"  Margin="339,4,-394,-13">
+            <Controls:MetroTabItem Header="page" Foreground="White"  Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"  BorderBrush="Black"  Controls:ControlsHelper.HeaderFontSize="18" Margin="339,4,-380,-13" RenderTransformOrigin="0.49,0.571">
             </Controls:MetroTabItem>
         </Controls:MetroAnimatedTabControl>
     </Grid>
