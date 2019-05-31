@@ -453,7 +453,7 @@ namespace WpfApp1
                 s.Stop();
                 elapsedMS = s.ElapsedMilliseconds;
 
-                if (response.ResponseStatus.ToString() == "Completed")
+                if (response.IsSuccessful)
                 {
                     status = true;
                 }

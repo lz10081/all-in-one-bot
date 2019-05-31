@@ -44,7 +44,12 @@ namespace ZenAIO
             get; set;
         }
 
-        public WebProxy GetClient()
+        public bool HasAuthentication()
+        {
+            return !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password);
+        }
+
+        public WebProxy GetWebProxy()
         {
             if (proxy == null)
             {

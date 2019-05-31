@@ -13,17 +13,9 @@ namespace ZenAIO
         {
         }
 
-        protected override bool Scrape()
+        protected override bool Scrape(ref string content)
         {
             return false;
-        }
-
-        public override bool Available()
-        {
-            if (!Download())
-                return false;
-
-            return Scrape();
         }
 
     }
