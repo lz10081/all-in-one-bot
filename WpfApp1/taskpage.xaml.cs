@@ -32,7 +32,7 @@ namespace WpfApp1
             {
                 str = str + ", " + file.Name;
 
-                Profile.Items.Add(file.Name);
+                //Profile.Items.Add(file.Name);
             }
            
 

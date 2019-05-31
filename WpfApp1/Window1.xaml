@@ -4,39 +4,37 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
+        xmlns:materiaDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:fw ="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         fw:AcrylicWindow.ShowTitleBar="False"
         mc:Ignorable="d"
         fw:AcrylicWindow.Enabled="True"
-      
-      
+         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
          WindowStartupLocation="CenterScreen"
         Title="Zen Aio" Height="800" Width="1500">
     <Grid>
-        
+
         <Frame x:Name="Main" NavigationUIVisibility="Hidden" Margin="0,0,0,-36"></Frame>
         <Grid MouseDown="mouse" HorizontalAlignment="Left" Height="66"   Background="#FF975757" VerticalAlignment="Top" Width="1500">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-            
+
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
-                <Button x:Name="Tasks"  Click="TasksClicked" Foreground="White"  Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9" BorderBrush="Black" Content="Tasks" HorizontalAlignment="Left" Margin="40,24,0,0" VerticalAlignment="Top" Width="111"/>
             <Button x:Name="Profiles" Click="ProfilesClicked"  Foreground="White"  Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"  BorderBrush="Black" Content="Profiles" HorizontalAlignment="Left" Margin="560,24,0,0" VerticalAlignment="Top" Width="119"/>
             <Button x:Name="Proxy"  Click="ProxyClicked" Foreground="White"  Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"  BorderBrush="Black" Content="Proxy Tester" HorizontalAlignment="Left" Margin="849,24,0,0" VerticalAlignment="Top" Width="130"/>
             <Button x:Name="Copped" Click="CoppedClicked" Foreground="White" Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"   BorderBrush="Black"  Content="Copped" HorizontalAlignment="Left" Margin="1110,24,0,0" VerticalAlignment="Top" Width="102"/>
             <Button x:Name="Setting"  Click="SettingClicked" Foreground="White" Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"  BorderBrush="Black"  HorizontalAlignment="Left" Margin="1247,24,0,0" VerticalAlignment="Top" Width="102">
-                <materialDesign:PackIcon Kind="Settings" Height="29" Width="41"/>
+                <materiaDesign:PackIcon Kind="Settings" Height="29" Width="41"/>
             </Button>
-            <Button x:Name="View"  Click="ViewClicked" Foreground="White" Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9" BorderBrush="Black" Content="View Tasks" HorizontalAlignment="Left" Margin="278,24,0,0" VerticalAlignment="Top" Width="111"/>
+
             <Button x:Name="Minus"  Click="MinusClicked" Foreground="White" Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"  BorderBrush="Black"  HorizontalAlignment="Left" Margin="1354,24,0,0" VerticalAlignment="Top" Width="70">
-                <materialDesign:PackIcon Kind="Minus" Height="29" Width="41"/>
+                <materiaDesign:PackIcon Kind="Minus" Height="29" Width="41"/>
             </Button>
             <Button x:Name="Close"  Click="CloseClicked" Foreground="White" Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"  BorderBrush="Black"  HorizontalAlignment="Left" Margin="1429,24,0,0" VerticalAlignment="Top" Width="61">
-                <materialDesign:PackIcon Kind="Close" Height="29" Width="41"/>
+                <materiaDesign:PackIcon Kind="Close" Height="29" Width="41"/>
             </Button>
         </Grid>
         <Grid HorizontalAlignment="Left" Height="45"   Background="#FF0F2525" VerticalAlignment="Bottom" Width="1500" Margin="0,0,-8,0">
@@ -54,6 +52,68 @@
             <Button x:Name="Copped1"  Foreground="White" Background="Transparent"   BorderBrush="Black"  Content="Twitter" HorizontalAlignment="Left" Margin="692,10,0,0"  Padding="0" BorderThickness="0" Opacity="0.9" VerticalAlignment="Top" Width="102"/>
             <Button x:Name="Setting1"   Foreground="White" Background="Transparent"  BorderBrush="Black"  Content="Discord" HorizontalAlignment="Left" Margin="824,10,0,0"  Padding="0" BorderThickness="0" Opacity="0.9" VerticalAlignment="Top" Width="102"/>
         </Grid>
+        <Controls:MetroAnimatedTabControl x:Name="tabControl" Margin="-5,24,5,0">
+            <Controls:MetroTabItem Header="Tasks" Margin="56,5,-99,-11">
+                <Grid Background="#FFE5E5E5" Margin="0,23,0,46">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="32"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid HorizontalAlignment="Left" Height="187" Margin="18,39,0,0"  Opacity="0.9"  Background="#FF0F2525" VerticalAlignment="Top" Width="1382" Grid.Column="1">
+                        <Button x:Name="Solebox"  Click="SoleboxClicked" BorderBrush="Black"  Background="Black" HorizontalAlignment="Left" Margin="30,10,0,0" VerticalAlignment="Top" Width="199" RenderTransformOrigin="-0.083,0.532" Height="167">
+                            <Image Source="C:\Users\luxing\source\repos\NewRepo\WpfApp1\image\box.jpg"></Image>
+                        </Button>
+                        <Button x:Name="button_Copy"  BorderBrush="Black" HorizontalAlignment="Left" Background="Black"  Margin="255,10,0,0" VerticalAlignment="Top" Width="199" RenderTransformOrigin="-0.083,0.532" Height="167">
+                            <Image Source="C:\Users\luxing\source\repos\NewRepo\WpfApp1\image\sns.jpg" Width="189"></Image>
+                        </Button>
+                        <Button x:Name="button_Copy1" BorderBrush="Black"   HorizontalAlignment="Left" Margin="490,10,0,0" VerticalAlignment="Top" Width="199" RenderTransformOrigin="-0.083,0.532" Height="167" Padding="0" Grid.IsSharedSizeScope="True">
+                            <Image Source="C:\Users\luxing\source\repos\NewRepo\WpfApp1\image\svd.png" Width="199" Height="167" Stretch="UniformToFill"/>
+                        </Button>
+                        <Button x:Name="button_Copy2"  BorderBrush="Black"  HorizontalAlignment="Left" Margin="737,10,0,0" VerticalAlignment="Top" Width="199" RenderTransformOrigin="-0.083,0.532" Height="167" Padding="0,-5,0,0">
+                            <Image Source="C:\Users\luxing\source\repos\NewRepo\WpfApp1\image\Caliroots.png" Width="199" Stretch="UniformToFill"/>
+                        </Button>
+                        <Button x:Name="button_Copy3"  BorderBrush="Black" Content="Coming Soon" HorizontalAlignment="Left" Margin="973,10,0,0" VerticalAlignment="Top" Width="199" RenderTransformOrigin="-0.083,0.532" Height="167" />
 
+                    </Grid>
+
+                    <Grid HorizontalAlignment="Left" Background="#FF0F2525"   Height="401" Margin="18,246,0,0" VerticalAlignment="Top" Width="1382" Grid.Column="1">
+
+                        <Label x:Name="labe3" FontStyle="Italic" Foreground="White" FontSize="20"  BorderThickness="2,2,2,2" Content="Create tasks" HorizontalAlignment="Left" Margin="34,28,0,0" VerticalAlignment="Top" Width="141"/>
+
+                        <TextBox x:Name="url" Background="White"  BorderBrush="Black"  materiaDesign:HintAssist.Hint="URL"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="34,103,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" />
+                        <TextBox x:Name="size" Background="White" BorderBrush="Black" materiaDesign:HintAssist.Hint="Size"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="400,103,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="295" />
+                        <ComboBox x:Name="Profile" Background="White" HorizontalAlignment="Left"    BorderBrush="Black" materiaDesign:HintAssist.Hint="Profile"  FontSize="20" BorderThickness="2,2,2,2" Margin="834,103,0,0"  VerticalAlignment="Top" Width="276" Height="40"/>
+                        <TextBox x:Name="Quantity" Background="White" BorderBrush="Black"  materiaDesign:HintAssist.Hint="Quantity"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="34,229,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" />
+                        <Button x:Name="Create"  BorderBrush="Black" Click="Start" Content="Create" HorizontalAlignment="Left" Margin="940,303,0,0" VerticalAlignment="Top" Width="146" Height="60" RenderTransformOrigin="0.298,0.525"/>
+                    </Grid>
+                </Grid>
+            </Controls:MetroTabItem>
+            <Controls:MetroTabItem Header="View" Margin="197,5,-231,-10">
+                <Grid Background="#FFE5E5E5" Margin="5,25,0,45">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" MinHeight="12"/>
+                        <RowDefinition Height="Auto" MinHeight="44"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="buttonRemoveProxy" Content="Start All" Grid.Row="1" Grid.Column="0" Height="Auto"  Margin="112,5,111,0"/>
+                    <DataGrid x:Name="dataGridProxies" Grid.Row="2" Grid.ColumnSpan="4" Margin="10,20,10,10"/>
+                    <Button x:Name="Stop" Content="Stop All" Grid.Row="1" Grid.Column="1" Height="Auto"  Margin="114,5,109,0"/>
+                    <Button x:Name="buttonRemoveProxy_Copy1" Content="Remove All" Grid.Row="1" Grid.Column="2" Height="Auto" Margin="121,5,102,0"/>
+                    <Button x:Name="buttonRemoveProxy_Copy2" Content="Remove" Grid.Row="1" Grid.Column="3" Height="Auto" Margin="136,5,87,0"/>
+
+                </Grid>
+            </Controls:MetroTabItem>
+
+            <Controls:MetroTabItem Header="page"  Margin="339,4,-394,-13">
+            </Controls:MetroTabItem>
+        </Controls:MetroAnimatedTabControl>
     </Grid>
 </Window>

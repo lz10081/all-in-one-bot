@@ -40,8 +40,6 @@ namespace WpfApp1
                 range.Load(fStream, System.Windows.DataFormats.Text);
                 fStream.Close();
             }
-
-
         }
 
         private void Save(object sender, RoutedEventArgs e)
@@ -70,16 +68,16 @@ namespace WpfApp1
                     Description = "Testing.."
 
                 };
-                embed.AddField("Product",
-            "Yeezy 350 V2")
-          .WithFooter(footer => footer.Text = "Zen Aio")
-           //.WithFooter(footer => )
-           .WithColor(Discord.Color.Blue)
-           .WithCurrentTimestamp()
-           .WithImageUrl("https://www.flightclub.com/media/catalog/product/cache/1/image/1600x1140/9df78eab33525d08d6e5fb8d27136e95/2/0/201519_1.jpg")
-           .Build();
-                embed.Footer.IconUrl = "https://cdn.discordapp.com/attachments/561322271935823893/580919251670663168/Zen.jpg";
-                s.SendMessageAsync(text: "COPPED!", embeds: new[] { embed.Build() });
+                   embed.AddField("Product",
+                   "Yeezy 350 V2")
+                   .WithFooter(footer => footer.Text = "Zen Aio")
+                   //.WithFooter(footer => )
+                   .WithColor(Discord.Color.Blue)
+                   .WithCurrentTimestamp()
+                   .WithImageUrl("https://www.flightclub.com/media/catalog/product/cache/1/image/1600x1140/9df78eab33525d08d6e5fb8d27136e95/2/0/201519_1.jpg")
+                   .Build();
+                    embed.Footer.IconUrl = "https://cdn.discordapp.com/attachments/561322271935823893/580919251670663168/Zen.jpg";
+                    s.SendMessageAsync(text: "COPPED!", embeds: new[] { embed.Build() });
             }
             catch
             {
