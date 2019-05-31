@@ -88,8 +88,8 @@
                     </Grid>
                 </Grid>
             </Controls:MetroTabItem>
-            <Controls:MetroTabItem Header="View" Margin="197,5,-231,-10">
-                <Grid Background="#FFE5E5E5" Margin="5,25,0,45">
+            <Controls:MetroTabItem Header="View" Margin="197,5,-231,-10" HorizontalAlignment="Left" Width="74">
+                <Grid Background="#FFE5E5E5" Margin="0,20,-4,45">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" MinHeight="12"/>
@@ -98,18 +98,22 @@
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="373*" />
+                        <ColumnDefinition Width="375*" />
+                        <ColumnDefinition Width="374*" />
+                        <ColumnDefinition Width="374*" />
                     </Grid.ColumnDefinitions>
                     <Button x:Name="buttonRemoveProxy" Content="Start All" Grid.Row="1" Grid.Column="0" Height="Auto"  Margin="112,5,111,0"/>
-                    <DataGrid x:Name="dataGridProxies" Grid.Row="2" Grid.ColumnSpan="4" Margin="10,20,10,10"/>
+                    <DataGrid x:Name="dataGridProxies" Grid.Row="2" Grid.ColumnSpan="4" Margin="0,20,20,10">
+
+
+
+                    </DataGrid>
                     <Button x:Name="Stop" Content="Stop All" Grid.Row="1" Grid.Column="1" Height="Auto"  Margin="114,5,109,0"/>
                     <Button x:Name="buttonRemoveProxy_Copy1" Content="Remove All" Grid.Row="1" Grid.Column="2" Height="Auto" Margin="121,5,102,0"/>
-                    <Button x:Name="buttonRemoveProxy_Copy2" Content="Remove" Grid.Row="1" Grid.Column="3" Height="Auto" Margin="136,5,87,0"/>
 
                 </Grid>
+                
             </Controls:MetroTabItem>
 
             <Controls:MetroTabItem Header="page" Foreground="White"  Background="Transparent"  Padding="0" BorderThickness="0" Opacity="0.9"  BorderBrush="Black"  Controls:ControlsHelper.HeaderFontSize="18" Margin="339,4,-380,-13" RenderTransformOrigin="0.49,0.571">

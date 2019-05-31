@@ -42,6 +42,82 @@ namespace WpfApp1
 
                 //Profile.Items.Add(file.Name);
             }
+            #region dataGridProxies Settings
+            dataGridProxies.ItemsSource = "";
+           
+            dataGridProxies.AutoGenerateColumns = false;
+            dataGridProxies.IsReadOnly = true;
+            dataGridProxies.SelectionMode = DataGridSelectionMode.Single;
+            DataGridTextColumn c = new DataGridTextColumn();
+            DataGridTemplateColumn x = new DataGridTemplateColumn();
+            c = new DataGridTextColumn();
+            c.Header = "#";
+            c.Binding = new Binding("ID");
+            c.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            dataGridProxies.Columns.Add(c);
+
+            c = new DataGridTextColumn();
+            c.Header = "Site";
+            c.Binding = new Binding("Site");
+            c.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            dataGridProxies.Columns.Add(c);
+
+            c = new DataGridTextColumn();
+            c.Header = "Size";
+            c.Binding = new Binding("Size");
+            c.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            dataGridProxies.Columns.Add(c);
+
+            c = new DataGridTextColumn();
+            c.Header = "Product";
+            c.Binding = new Binding("Product");
+            c.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            dataGridProxies.Columns.Add(c);
+
+            c = new DataGridTextColumn();
+            c.Header = "Billing";
+            c.Binding = new Binding("Billing");
+            c.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            dataGridProxies.Columns.Add(c);
+
+            c = new DataGridTextColumn();
+            c.Header = "Proxy";
+            c.Binding = new Binding("Proxy");
+            c.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            dataGridProxies.Columns.Add(c);
+
+            c = new DataGridTextColumn();
+            c.Header = "Status";
+            c.Binding = new Binding("Status");
+            c.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+          
+            dataGridProxies.Columns.Add(c);
+
+            x = new DataGridTemplateColumn();
+            Button a = new Button();
+
+            x.Header = "Acotion";
+           // x.CellTemplate.Template = t1.Template;
+            dataGridProxies.Columns.Add(x);
+
+            // < DataGridTemplateColumn Header = "Acotion" >
+
+            //           < DataGridTemplateColumn.CellTemplate >
+
+            //        < DataTemplate >
+            //     < Button Name = "bt" Content = "here" ></ Button >
+            //
+            //  </ DataTemplate >
+
+            //   </ DataGridTemplateColumn.CellTemplate >
+
+
+            //   </ DataGridTemplateColumn >
+
+
+
+            #endregion
+
         }
         private void mouse(object sender, MouseButtonEventArgs e)
         {
