@@ -345,7 +345,7 @@ namespace WpfApp1
 
                     proxyCheck.Port = port;
                     proxyCheck.Username = linenumber[2].ToString();
-                    proxyCheck.Password = replacement;
+                    proxyCheck.Password = linenumber[3].ToString(); // was set to port
                 }
 
                 else
@@ -436,17 +436,19 @@ namespace WpfApp1
             public bool check(out long elapsedMS)
             {
                 bool status = false;
+                RestClient client = new RestClient();
 
-                var client = new RestClient(TestURL);
-                client.Proxy = new WebProxy(ProxyURL + ":" + Port, false);
-
+                    //var client = new RestClient(TestURL);
+                client.Proxy = new WebProxy("http://"+ProxyURL + ":" + Port, false);
+                Console.WriteLine("http://" + ProxyURL + ":" + Port);
                 if (!string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password))
                     client.Proxy.Credentials = new NetworkCredential(Username, Password);
-
+                
+                Console.WriteLine(Username + ":" + Password);
                 Stopwatch s = new Stopwatch();
                 s.Start();
 
-                var response = client.Execute(new RestRequest());
+                var response = client.Execute(new RestRequest(TestURL));
 
                 s.Stop();
                 elapsedMS = s.ElapsedMilliseconds;
