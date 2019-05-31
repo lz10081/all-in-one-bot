@@ -60,5 +60,17 @@ namespace ZenAIO
             return proxy;
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj == this)
+                return true;
+            else if (obj == null || !(obj is Proxy))
+                return false;
+
+            Proxy other = obj as Proxy;
+
+            return URL == other.URL && Port == other.Port && Username == other.Username && Password == other.Username;
+        }
+
     }
 }

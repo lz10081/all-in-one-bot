@@ -9,7 +9,7 @@ namespace ZenAIO
     public class Product
     {
 
-        public Product(string url, string name, uint size, string profile)
+        public Product(string url, string name, float size, string profile)
         {
             URL = url;
             Name = name;
@@ -27,7 +27,7 @@ namespace ZenAIO
             get; private set;
         }
 
-        public uint Size
+        public float Size
         {
             get; private set;
         }
@@ -62,7 +62,7 @@ namespace ZenAIO
             {
                 hash = hash * 31 + URL.GetHashCode();
                 hash = hash * 31 + Name.GetHashCode();
-                hash = hash * 31 + (int) Size;
+                hash = hash * 31 + (int) (Size * 2.0F); // multiply by 2 to remove half sizes
                 hash = hash * 31 + Profile.GetHashCode();
             }
 

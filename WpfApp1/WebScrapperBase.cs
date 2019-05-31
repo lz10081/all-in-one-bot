@@ -101,15 +101,17 @@ namespace ZenAIO
                 Proxy proxy = CreateProxy(ref fields);
 
                 if (proxy != null)
-                    proxies.Add(Utils.Pair<Proxy, bool>.MakePair(proxy, false));
+                    proxies.Add(Utils.MakePair<Proxy, bool>(proxy, false));
             }
         }
 
         private Proxy GetRandomProxy()
         {
+            int attempts = 0;
+
             do
             {
-                int index = random.Next(0, proxies.Count + 1);
+                int index = random.Next(0, proxies.Count);
 
                 Utils.Pair<Proxy, bool> pair = proxies[index];
 
@@ -122,9 +124,27 @@ namespace ZenAIO
                     }
                 }
             }
-            while (true);
+            while (++attempts < 20);
 
             return null;
+        }
+
+        private void ReleaseProxy(ref Proxy proxy)
+        {
+            for (int i = 0; i < proxies.Count; i++)
+            {
+                Utils.Pair<Proxy, bool> cur = proxies[i];
+
+                if (cur.item2 && cur.item1.Equals(proxy))
+                {
+                    lock (theLock)
+                    {
+                        cur.item2 = false;
+                    }
+
+                    break;
+                }
+            }
         }
 
         /// <summary>
@@ -136,6 +156,8 @@ namespace ZenAIO
         {
             if (proxies == null || proxies.Count == 0)
             {
+                HttpWebRequest.DefaultMaximumErrorResponseLength = 1048576;
+
                 InitProxyList();
 
                 // If still empty (no proxies available) return false.
@@ -151,12 +173,19 @@ namespace ZenAIO
             if (proxy.HasAuthentication())
                 client.Proxy.Credentials = new NetworkCredential(proxy.Username, proxy.Password);
 
-            var request = new RestRequest();
+            var request = new RestRequest(Method.GET);
+
+            request.AddHeader("postman-token", "62472814-e58d-de30-fa1b-678ab9d68f66");
+            request.AddHeader("cache-control", "no-cache");
+
             var response = client.Execute(request);
+
+            Console.WriteLine("response.StatusCode: " + ((int) response.StatusCode));
 
             if (!response.IsSuccessful)
             {
                 result = "";
+                ReleaseProxy(ref proxy);
                 return false;
             }
 
@@ -165,6 +194,9 @@ namespace ZenAIO
 #if DEBUG
             Console.WriteLine("Content: \n{0}", result); // test dump
 #endif
+
+            // Make sure we release the proxy when we are done using it!
+            ReleaseProxy(ref proxy);
 
             return true;
         }

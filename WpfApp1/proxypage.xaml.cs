@@ -366,6 +366,18 @@ namespace WpfApp1
 
         private void Test(object sender, RoutedEventArgs e)
         {
+            if (true)
+            {
+                // Product product = new Product("https://www.footlocker.com/product/nike-lebron-16-mens/I1521001.html", "Lebron 16", 7, "default");
+                Product product = new Product("https://www.footlocker.com/product/model/nike-lebron-16-mens/299649.html", "Lebron 16", 7, "default");
+                IWebScrapper webScrapper = new FootlockerWebScrapper(product);
+
+                var result = webScrapper.Available();
+
+                Console.WriteLine("webScrapper result: " + result);
+
+                return;
+            }
 
             proxyCheckWorker();
 
@@ -438,12 +450,12 @@ namespace WpfApp1
                 bool status = false;
                 RestClient client = new RestClient();
 
-                    //var client = new RestClient(TestURL);
-                client.Proxy = new WebProxy("http://"+ProxyURL + ":" + Port, false);
+                //var client = new RestClient(TestURL);
+                client.Proxy = new WebProxy("http://" + ProxyURL + ":" + Port, false);
                 Console.WriteLine("http://" + ProxyURL + ":" + Port);
                 if (!string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password))
                     client.Proxy.Credentials = new NetworkCredential(Username, Password);
-                
+
                 Console.WriteLine(Username + ":" + Password);
                 Stopwatch s = new Stopwatch();
                 s.Start();

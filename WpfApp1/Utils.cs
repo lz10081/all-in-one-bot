@@ -45,6 +45,11 @@ namespace ZenAIO
             return result;
         }
 
+        public static Pair<T1, T2> MakePair<T1, T2>(T1 item1 = default(T1), T2 item2 = default(T2))
+        {
+            return new Pair<T1, T2>(item1, item2);
+        }
+
         public class Pair<T1, T2>
         {
             public T1 item1;
@@ -54,11 +59,6 @@ namespace ZenAIO
             {
                 this.item1 = item1;
                 this.item2 = item2;
-            }
-
-            public static Pair<T1, T2> MakePair(T1 item1 = default(T1), T2 item2 = default(T2))
-            {
-                return new Pair<T1, T2>(item1, item2);
             }
         }
 
