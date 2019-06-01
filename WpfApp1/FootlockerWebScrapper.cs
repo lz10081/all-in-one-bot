@@ -19,11 +19,11 @@ namespace ZenAIO
             StringBuilder builder = new StringBuilder(0x20);
             builder.Append('"');
 
-            if (product.Size < 10.0F)
-                builder.Append('0');
+            /*if (product.Size < 10.0F)
+                builder.Append('0');*/
 
-            builder.Append(product.Size.ToString());
-            builder.Append("\",\"isDisabled\":");
+            builder.Append(product.Size.ToString("00.0#"));
+            builder.Append("\",\"isDisabled\":true");
 
             return builder.ToString();
         }
@@ -38,12 +38,12 @@ namespace ZenAIO
 
             Match match = regex.Match(content);
 
-            if (!match.Success)
+            if (match.Success)
                 return false;
 
             Console.WriteLine("Match result: " + match.Value);
 
-            return false;
+            return true;
         }
 
     }
