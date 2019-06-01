@@ -370,10 +370,17 @@ namespace WpfApp1
             if (false)
             {
                 // Out of stock example as of 5/31/19 @20:09
-                Product product = new Product("https://www.footlocker.com/product/model/nike-lebron-16-mens/299649.html", "Lebron 16", 7, "default");
+                // Product product = new Product("https://www.footlocker.com/product/model/nike-lebron-16-mens/299649.html", "Lebron 16", 7, "default");
 
                 // In stock example as of 5/31/19 @20:09
                 // Product product = new Product("https://www.footlocker.com/product/model/nike-lebron-16-mens/299649.html", "Lebron 16", 8, "default");
+
+                // Out of stock example as of 5/31/19 @23:16 
+                Product product = new Product("https://www.footlocker.com/product/nike-lebron-16-mens/862001.html", "Lebron 16", 7, "default");
+
+                // In of stock example as of 5/31/19 @23:16 
+                // Product product = new Product("https://www.footlocker.com/product/nike-lebron-16-mens/862001.html", "Lebron 16", 8.5F, "default");
+
                 IWebScrapper webScrapper = new FootlockerWebScrapper(product);
 
                 bool result = webScrapper.Available();

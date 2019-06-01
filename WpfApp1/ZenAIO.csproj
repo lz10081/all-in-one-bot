@@ -252,6 +252,7 @@
     <Compile Include="coppedpage.xaml.cs">
       <DependentUpon>coppedpage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Debug.cs" />
     <Compile Include="FootlockerWebScrapper.cs" />
     <Compile Include="IWebScrapper.cs" />
     <Compile Include="Product.cs" />

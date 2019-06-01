@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using ZenAIO;
+
 namespace WpfApp1
 {
     /// <summary>
@@ -24,36 +26,34 @@ namespace WpfApp1
         public taskpage()
         {
             InitializeComponent();
-           this.KeepAlive = true;
+            this.KeepAlive = true;
             DirectoryInfo d = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);//Assuming Test is your Folder
             FileInfo[] Files = d.GetFiles("*.json"); //Getting Text files
             string str = "";
+
             foreach (FileInfo file in Files)
             {
                 str = str + ", " + file.Name;
 
                 //Profile.Items.Add(file.Name);
             }
-           
-
-
-
-
         }
+
         private void SoleboxClicked(object sender, RoutedEventArgs e)
         {
             taskSolebox = true;
         }
+
         private void Start(object sender, RoutedEventArgs e)
         {
-            if(taskSolebox)
-             Soleboxmain();
+            if (taskSolebox)
+                Soleboxmain();
         }
-        public void Soleboxmain() // will make a other cs file for each site 
 
+        public void Soleboxmain() // will make a other cs file for each site 
         {
-           
-            string path = GetPath("proxy.txt");
+
+            string path = Utils.GetPath("proxy.txt");
 
             if (new FileInfo(path).Length == 0)
             {
@@ -67,10 +67,6 @@ namespace WpfApp1
 
             //https://stackoverflow.com/questions/7198005/c-sharp-httpwebrequest-website-sign-in set up CookieContainer 
 
-        }
-        private static string GetPath(string file)
-        {
-            return System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, file);
         }
 
         /// <summary>

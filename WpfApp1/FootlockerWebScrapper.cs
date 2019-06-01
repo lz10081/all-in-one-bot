@@ -19,9 +19,6 @@ namespace ZenAIO
             StringBuilder builder = new StringBuilder(0x20);
             builder.Append('"');
 
-            /*if (product.Size < 10.0F)
-                builder.Append('0');*/
-
             builder.Append(product.Size.ToString("00.0#"));
             builder.Append("\",\"isDisabled\":true");
 
@@ -41,7 +38,7 @@ namespace ZenAIO
             if (match.Success)
                 return false;
 
-            Console.WriteLine("Match result: " + match.Value);
+            // Console.WriteLine("Match result: " + match.Value);
 
             return true;
         }

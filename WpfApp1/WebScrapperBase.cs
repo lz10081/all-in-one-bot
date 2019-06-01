@@ -43,7 +43,7 @@ namespace ZenAIO
                 int port = 0;
                 if (!int.TryParse(replacement, out port))
                 {
-                    Console.WriteLine("Failed to parse port number for address " + proxy.URL);
+                    Debug.Error("Failed to parse port number for address " + proxy.URL);
                     return null; 
                 }
 
@@ -68,7 +68,7 @@ namespace ZenAIO
 
             else
             {
-                Console.WriteLine("Invalid proxy.txt");
+                Debug.Error("Invalid proxy.txt");
             }
 
             return null;
@@ -101,7 +101,7 @@ namespace ZenAIO
                 Proxy proxy = CreateProxy(ref fields);
 
                 if (proxy != null)
-                    proxies.Add(Utils.MakePair<Proxy, bool>(proxy, false));
+                    proxies.Add(Utils.MakePair(proxy, false));
             }
         }
 
@@ -180,7 +180,7 @@ namespace ZenAIO
 
             var response = client.Execute(request);
 
-            Console.WriteLine("response.StatusCode: " + ((int) response.StatusCode));
+            Debug.Info("response.StatusCode: " + ((int) response.StatusCode));
 
             if (!response.IsSuccessful)
             {
@@ -191,9 +191,7 @@ namespace ZenAIO
 
             result = response.Content;
 
-#if DEBUG
-            Console.WriteLine("Content: \n{0}", result); // test dump
-#endif
+            Debug.Info("Content: \n{0}", result); // test dump
 
             // Make sure we release the proxy when we are done using it!
             ReleaseProxy(ref proxy);
