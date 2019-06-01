@@ -22,7 +22,7 @@ using System.Collections.ObjectModel;
 using static WpfApp1.profilepage;
 using Newtonsoft.Json;
 using ZenAIO;
-
+using System.Text.RegularExpressions;
 
 namespace WpfApp1
 {
@@ -33,7 +33,7 @@ namespace WpfApp1
     
     public partial class Window1 : Window
     {
-        bool taskSolebox = false;
+       
         ObservableCollection<JobTask> MyList = new ObservableCollection<JobTask>();
         List<Int32> savelist = new List<Int32>();
         public Window1()
@@ -50,6 +50,8 @@ namespace WpfApp1
 
                 //Profile.Items.Add(file.Name);
             }
+            // add all the site we support
+            Sitelist.Items.Add("Footlocker");
             
             string path = Utils.GetPath("Profile.json");
 
@@ -214,11 +216,16 @@ namespace WpfApp1
         {
 
         }
+        private void PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
 
         private void TaskRemoveClick(object sender, RoutedEventArgs e)
         {
             savelist.Sort();
-           (savelist).ForEach(Console.WriteLine);
+          // (savelist).ForEach(Console.WriteLine);
             var x = dataGridProxies.SelectedIndex; // get the current index number
             int index = savelist[x];
 
@@ -230,7 +237,7 @@ namespace WpfApp1
               
                 savelist.Remove(index);
                // Console.WriteLine("///////////////////");
-                (savelist).ForEach(Console.WriteLine);
+             //   (savelist).ForEach(Console.WriteLine);
                 //  Console.WriteLine(index);
             }
             catch
@@ -281,22 +288,54 @@ namespace WpfApp1
         {
             System.Environment.Exit(1);
         }
-        private void SoleboxClicked(object sender, RoutedEventArgs e)
-        {
-            taskSolebox = true;
-        }
+      
         private void Start(object sender, RoutedEventArgs e)
         {
             if (url.Text == "" || Profile.Text == "" || size.Text == "")
                 MessageBox.Show("You must enter all information");
             else
             {
-                if (taskSolebox)
-                    Soleboxmain();
+                if (Sitelist.Text == "Footlocker")
+                    Footlocker();
             }
             
         }
-        public void Soleboxmain() // will make a other cs file for each site 
+        private void Useall(object sender, RoutedEventArgs e)
+        {
+            if ((bool)UseallcheckBox.IsChecked == true)
+            {
+                Profile.IsEnabled = false;
+          
+            }
+            else
+            {
+              
+                Profile.IsEnabled = true;
+            }
+
+        }
+        private void Sizebox(object sender, RoutedEventArgs e)
+        {
+            if ((bool)SizeruncheckBox.IsChecked == true)
+            {
+                startsize.IsEnabled = true;
+                endsize.IsEnabled = true;
+                Quantity2.IsEnabled = true;
+                size.IsEnabled = false;
+                Quantity.IsEnabled = false;
+            }
+            else
+            {
+                startsize.IsEnabled = false;
+                endsize.IsEnabled = false;
+                Quantity2.IsEnabled = false;
+                size.IsEnabled = true;
+                Quantity.IsEnabled = true;
+            }
+
+        }
+
+        public void Footlocker() // will make a other cs file for each site 
 
         {
 
@@ -316,7 +355,7 @@ namespace WpfApp1
                 JobTask playerList = new JobTask();
                 playerList.ID = MyList.Count.ToString();
                 playerList.Product = url.Text;
-                playerList.Site = "Solebox";
+                playerList.Site = "Footlocker";
                 playerList.Status = "";
                 playerList.Proxy = "12135489978";
                 playerList.Billing = Profile.Text;
