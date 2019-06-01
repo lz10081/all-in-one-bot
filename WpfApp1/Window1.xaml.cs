@@ -33,23 +33,32 @@ namespace WpfApp1
     
     public partial class Window1 : Window
     {
-       
-        ObservableCollection<JobTask> MyList = new ObservableCollection<JobTask>();
-        List<Int32> savelist = new List<Int32>();
+
+        private ObservableCollection<JobTask> MyList;
+        private List<Int32> savelist;
+
         public Window1()
         {
             InitializeComponent();
-          
-            Main.Content = new profilepage();
-            DirectoryInfo d = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);//Assuming Test is your Folder
-            FileInfo[] Files = d.GetFiles("*.json"); //Getting Text files
-            string str = "";
-            foreach (FileInfo file in Files)
-            {
-                str = str + ", " + file.Name;
 
-                //Profile.Items.Add(file.Name);
+            MyList = new ObservableCollection<JobTask>();
+            savelist = new List<Int32>();
+
+            Main.Content = new profilepage();
+
+            if (false)
+            {
+                DirectoryInfo d = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);//Assuming Test is your Folder
+                FileInfo[] Files = d.GetFiles("*.json"); //Getting Text files
+                string str = "";
+                foreach (FileInfo file in Files)
+                {
+                    str = str + ", " + file.Name;
+
+                    //Profile.Items.Add(file.Name);
+                }
             }
+
             // add all the site we support
             Sitelist.Items.Add("Footlocker");
             
@@ -192,6 +201,7 @@ namespace WpfApp1
 
             }
         }
+
         private void Removeall(object sender, RoutedEventArgs e)
         {
             ObservableCollection<JobTask> Em = new ObservableCollection<JobTask>();
@@ -200,6 +210,7 @@ namespace WpfApp1
             savelist = em;
             dataGridProxies.ItemsSource = MyList;
         }
+
         private void TaskStartClick(object sender, RoutedEventArgs e)
         {
             // Get the currently selected row using the SelectedRow property.
@@ -208,14 +219,15 @@ namespace WpfApp1
            
 
             //   MyList.IndexOf(); need to fixed the id first
-            Console.WriteLine(x);
-            Console.WriteLine(q.ID);
-
+            Debug.Info(x.ToString());
+            Debug.Info(q.ID);
         }
+
         private void TaskStopClick(object sender, RoutedEventArgs e)
         {
 
         }
+
         private void PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
@@ -242,12 +254,9 @@ namespace WpfApp1
             }
             catch
             {
-             
                // Console.WriteLine(x);
-                Console.WriteLine("unknow error");
-
+                Debug.Error("unknow error");
             }
-           
         }
 
         private void mouse(object sender, MouseButtonEventArgs e)
@@ -255,35 +264,43 @@ namespace WpfApp1
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
         }
+
         private void TasksClicked(object sender, RoutedEventArgs e)
         {
             Main.NavigationService.Navigate(new taskpage());
             // Main.Content = new taskpage();
         }
+
         private void ProfilesClicked(object sender, RoutedEventArgs e)
         {
             Main.Content = new profilepage();
         }
+
         private void ProxyClicked(object sender, RoutedEventArgs e)
         {
             Main.Content = new proxypage();
         }
+
         private void CoppedClicked(object sender, RoutedEventArgs e)
         {
             Main.Content = new coppedpage();
         }
+
         private void ViewClicked(object sender, RoutedEventArgs e)
         {
             Main.Content = new viewpage();
         }
+
         private void SettingClicked(object sender, RoutedEventArgs e)
         {
             Main.Content = new Settingpage();
         }
+
         private void MinusClicked(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
         }
+
         private void CloseClicked(object sender, RoutedEventArgs e)
         {
             System.Environment.Exit(1);
@@ -291,7 +308,7 @@ namespace WpfApp1
       
         private void Start(object sender, RoutedEventArgs e)
         {
-            if (url.Text == "" || Profile.Text == "" || size.Text == "")
+            if (string.IsNullOrWhiteSpace(url.Text) || string.IsNullOrWhiteSpace(Profile.Text) || string.IsNullOrWhiteSpace(size.Text))
                 MessageBox.Show("You must enter all information");
             else
             {
@@ -302,7 +319,7 @@ namespace WpfApp1
         }
         private void Useall(object sender, RoutedEventArgs e)
         {
-            if ((bool)UseallcheckBox.IsChecked == true)
+            if (UseallcheckBox?.IsChecked == true)
             {
                 Profile.IsEnabled = false;
           
@@ -316,7 +333,7 @@ namespace WpfApp1
         }
         private void Sizebox(object sender, RoutedEventArgs e)
         {
-            if ((bool)SizeruncheckBox.IsChecked == true)
+            if (SizeruncheckBox?.IsChecked == true)
             {
                 startsize.IsEnabled = true;
                 endsize.IsEnabled = true;
@@ -324,6 +341,7 @@ namespace WpfApp1
                 size.IsEnabled = false;
                 Quantity.IsEnabled = false;
             }
+
             else
             {
                 startsize.IsEnabled = false;
@@ -336,10 +354,8 @@ namespace WpfApp1
         }
 
         public void Footlocker() // will make a other cs file for each site 
-
         {
-
-            string path = GetPath("proxy.txt");
+            string path = Utils.GetPath("proxy.txt");
 
             if (new FileInfo(path).Length == 0)
             {
@@ -349,31 +365,33 @@ namespace WpfApp1
             {
                 Console.WriteLine("running proxy");
             }
-          
-            for (var x = 1; x <= Int32.Parse( Quantity.Text); x++)
+
+            int quantity = 0;
+
+            // Only run this code if Quantity.Text is a valid parse.
+            if (int.TryParse(Quantity.Text, out quantity) && quantity > 0)
             {
-                JobTask playerList = new JobTask();
-                playerList.ID = MyList.Count.ToString();
-                playerList.Product = url.Text;
-                playerList.Site = "Footlocker";
-                playerList.Status = "";
-                playerList.Proxy = "12135489978";
-                playerList.Billing = Profile.Text;
-                playerList.Size = size.Text;
-                MyList.Add(playerList);
-                savelist.Add(MyList.Count);
+                for (var x = 1; x <= quantity; x++)
+                {
+                    JobTask playerList = new JobTask();
+                    playerList.ID = MyList.Count.ToString();
+                    playerList.Product = url.Text;
+                    playerList.Site = "Footlocker";
+                    playerList.Status = "";
+                    playerList.Proxy = "12135489978";
+                    playerList.Billing = Profile.Text;
+                    playerList.Size = size.Text;
+                    MyList.Add(playerList);
+                    savelist.Add(MyList.Count);
 
 
+                }
+
+                dataGridProxies.ItemsSource = MyList;
             }
-            dataGridProxies.ItemsSource = MyList;
-
 
             //https://stackoverflow.com/questions/7198005/c-sharp-httpwebrequest-website-sign-in set up CookieContainer 
 
-        }
-        private static string GetPath(string file)
-        {
-            return System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, file);
         }
 
         /// <summary>
