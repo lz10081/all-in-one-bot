@@ -17,6 +17,8 @@ using System.Drawing;
 using System.Configuration;
 using System.Windows.Navigation;
 using System.IO;
+using System.Windows.Controls.Primitives;
+using System.Collections.ObjectModel;
 
 namespace WpfApp1
 {
@@ -28,6 +30,7 @@ namespace WpfApp1
     public partial class Window1 : Window
     {
         bool taskSolebox = false;
+        ObservableCollection<JobTask> MyList = new ObservableCollection<JobTask>();
         public Window1()
         {
             InitializeComponent();
@@ -53,51 +56,77 @@ namespace WpfApp1
             c = new DataGridTextColumn();
             c.Header = "#";
             c.Binding = new Binding("ID");
-            c.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            c.Width = new DataGridLength(0.2, DataGridLengthUnitType.Star);
             dataGridProxies.Columns.Add(c);
 
             c = new DataGridTextColumn();
             c.Header = "Site";
             c.Binding = new Binding("Site");
-            c.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            c.Width = new DataGridLength(0.5, DataGridLengthUnitType.Star);
             dataGridProxies.Columns.Add(c);
 
             c = new DataGridTextColumn();
             c.Header = "Size";
             c.Binding = new Binding("Size");
-            c.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            c.Width = new DataGridLength(0.5, DataGridLengthUnitType.Star);
             dataGridProxies.Columns.Add(c);
 
             c = new DataGridTextColumn();
             c.Header = "Product";
             c.Binding = new Binding("Product");
-            c.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            c.Width = new DataGridLength(0.5, DataGridLengthUnitType.Star);
             dataGridProxies.Columns.Add(c);
 
             c = new DataGridTextColumn();
             c.Header = "Billing";
             c.Binding = new Binding("Billing");
-            c.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            c.Width = new DataGridLength(0.5, DataGridLengthUnitType.Star);
             dataGridProxies.Columns.Add(c);
 
             c = new DataGridTextColumn();
             c.Header = "Proxy";
             c.Binding = new Binding("Proxy");
-            c.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            c.Width = new DataGridLength(0.5, DataGridLengthUnitType.Star);
             dataGridProxies.Columns.Add(c);
 
             c = new DataGridTextColumn();
             c.Header = "Status";
             c.Binding = new Binding("Status");
-            c.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            c.Width = new DataGridLength(0.3, DataGridLengthUnitType.Star);
           
             dataGridProxies.Columns.Add(c);
 
             x = new DataGridTemplateColumn();
-            Button a = new Button();
+            x.Width = new DataGridLength(0.3, DataGridLengthUnitType.Star);
+            DataTemplate buttonTemplate = new DataTemplate();
+            FrameworkElementFactory buttonFactory = new FrameworkElementFactory(typeof(Button));
+            buttonTemplate.VisualTree = buttonFactory;
+            buttonFactory.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(TaskStartClick));
+            buttonFactory.SetValue(ContentProperty, "Start");
+            x.CellTemplate = buttonTemplate;
+            // x.CellTemplate.Template = t1.Template;
+            dataGridProxies.Columns.Add(x);
 
-            x.Header = "Acotion";
-           // x.CellTemplate.Template = t1.Template;
+            x = new DataGridTemplateColumn();
+            x.Width = new DataGridLength(0.3, DataGridLengthUnitType.Star);
+            DataTemplate buttonTemplate2 = new DataTemplate();
+            FrameworkElementFactory buttonFactory2 = new FrameworkElementFactory(typeof(Button));
+            buttonTemplate2.VisualTree = buttonFactory2;
+            buttonFactory2.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(TaskStopClick));
+            buttonFactory2.SetValue(ContentProperty, "Stop");
+            x.CellTemplate = buttonTemplate2;
+            // x.CellTemplate.Template = t1.Template;
+            dataGridProxies.Columns.Add(x);
+
+            x = new DataGridTemplateColumn();
+            x.Width = new DataGridLength(0.3, DataGridLengthUnitType.Star);
+            DataTemplate buttonTemplate3 = new DataTemplate();
+            FrameworkElementFactory buttonFactory3 = new FrameworkElementFactory(typeof(Button));
+            buttonTemplate3.VisualTree = buttonFactory3;
+            buttonFactory3.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(TaskRemoveClick));
+            buttonFactory3.SetValue(ContentProperty, "Remove");
+            x.CellTemplate = buttonTemplate3;
+            // x.CellTemplate.Template = t1.Template;
             dataGridProxies.Columns.Add(x);
 
             // < DataGridTemplateColumn Header = "Acotion" >
@@ -119,6 +148,34 @@ namespace WpfApp1
             #endregion
 
         }
+        public class JobTask
+        {
+            public string ID { get; set; }
+            public string Site { get; set; }
+            public string Product { get; set; }
+            public string Billing { get; set; }
+            public string Proxy { get; set; }
+            public string Status { get; set; }
+            public string Acotion { get; set; }
+            public string Size { get; set; }
+
+        }
+
+
+        private void TaskStartClick(object sender, RoutedEventArgs e)
+        {
+           
+        }
+        private void TaskStopClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TaskRemoveClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void mouse(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
@@ -180,7 +237,16 @@ namespace WpfApp1
             {
                 Console.WriteLine("running proxy");
             }
-
+            JobTask playerList = new JobTask();
+            playerList.ID = "1";
+            playerList.Product = "Shoe";
+            playerList.Site = "Footlocker";
+            playerList.Status = "";
+            playerList.Proxy = "12135489978";
+            playerList.Billing = "fake";
+            playerList.Size = "8";
+            MyList.Add(playerList);
+            dataGridProxies.ItemsSource = MyList;
 
             //https://stackoverflow.com/questions/7198005/c-sharp-httpwebrequest-website-sign-in set up CookieContainer 
 
