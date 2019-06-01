@@ -23,6 +23,7 @@ using static WpfApp1.profilepage;
 using Newtonsoft.Json;
 using ZenAIO;
 
+
 namespace WpfApp1
 {
     /// <summary>
@@ -34,6 +35,7 @@ namespace WpfApp1
     {
         bool taskSolebox = false;
         ObservableCollection<JobTask> MyList = new ObservableCollection<JobTask>();
+        List<Int32> savelist = new List<Int32>();
         public Window1()
         {
             InitializeComponent();
@@ -57,7 +59,7 @@ namespace WpfApp1
                 ReadProfile(ref path);
 
             #region dataGridProxies Settings
-            dataGridProxies.ItemsSource = "";
+            dataGridProxies.ItemsSource = MyList;
            
             dataGridProxies.AutoGenerateColumns = false;
             dataGridProxies.IsReadOnly = true;
@@ -188,10 +190,25 @@ namespace WpfApp1
 
             }
         }
-
+        private void Removeall(object sender, RoutedEventArgs e)
+        {
+            ObservableCollection<JobTask> Em = new ObservableCollection<JobTask>();
+            List<Int32> em = new List<int>();
+            MyList = Em;
+            savelist = em;
+            dataGridProxies.ItemsSource = MyList;
+        }
         private void TaskStartClick(object sender, RoutedEventArgs e)
         {
+            // Get the currently selected row using the SelectedRow property.
+            var x = dataGridProxies.SelectedIndex; // get the current index number
+            var q = MyList.Where(X => X.ID == x.ToString()).FirstOrDefault(); // can get all the information on the index
            
+
+            //   MyList.IndexOf(); need to fixed the id first
+            Console.WriteLine(x);
+            Console.WriteLine(q.ID);
+
         }
         private void TaskStopClick(object sender, RoutedEventArgs e)
         {
@@ -200,7 +217,30 @@ namespace WpfApp1
 
         private void TaskRemoveClick(object sender, RoutedEventArgs e)
         {
+            savelist.Sort();
+           (savelist).ForEach(Console.WriteLine);
+            var x = dataGridProxies.SelectedIndex; // get the current index number
+            int index = savelist[x];
 
+            try
+            {
+               // Console.WriteLine("this is inderx" + index);
+              //  Console.WriteLine("this is x" + x);
+                MyList.Remove(MyList.Where(i => i.ID == (index-1).ToString()).Single());
+              
+                savelist.Remove(index);
+               // Console.WriteLine("///////////////////");
+                (savelist).ForEach(Console.WriteLine);
+                //  Console.WriteLine(index);
+            }
+            catch
+            {
+             
+               // Console.WriteLine(x);
+                Console.WriteLine("unknow error");
+
+            }
+           
         }
 
         private void mouse(object sender, MouseButtonEventArgs e)
@@ -270,21 +310,21 @@ namespace WpfApp1
             {
                 Console.WriteLine("running proxy");
             }
-            JobTask playerList = new JobTask();
-            var xx = 1;
-            playerList.ID = xx.ToString();
-            playerList.Product = url.Text;
-            playerList.Site = "Solebox";
-            playerList.Status = "";
-            playerList.Proxy = "12135489978";
-            playerList.Billing = Profile.Text;
-            playerList.Size = size.Text;
+          
             for (var x = 1; x <= Int32.Parse( Quantity.Text); x++)
             {
-                
+                JobTask playerList = new JobTask();
+                playerList.ID = MyList.Count.ToString();
+                playerList.Product = url.Text;
+                playerList.Site = "Solebox";
+                playerList.Status = "";
+                playerList.Proxy = "12135489978";
+                playerList.Billing = Profile.Text;
+                playerList.Size = size.Text;
                 MyList.Add(playerList);
-               
-                xx = xx + 1;
+                savelist.Add(MyList.Count);
+
+
             }
             dataGridProxies.ItemsSource = MyList;
 

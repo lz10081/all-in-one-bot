@@ -110,7 +110,7 @@
 
                     </DataGrid>
                     <Button x:Name="Stop" Content="Stop All" Grid.Row="1" Grid.Column="1" Height="Auto"  Margin="114,5,109,0"/>
-                    <Button x:Name="buttonRemoveProxy_Copy1" Content="Remove All" Grid.Row="1" Grid.Column="2" Height="Auto" Margin="121,5,102,0"/>
+                    <Button x:Name="buttonRemoveProxy_Copy1"  Click="Removeall" Content="Remove All" Grid.Row="1" Grid.Column="2" Height="Auto" Margin="121,5,102,0"/>
 
                 </Grid>
                 
