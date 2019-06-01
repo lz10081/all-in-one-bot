@@ -36,14 +36,14 @@ namespace WpfApp1
 
         private ObservableCollection<JobTask> MyList;
         private List<Int32> savelist;
-
+        private List<String> proxylist;
         public Window1()
         {
             InitializeComponent();
 
             MyList = new ObservableCollection<JobTask>();
             savelist = new List<Int32>();
-
+            proxylist = new List<String>();
             Main.Content = new profilepage();
 
             if (false)
@@ -63,11 +63,14 @@ namespace WpfApp1
             Sitelist.Items.Add("Footlocker");
             
             string path = Utils.GetPath("Profile.json");
-
+            string path2 = Utils.GetPath("proxy.txt");
             // Checks if a profile exists or not. If not, will create a default profile.
             // Else (does exist) prompts us to read the file in like normal.
             if (CreateDefaultProfile(ref path))
                 ReadProfile(ref path);
+
+            if (CreateDefaultProfile(ref path2)) //  for proxylist
+                ReadProfile(ref path2);
 
             #region dataGridProxies Settings
             dataGridProxies.ItemsSource = MyList;
@@ -196,7 +199,8 @@ namespace WpfApp1
                 }
                 else
                 {
-
+                    
+                    proxylist.Add(line);
                 }
 
             }
@@ -396,6 +400,7 @@ namespace WpfApp1
             }
 
         }
+        
 
         public void Footlocker() // will make a other cs file for each site 
         {
@@ -409,23 +414,35 @@ namespace WpfApp1
             {
                 Console.WriteLine("running proxy");
             }
-
+            Console.WriteLine("my proxy"+proxylist.Count);
             int quantity = 0;
             if (SizeruncheckBox.IsChecked == false) // easy case 
             {
                 /// <summary>
                 /// normal case no use all profile and use range box
                 /// </summary>
+                /// 
+                bool t = false;
+                if (Localhost.IsChecked == true || (new FileInfo(path).Length == 0))
+                    t = true;
+                Random rand = new Random();
                 if (int.TryParse(Quantity.Text, out quantity) && quantity > 0 && UseallcheckBox.IsChecked == false) // easy case 
                 {
                     for (var x = 1; x <= quantity; x++)
                     {
+
+                       
+                        int nextVal = rand.Next(proxylist.Count);
+
                         JobTask playerList = new JobTask();
                         playerList.ID = MyList.Count.ToString();
                         playerList.Product = url.Text;
                         playerList.Site = Sitelist.Text;
                         playerList.Status = "";
-                        playerList.Proxy = "12135489978";
+                        if(t)
+                            playerList.Proxy = "Localhost";
+                        else
+                            playerList.Proxy = proxylist[nextVal];
                         playerList.Billing = Profile.Text;
                         playerList.Size = size.Text;
                         MyList.Add(playerList);
@@ -446,12 +463,16 @@ namespace WpfApp1
                     {
                         for (var x = 1; x <= quantity; x++)
                         {
+                            int nextVal = rand.Next(proxylist.Count);
                             JobTask playerList = new JobTask();
                             playerList.ID = MyList.Count.ToString();
                             playerList.Product = url.Text;
                             playerList.Site = Sitelist.Text;
                             playerList.Status = "";
-                            playerList.Proxy = "12135489978";
+                            if (t)
+                                playerList.Proxy = "Localhost";
+                            else
+                                playerList.Proxy = proxylist[nextVal];
                             playerList.Billing = Profile.Items[y].ToString();
                             playerList.Size = size.Text;
                             MyList.Add(playerList);
@@ -469,6 +490,12 @@ namespace WpfApp1
                 ///  case not use all profile  use range box
                 /// </summary>
                 /// 
+
+                bool t = false;
+                if (Localhost.IsChecked == true || (new FileInfo(path).Length == 0))
+                    t = true;
+                Random rand = new Random();
+
                 if (int.TryParse(Quantity2.Text, out quantity) && quantity > 0 && UseallcheckBox.IsChecked == false) // hard case 1
                 {
                    
@@ -479,12 +506,16 @@ namespace WpfApp1
                     {
                             for (var x = 1; x <= quantity; x++)
                             {
+                                int nextVal = rand.Next(proxylist.Count);
                                 JobTask playerList = new JobTask();
                                 playerList.ID = MyList.Count.ToString();
                                 playerList.Product = url.Text;
                                 playerList.Site = Sitelist.Text;
                                 playerList.Status = "";
-                                playerList.Proxy = "12135489978";
+                                if (t)
+                                    playerList.Proxy = "Localhost";
+                                else
+                                    playerList.Proxy = proxylist[nextVal];
                                 playerList.Billing = Profile.Text;
                                 playerList.Size = currentsize.ToString();
                                 MyList.Add(playerList);
@@ -513,12 +544,16 @@ namespace WpfApp1
                         {
                             for (var x = 1; x <= quantity; x++)
                             {
+                                int nextVal = rand.Next(proxylist.Count);
                                 JobTask playerList = new JobTask();
                                 playerList.ID = MyList.Count.ToString();
                                 playerList.Product = url.Text;
                                 playerList.Site = Sitelist.Text;
                                 playerList.Status = "";
-                                playerList.Proxy = "12135489978";
+                                if (t)
+                                    playerList.Proxy = "Localhost";
+                                else
+                                    playerList.Proxy = proxylist[nextVal];
                                 playerList.Billing = Profile.Items[y].ToString();
                                 playerList.Size = currentsize.ToString();
                                 MyList.Add(playerList);

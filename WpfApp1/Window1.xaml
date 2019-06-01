@@ -86,6 +86,7 @@
                         <TextBox x:Name="Quantity2" Background="White"  PreviewTextInput="PreviewTextInput" IsEnabled="False" BorderBrush="Black"  materiaDesign:HintAssist.Hint="Quantity"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="37" Margin="1095,224,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="243" />
                         <ComboBox x:Name="Sitelist" Background="White" HorizontalAlignment="Left"    BorderBrush="Black" materiaDesign:HintAssist.Hint="Site"  FontSize="20" BorderThickness="2,2,2,2" Margin="227,28,0,0"  VerticalAlignment="Top" Width="207" Height="40"/>
                         <ComboBox x:Name="size" Background="White" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="Size"  FontSize="20" BorderThickness="2,2,2,2" Margin="400,103,0,0"  VerticalAlignment="Top" Width="276" Height="40"/>
+                        <CheckBox x:Name="Localhost"  IsChecked="False" Content="Use localhost" FontStyle="Italic" Foreground="Black" FontSize="20" HorizontalAlignment="Left" Margin="400,338,0,0" VerticalAlignment="Top" Width="276" Height="50"/>
                     </Grid>
                 </Grid>
             </Controls:MetroTabItem>
