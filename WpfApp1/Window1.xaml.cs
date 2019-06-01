@@ -330,7 +330,10 @@ namespace WpfApp1
         {
             System.Environment.Exit(1);
         }
-      
+        /// <summary>
+        /// Checks if all inputbox exists, if not
+        /// show MessageBox
+        /// </summary>
         private void Start(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(url.Text)  || string.IsNullOrWhiteSpace(Sitelist.Text))
@@ -354,6 +357,10 @@ namespace WpfApp1
             }
             
         }
+        /// <summary>
+        /// Enabled Profile checkbox if IsChecked , if not
+        /// disable
+        /// </summary>
         private void Useall(object sender, RoutedEventArgs e)
         {
             if (UseallcheckBox?.IsChecked == true)
@@ -406,6 +413,9 @@ namespace WpfApp1
             int quantity = 0;
             if (SizeruncheckBox.IsChecked == false) // easy case 
             {
+                /// <summary>
+                /// normal case no use all profile and use range box
+                /// </summary>
                 if (int.TryParse(Quantity.Text, out quantity) && quantity > 0 && UseallcheckBox.IsChecked == false) // easy case 
                 {
                     for (var x = 1; x <= quantity; x++)
@@ -426,7 +436,10 @@ namespace WpfApp1
 
                     dataGridProxies.ItemsSource = MyList;
                 }
-                else if(int.TryParse(Quantity.Text, out quantity) && quantity > 0 && UseallcheckBox.IsChecked == true)
+                /// <summary>
+                ///  case with use all profile not use range box
+                /// </summary>
+                else if (int.TryParse(Quantity.Text, out quantity) && quantity > 0 && UseallcheckBox.IsChecked == true)
                 {
                     int Profilesize = Profile.Items.Count;
                     for(var y = 0; y <= Profilesize -1; y++)
@@ -452,6 +465,10 @@ namespace WpfApp1
             }
             else if (SizeruncheckBox.IsChecked == true)
             {
+                /// <summary>
+                ///  case not use all profile  use range box
+                /// </summary>
+                /// 
                 if (int.TryParse(Quantity2.Text, out quantity) && quantity > 0 && UseallcheckBox.IsChecked == false) // hard case 1
                 {
                    
@@ -480,14 +497,13 @@ namespace WpfApp1
                         }
                         //Debug.Info(count.ToString());
 
-                       
-
-
-
-                    
-
                     dataGridProxies.ItemsSource = MyList;
-                }else if(int.TryParse(Quantity2.Text, out quantity) && quantity > 0 && UseallcheckBox.IsChecked == true)
+                }
+                /// <summary>
+                ///  case use all profile  use range box
+                /// </summary>
+                /// 
+                else if (int.TryParse(Quantity2.Text, out quantity) && quantity > 0 && UseallcheckBox.IsChecked == true)
                 {
                     int Profilesize = Profile.Items.Count;
                     for (var y = 0; y <= Profilesize - 1; y++)
