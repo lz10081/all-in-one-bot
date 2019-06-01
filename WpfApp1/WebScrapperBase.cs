@@ -165,13 +165,18 @@ namespace ZenAIO
                     useLocal = true;
             }
 
-            Proxy proxy = GetRandomProxy();
             var client = new RestClient(product.URL);
-            WebProxy webProxy = proxy.GetWebProxy();
-            client.Proxy = webProxy;
+            Proxy proxy = null;
 
-            if (proxy.HasAuthentication())
-                client.Proxy.Credentials = new NetworkCredential(proxy.Username, proxy.Password);
+            if (!useLocal)
+            {
+                proxy = GetRandomProxy();
+                WebProxy webProxy = proxy.GetWebProxy();
+                client.Proxy = webProxy;
+
+                if (proxy.HasAuthentication())
+                    client.Proxy.Credentials = new NetworkCredential(proxy.Username, proxy.Password);
+            }
 
             var request = new RestRequest(Method.GET);
 
@@ -185,7 +190,10 @@ namespace ZenAIO
             if (!response.IsSuccessful)
             {
                 result = "";
-                ReleaseProxy(ref proxy);
+
+                if (!useLocal)
+                    ReleaseProxy(ref proxy);
+
                 return false;
             }
 
@@ -194,7 +202,8 @@ namespace ZenAIO
             Debug.Info("Content: \n{0}", result); // test dump
 
             // Make sure we release the proxy when we are done using it!
-            ReleaseProxy(ref proxy);
+            if (!useLocal)
+                ReleaseProxy(ref proxy);
 
             return true;
         }

@@ -266,6 +266,7 @@
     <Compile Include="Settingpage.xaml.cs">
       <DependentUpon>Settingpage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TaskManager.cs" />
     <Compile Include="taskpage.xaml.cs">
       <DependentUpon>taskpage.xaml</DependentUpon>
     </Compile>
