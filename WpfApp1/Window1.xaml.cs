@@ -19,6 +19,9 @@ using System.Windows.Navigation;
 using System.IO;
 using System.Windows.Controls.Primitives;
 using System.Collections.ObjectModel;
+using static WpfApp1.profilepage;
+using Newtonsoft.Json;
+using ZenAIO;
 
 namespace WpfApp1
 {
@@ -45,6 +48,14 @@ namespace WpfApp1
 
                 //Profile.Items.Add(file.Name);
             }
+            
+            string path = Utils.GetPath("Profile.json");
+
+            // Checks if a profile exists or not. If not, will create a default profile.
+            // Else (does exist) prompts us to read the file in like normal.
+            if (CreateDefaultProfile(ref path))
+                ReadProfile(ref path);
+
             #region dataGridProxies Settings
             dataGridProxies.ItemsSource = "";
            
@@ -126,25 +137,7 @@ namespace WpfApp1
             buttonFactory3.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(TaskRemoveClick));
             buttonFactory3.SetValue(ContentProperty, "Remove");
             x.CellTemplate = buttonTemplate3;
-            // x.CellTemplate.Template = t1.Template;
             dataGridProxies.Columns.Add(x);
-
-            // < DataGridTemplateColumn Header = "Acotion" >
-
-            //           < DataGridTemplateColumn.CellTemplate >
-
-            //        < DataTemplate >
-            //     < Button Name = "bt" Content = "here" ></ Button >
-            //
-            //  </ DataTemplate >
-
-            //   </ DataGridTemplateColumn.CellTemplate >
-
-
-            //   </ DataGridTemplateColumn >
-
-
-
             #endregion
 
         }
@@ -160,7 +153,41 @@ namespace WpfApp1
             public string Size { get; set; }
 
         }
+     
+        private void ReadProfile(ref string path)
+        {
+            var lines = File.ReadAllLines(path);
+            //var playerList = JsonConvert.DeserializeObject<List<NotusdataWship>>(json);
+            foreach (var line in lines)
+            {
+                // I'm not sure what this is doing
+                if (line.Contains("1type"))
+                {
+                    var playerList = JsonConvert.DeserializeObject<List<DataWithoutShip>>(line);
+                    Profile.Items.Add(playerList[0].nanme);
+                }
+                else if (line.Contains("2type"))
+                {
+                    var playerList = JsonConvert.DeserializeObject<List<DataWithShip>>(line);
+                    Profile.Items.Add(playerList[0].nanme);
+                }
+                else if (line.Contains("3type"))
+                {
+                    var playerList = JsonConvert.DeserializeObject<List<NonUSDataWithoutShip>>(line);
+                    Profile.Items.Add(playerList[0].nanme);
+                }
+                else if (line.Contains("4type"))
+                {
+                    var playerList = JsonConvert.DeserializeObject<List<NotUSDataWithShip>>(line);
+                    Profile.Items.Add(playerList[0].nanme);
+                }
+                else
+                {
 
+                }
+
+            }
+        }
 
         private void TaskStartClick(object sender, RoutedEventArgs e)
         {
@@ -220,8 +247,14 @@ namespace WpfApp1
         }
         private void Start(object sender, RoutedEventArgs e)
         {
-            if (taskSolebox)
-                Soleboxmain();
+            if (url.Text == "" || Profile.Text == "" || size.Text == "")
+                MessageBox.Show("You must enter all information");
+            else
+            {
+                if (taskSolebox)
+                    Soleboxmain();
+            }
+            
         }
         public void Soleboxmain() // will make a other cs file for each site 
 
@@ -238,15 +271,23 @@ namespace WpfApp1
                 Console.WriteLine("running proxy");
             }
             JobTask playerList = new JobTask();
-            playerList.ID = "1";
-            playerList.Product = "Shoe";
-            playerList.Site = "Footlocker";
+            var xx = 1;
+            playerList.ID = xx.ToString();
+            playerList.Product = url.Text;
+            playerList.Site = "Solebox";
             playerList.Status = "";
             playerList.Proxy = "12135489978";
-            playerList.Billing = "fake";
-            playerList.Size = "8";
-            MyList.Add(playerList);
+            playerList.Billing = Profile.Text;
+            playerList.Size = size.Text;
+            for (var x = 1; x <= Int32.Parse( Quantity.Text); x++)
+            {
+                
+                MyList.Add(playerList);
+               
+                xx = xx + 1;
+            }
             dataGridProxies.ItemsSource = MyList;
+
 
             //https://stackoverflow.com/questions/7198005/c-sharp-httpwebrequest-website-sign-in set up CookieContainer 
 
