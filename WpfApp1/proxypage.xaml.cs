@@ -366,13 +366,17 @@ namespace WpfApp1
 
         private void Test(object sender, RoutedEventArgs e)
         {
-            if (true)
+            // Test code test web scrapper with Foot Locker.
+            if (false)
             {
-                // Product product = new Product("https://www.footlocker.com/product/nike-lebron-16-mens/I1521001.html", "Lebron 16", 7, "default");
+                // Out of stock example as of 5/31/19 @20:09
                 Product product = new Product("https://www.footlocker.com/product/model/nike-lebron-16-mens/299649.html", "Lebron 16", 7, "default");
+
+                // In stock example as of 5/31/19 @20:09
+                // Product product = new Product("https://www.footlocker.com/product/model/nike-lebron-16-mens/299649.html", "Lebron 16", 8, "default");
                 IWebScrapper webScrapper = new FootlockerWebScrapper(product);
 
-                var result = webScrapper.Available();
+                bool result = webScrapper.Available();
 
                 Console.WriteLine("webScrapper result: " + result);
 
