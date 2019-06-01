@@ -74,7 +74,7 @@
                         <Label x:Name="labe3" FontStyle="Italic" Foreground="Black" FontSize="20"  BorderThickness="2,2,2,2" Content="Create tasks" HorizontalAlignment="Left" Margin="34,28,0,0" VerticalAlignment="Top" Width="141"/>
                         <CheckBox x:Name="UseallcheckBox" Click="Useall" IsChecked="False" Content="Use all Profile" FontStyle="Italic" Foreground="Black" FontSize="20" HorizontalAlignment="Left" Margin="34,338,0,0" VerticalAlignment="Top" Width="276" Height="50"/>
                         <TextBox x:Name="url" Background="White"  BorderBrush="Black"  materiaDesign:HintAssist.Hint="URL"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="34,103,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" />
-                        <TextBox x:Name="size" Background="White" BorderBrush="Black" PreviewTextInput="PreviewTextInput"  materiaDesign:HintAssist.Hint="Size"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="400,103,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" />
+                       
                         <ComboBox x:Name="Profile" Background="White" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="Profile"  FontSize="20" BorderThickness="2,2,2,2" Margin="400,224,0,0"  VerticalAlignment="Top" Width="276" Height="40"/>
                         <CheckBox x:Name="SizeruncheckBox"  IsChecked="False" Click="Sizebox" Content="Use Size Range" FontStyle="Italic" Foreground="Black" FontSize="20" HorizontalAlignment="Left" Margin="820,103,0,0" VerticalAlignment="Top" Width="249" Height="49"/>
                         <TextBox x:Name="Quantity" Background="White"  PreviewTextInput="PreviewTextInput"  BorderBrush="Black"  materiaDesign:HintAssist.Hint="Quantity"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="34,224,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" />
@@ -85,6 +85,7 @@
                         <ComboBox x:Name="endsize" Background="White" HorizontalAlignment="Left"    IsEnabled="False" BorderBrush="Black" materiaDesign:HintAssist.Hint="End"  FontSize="20" BorderThickness="2,2,2,2" Margin="960,224,0,0"  VerticalAlignment="Top" Width="109" Height="37"/>
                         <TextBox x:Name="Quantity2" Background="White"  PreviewTextInput="PreviewTextInput" IsEnabled="False" BorderBrush="Black"  materiaDesign:HintAssist.Hint="Quantity"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="37" Margin="1095,224,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="243" />
                         <ComboBox x:Name="Sitelist" Background="White" HorizontalAlignment="Left"    BorderBrush="Black" materiaDesign:HintAssist.Hint="Site"  FontSize="20" BorderThickness="2,2,2,2" Margin="227,28,0,0"  VerticalAlignment="Top" Width="207" Height="40"/>
+                        <ComboBox x:Name="size" Background="White" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="Size"  FontSize="20" BorderThickness="2,2,2,2" Margin="400,103,0,0"  VerticalAlignment="Top" Width="276" Height="40"/>
                     </Grid>
                 </Grid>
             </Controls:MetroTabItem>

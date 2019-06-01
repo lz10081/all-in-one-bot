@@ -58,7 +58,7 @@ namespace WpfApp1
                     //Profile.Items.Add(file.Name);
                 }
             }
-
+            Additem();
             // add all the site we support
             Sitelist.Items.Add("Footlocker");
             
@@ -201,6 +201,31 @@ namespace WpfApp1
 
             }
         }
+        private void Additem()
+        {
+
+
+            for (var a = 3; a <= 18; a++)
+            {
+                if(a < 13)
+                {
+                    size.Items.Add(a);
+                    size.Items.Add(a+0.5);
+                    startsize.Items.Add(a);
+                    startsize.Items.Add(a + 0.5);
+                    endsize.Items.Add(a);
+                    endsize.Items.Add(a + 0.5);
+                }
+                else
+                {
+                    size.Items.Add(a);
+                    startsize.Items.Add(a);
+                    endsize.Items.Add(a);
+                }
+                   
+            }
+            size.Items.Add("Random");
+        }
 
         private void Removeall(object sender, RoutedEventArgs e)
         {
@@ -308,8 +333,20 @@ namespace WpfApp1
       
         private void Start(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(url.Text) || string.IsNullOrWhiteSpace(Profile.Text) || string.IsNullOrWhiteSpace(size.Text))
+            if (string.IsNullOrWhiteSpace(url.Text)  || string.IsNullOrWhiteSpace(Sitelist.Text))
                 MessageBox.Show("You must enter all information");
+            else if (SizeruncheckBox.IsChecked == true && string.IsNullOrWhiteSpace(startsize.Text) || SizeruncheckBox.IsChecked == true && string.IsNullOrWhiteSpace(endsize.Text))
+                MessageBox.Show("You must enter start size and end size");
+            else if (SizeruncheckBox.IsChecked == true && (Double.Parse(startsize.Text) >= Double.Parse(endsize.Text)) )
+                MessageBox.Show("Start size must less than end size ");
+            else if (SizeruncheckBox.IsChecked == true && string.IsNullOrWhiteSpace(Quantity2.Text))
+                MessageBox.Show("You enter quantity ");
+            else if (SizeruncheckBox.IsChecked == false && string.IsNullOrWhiteSpace(Quantity.Text))
+                MessageBox.Show("You enter quantity");
+            else if (SizeruncheckBox.IsChecked == false && string.IsNullOrWhiteSpace(size.Text))
+                MessageBox.Show("You enter size");
+            else if (UseallcheckBox.IsChecked == false && string.IsNullOrWhiteSpace(Profile.Text))
+                MessageBox.Show("You must enter your profile information");
             else
             {
                 if (Sitelist.Text == "Footlocker")
@@ -367,28 +404,121 @@ namespace WpfApp1
             }
 
             int quantity = 0;
-
-            // Only run this code if Quantity.Text is a valid parse.
-            if (int.TryParse(Quantity.Text, out quantity) && quantity > 0)
+            if (SizeruncheckBox.IsChecked == false) // easy case 
             {
-                for (var x = 1; x <= quantity; x++)
+                if (int.TryParse(Quantity.Text, out quantity) && quantity > 0 && UseallcheckBox.IsChecked == false) // easy case 
                 {
-                    JobTask playerList = new JobTask();
-                    playerList.ID = MyList.Count.ToString();
-                    playerList.Product = url.Text;
-                    playerList.Site = "Footlocker";
-                    playerList.Status = "";
-                    playerList.Proxy = "12135489978";
-                    playerList.Billing = Profile.Text;
-                    playerList.Size = size.Text;
-                    MyList.Add(playerList);
-                    savelist.Add(MyList.Count);
+                    for (var x = 1; x <= quantity; x++)
+                    {
+                        JobTask playerList = new JobTask();
+                        playerList.ID = MyList.Count.ToString();
+                        playerList.Product = url.Text;
+                        playerList.Site = Sitelist.Text;
+                        playerList.Status = "";
+                        playerList.Proxy = "12135489978";
+                        playerList.Billing = Profile.Text;
+                        playerList.Size = size.Text;
+                        MyList.Add(playerList);
+                        savelist.Add(MyList.Count);
 
 
+                    }
+
+                    dataGridProxies.ItemsSource = MyList;
                 }
+                else if(int.TryParse(Quantity.Text, out quantity) && quantity > 0 && UseallcheckBox.IsChecked == true)
+                {
+                    int Profilesize = Profile.Items.Count;
+                    for(var y = 0; y <= Profilesize -1; y++)
+                    {
+                        for (var x = 1; x <= quantity; x++)
+                        {
+                            JobTask playerList = new JobTask();
+                            playerList.ID = MyList.Count.ToString();
+                            playerList.Product = url.Text;
+                            playerList.Site = Sitelist.Text;
+                            playerList.Status = "";
+                            playerList.Proxy = "12135489978";
+                            playerList.Billing = Profile.Items[y].ToString();
+                            playerList.Size = size.Text;
+                            MyList.Add(playerList);
+                            savelist.Add(MyList.Count);
 
-                dataGridProxies.ItemsSource = MyList;
+
+                        }
+                    }
+                 
+                }
             }
+            else if (SizeruncheckBox.IsChecked == true)
+            {
+                if (int.TryParse(Quantity2.Text, out quantity) && quantity > 0 && UseallcheckBox.IsChecked == false) // hard case 1
+                {
+                   
+                     
+                       // int count = 1;
+                        Double currentsize = Double.Parse(startsize.Text);
+                    while (currentsize - 0.5 != Double.Parse(endsize.Text))
+                    {
+                            for (var x = 1; x <= quantity; x++)
+                            {
+                                JobTask playerList = new JobTask();
+                                playerList.ID = MyList.Count.ToString();
+                                playerList.Product = url.Text;
+                                playerList.Site = Sitelist.Text;
+                                playerList.Status = "";
+                                playerList.Proxy = "12135489978";
+                                playerList.Billing = Profile.Text;
+                                playerList.Size = currentsize.ToString();
+                                MyList.Add(playerList);
+                                savelist.Add(MyList.Count);
+
+
+                            }
+                            currentsize = currentsize + 0.5;
+                         
+                        }
+                        //Debug.Info(count.ToString());
+
+                       
+
+
+
+                    
+
+                    dataGridProxies.ItemsSource = MyList;
+                }else if(int.TryParse(Quantity2.Text, out quantity) && quantity > 0 && UseallcheckBox.IsChecked == true)
+                {
+                    int Profilesize = Profile.Items.Count;
+                    for (var y = 0; y <= Profilesize - 1; y++)
+                    {
+                        Double currentsize = Double.Parse(startsize.Text);
+                        while (currentsize - 0.5 != Double.Parse(endsize.Text))
+                        {
+                            for (var x = 1; x <= quantity; x++)
+                            {
+                                JobTask playerList = new JobTask();
+                                playerList.ID = MyList.Count.ToString();
+                                playerList.Product = url.Text;
+                                playerList.Site = Sitelist.Text;
+                                playerList.Status = "";
+                                playerList.Proxy = "12135489978";
+                                playerList.Billing = Profile.Items[y].ToString();
+                                playerList.Size = currentsize.ToString();
+                                MyList.Add(playerList);
+                                savelist.Add(MyList.Count);
+
+
+                            }
+                            currentsize = currentsize + 0.5;
+
+                        }
+                    }
+                 }
+
+            }
+            // Only run this code if Quantity.Text is a valid parse.
+          
 
             //https://stackoverflow.com/questions/7198005/c-sharp-httpwebrequest-website-sign-in set up CookieContainer 
 
