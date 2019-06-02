@@ -45,7 +45,7 @@ namespace WpfApp1
             savelist = new List<Int32>();
             proxylist = new List<String>();
             Main.Content = new profilepage();
-
+            
             if (false)
             {
                 DirectoryInfo d = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);//Assuming Test is your Folder
@@ -244,12 +244,27 @@ namespace WpfApp1
         {
             // Get the currently selected row using the SelectedRow property.
             var x = dataGridProxies.SelectedIndex; // get the current index number
-            var q = MyList.Where(X => X.ID == x.ToString()).FirstOrDefault(); // can get all the information on the index
-           
+            int index = savelist[x];
+            //  var q = MyList.Where(X => X.ID == x.ToString()).FirstOrDefault(); // can get all the information on the index
+            var item = MyList.FirstOrDefault(X => X.ID == (index - 1).ToString());
+          //  Debug.Info(item.ID);
+            if (item != null)
+            {
+                item.Status = "Started";
+              //  Debug.Info(item.Status);
+              
+            }
+            var found = MyList.FirstOrDefault(X => X.ID == (index - 1).ToString());
+            int i = MyList.IndexOf(found);
+            MyList[i] = item;
 
+           // MyList.Insert(MyList.IndexOf(q), item);
+            //MyList.Remove(q);
             //   MyList.IndexOf(); need to fixed the id first
-            Debug.Info(x.ToString());
-            Debug.Info(q.ID);
+           // Debug.Info(x.ToString());
+           //Debug.Info(MyList[i].Status);
+            dataGridProxies.ItemsSource = MyList;
+
         }
 
         private void TaskStopClick(object sender, RoutedEventArgs e)

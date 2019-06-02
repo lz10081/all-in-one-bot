@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ZenAIO
@@ -195,7 +196,7 @@ namespace ZenAIO
             }
 
             result = response.Content;
-
+          
             Debug.Info("Content: \n{0}", result); // test dump
 
             // Make sure we release the proxy when we are done using it!

@@ -20,7 +20,7 @@ namespace ZenAIO
             builder.Append('"');
 
             builder.Append(product.Size.ToString("00.0#"));
-            builder.Append("\",\"isDisabled\":true");
+            builder.Append("\",\"isDisabled\":true");// {"name":"08.0","code":"21946329","isDisabled":false}
 
             return builder.ToString();
         }
@@ -37,9 +37,9 @@ namespace ZenAIO
 
             if (match.Success)
                 return false;
-
-            // Console.WriteLine("Match result: " + match.Value);
-
+            var otherLang = regex.Match(content).Groups[1];
+           // Console.WriteLine("Match result: " + match.Value);
+           // Console.WriteLine(otherLang);
             return true;
         }
 
