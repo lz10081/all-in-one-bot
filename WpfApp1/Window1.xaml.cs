@@ -254,9 +254,18 @@ namespace WpfApp1
               //  Debug.Info(item.Status);
               
             }
-            var found = MyList.FirstOrDefault(X => X.ID == (index - 1).ToString());
-            int i = MyList.IndexOf(found);
-            MyList[i] = item;
+            // var found = MyList.FirstOrDefault(X => X.ID == (index - 1).ToString());
+            try
+            {
+                MyList.Remove(MyList.Where(i => i.ID == (index - 1).ToString()).Single());
+                MyList.Insert((index - 1), item);
+            }
+            catch
+            {
+                // Console.WriteLine(x);
+                Debug.Error("unknow error");
+            }
+            
 
            // MyList.Insert(MyList.IndexOf(q), item);
             //MyList.Remove(q);
