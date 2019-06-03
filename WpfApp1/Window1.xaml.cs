@@ -241,6 +241,7 @@ namespace WpfApp1
         }
         private void Stopall(object sender, RoutedEventArgs e)
         {
+            savelist.Sort();
             for (int a = 0; a < savelist.Count; a++)
             {
                 int index = savelist[a];
@@ -268,7 +269,8 @@ namespace WpfApp1
         }
         private void Startall(object sender, RoutedEventArgs e)
         {
-            for(int a = 0; a <savelist.Count; a++)
+            savelist.Sort();
+            for (int a = 0; a <savelist.Count; a++)
             {
                 int index = savelist[a];
              
@@ -296,6 +298,7 @@ namespace WpfApp1
 
         private void TaskStartClick(object sender, RoutedEventArgs e)
         {
+            savelist.Sort();
             // Get the currently selected row using the SelectedRow property.
             var x = dataGridProxies.SelectedIndex; // get the current index number
             int index = savelist[x];
@@ -332,6 +335,7 @@ namespace WpfApp1
 
         private void TaskStopClick(object sender, RoutedEventArgs e)
         {
+            savelist.Sort();
             var x = dataGridProxies.SelectedIndex; // get the current index number
             int index = savelist[x];
             
@@ -347,7 +351,9 @@ namespace WpfApp1
             try
             {
                 MyList.Remove(MyList.Where(i => i.ID == (index - 1).ToString()).Single());
+                savelist.Remove(index);
                 MyList.Insert((index - 1), item);
+                savelist.Insert(index, index);
             }
             catch
             {
