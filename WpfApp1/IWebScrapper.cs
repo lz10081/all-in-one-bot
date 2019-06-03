@@ -12,7 +12,7 @@ namespace ZenAIO
         /// <summary>
         /// Checks if the web scrapper found an availbility.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if in-stock/available, else false.</returns>
         bool Available();
 
     }
