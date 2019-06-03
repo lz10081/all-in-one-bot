@@ -55,7 +55,7 @@
         </Grid>
         <Controls:MetroAnimatedTabControl x:Name="tabControl" Margin="-5,24,5,0" >
             <Controls:MetroTabItem Header="Tasks" Margin="56,5,-99,-11">
-                <Grid  Margin="0,23,0,46">
+                <Grid  Margin="0,17,-8,46">
                     <Grid.Background>
 
                         <ImageBrush  Stretch="Fill" ImageSource="zenb.jpg" />
@@ -64,35 +64,36 @@
                     <Grid.ColumnDefinitions>
 
                         <ColumnDefinition Width="32"/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="229*"/>
+                        <ColumnDefinition Width="1232*"/>
                     </Grid.ColumnDefinitions>
 
 
-                    <Grid HorizontalAlignment="Left"    Height="506" Margin="23,76,0,0" VerticalAlignment="Top" Width="1377" Grid.Column="1">
+                    <Grid HorizontalAlignment="Left"    Height="506" Margin="23,76,0,0" VerticalAlignment="Top" Width="1377" Grid.Column="1" Grid.ColumnSpan="2">
                         <Grid.Background>
                             <ImageBrush  Stretch="Fill" ImageSource="zenb3.jpg" />
                         </Grid.Background>
-                        <Label x:Name="labe3" FontStyle="Italic" Foreground="Black" FontSize="20"  BorderThickness="2,2,2,2" Content="Create tasks" HorizontalAlignment="Left" Margin="34,28,0,0" VerticalAlignment="Top" Width="141"/>
-                        <CheckBox x:Name="UseallcheckBox" Click="Useall" IsChecked="False" Content="Use all Profile" FontStyle="Italic" Foreground="Black" FontSize="20" HorizontalAlignment="Left" Margin="34,338,0,0" VerticalAlignment="Top" Width="276" Height="50"/>
-                        <TextBox x:Name="url" Background="White"  BorderBrush="Black"  materiaDesign:HintAssist.Hint="URL"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="34,103,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" />
-                       
-                        <ComboBox x:Name="Profile" Background="White" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="Profile"  FontSize="20" BorderThickness="2,2,2,2" Margin="400,224,0,0"  VerticalAlignment="Top" Width="276" Height="40"/>
-                        <CheckBox x:Name="SizeruncheckBox"  IsChecked="False" Click="Sizebox" Content="Use Size Range" FontStyle="Italic" Foreground="Black" FontSize="20" HorizontalAlignment="Left" Margin="820,103,0,0" VerticalAlignment="Top" Width="249" Height="49"/>
-                        <TextBox x:Name="Quantity" Background="White"  PreviewTextInput="PreviewTextInput"  BorderBrush="Black"  materiaDesign:HintAssist.Hint="Quantity"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="34,224,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" />
+                        <Label x:Name="labe3" FontStyle="Italic" Foreground="Black" FontSize="20"  BorderThickness="2,2,2,2" Content="Create tasks" HorizontalAlignment="Left" Margin="34,28,0,0" VerticalAlignment="Top" Width="165" FontFamily="Times New Roman" FontWeight="Bold"/>
+                        <CheckBox x:Name="UseallcheckBox" Click="Useall" IsChecked="False" Content="Use all Profile" FontStyle="Italic" Foreground="Black" FontSize="20" HorizontalAlignment="Left" Margin="34,338,0,0" VerticalAlignment="Top" Width="276" Height="50" FontFamily="Times New Roman" FontWeight="Bold"/>
+                        <TextBox x:Name="url" Background="White"  BorderBrush="Black"  materiaDesign:HintAssist.Hint="URL"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="34,103,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" FontFamily="Times New Roman" />
+
+                        <ComboBox x:Name="Profile" Background="White" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="Profile"  FontSize="20" BorderThickness="2,2,2,2" Margin="400,224,0,0"  VerticalAlignment="Top" Width="276" Height="40" FontFamily="Times New Roman"/>
+                        <CheckBox x:Name="SizeruncheckBox"  IsChecked="False" Click="Sizebox" Content="Use Size Range" FontStyle="Italic" Foreground="Black" FontSize="20" HorizontalAlignment="Left" Margin="820,103,0,0" VerticalAlignment="Top" Width="249" Height="49" FontWeight="Bold" FontFamily="Times New Roman"/>
+                        <TextBox x:Name="Quantity" Background="White"  PreviewTextInput="PreviewTextInput"  BorderBrush="Black"  materiaDesign:HintAssist.Hint="Quantity"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="40" Margin="34,224,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="276" FontFamily="Times New Roman" />
                         <Button x:Name="Create"  BorderBrush="Black" Click="Start" Content="Create" HorizontalAlignment="Left" Margin="1192,420,0,0" VerticalAlignment="Top" Width="146" Height="60" RenderTransformOrigin="0.298,0.525">
 
                         </Button>
-                        <ComboBox x:Name="startsize" Background="White" HorizontalAlignment="Left"  IsEnabled="False" BorderBrush="Black" materiaDesign:HintAssist.Hint="Start"  FontSize="20" BorderThickness="2,2,2,2" Margin="820,224,0,0"  VerticalAlignment="Top" Width="109" Height="40"/>
-                        <ComboBox x:Name="endsize" Background="White" HorizontalAlignment="Left"    IsEnabled="False" BorderBrush="Black" materiaDesign:HintAssist.Hint="End"  FontSize="20" BorderThickness="2,2,2,2" Margin="960,224,0,0"  VerticalAlignment="Top" Width="109" Height="37"/>
-                        <TextBox x:Name="Quantity2" Background="White"  PreviewTextInput="PreviewTextInput" IsEnabled="False" BorderBrush="Black"  materiaDesign:HintAssist.Hint="Quantity"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="37" Margin="1095,224,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="243" />
+                        <ComboBox x:Name="startsize" Background="White" HorizontalAlignment="Left"  IsEnabled="False" BorderBrush="Black" materiaDesign:HintAssist.Hint="Start"  FontSize="20" BorderThickness="2,2,2,2" Margin="820,224,0,0"  VerticalAlignment="Top" Width="109" Height="40" FontFamily="Times New Roman"/>
+                        <ComboBox x:Name="endsize" Background="White" HorizontalAlignment="Left"    IsEnabled="False" BorderBrush="Black" materiaDesign:HintAssist.Hint="End"  FontSize="20" BorderThickness="2,2,2,2" Margin="960,224,0,0"  VerticalAlignment="Top" Width="109" Height="37" FontFamily="Times New Roman"/>
+                        <TextBox x:Name="Quantity2" Background="White"  PreviewTextInput="PreviewTextInput" IsEnabled="False" BorderBrush="Black"  materiaDesign:HintAssist.Hint="Quantity"  FontSize="20" BorderThickness="2,2,2,2"  HorizontalAlignment="Left" Height="37" Margin="1095,224,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="243" FontFamily="Times New Roman" />
                         <ComboBox x:Name="Sitelist" Background="White" HorizontalAlignment="Left"    BorderBrush="Black" materiaDesign:HintAssist.Hint="Site"  FontSize="20" BorderThickness="2,2,2,2" Margin="227,28,0,0"  VerticalAlignment="Top" Width="207" Height="40"/>
-                        <ComboBox x:Name="size" Background="White" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="Size"  FontSize="20" BorderThickness="2,2,2,2" Margin="400,103,0,0"  VerticalAlignment="Top" Width="276" Height="40"/>
-                        <CheckBox x:Name="Localhost"  IsChecked="False" Content="Use localhost" FontStyle="Italic" Foreground="Black" FontSize="20" HorizontalAlignment="Left" Margin="400,338,0,0" VerticalAlignment="Top" Width="276" Height="50"/>
+                        <ComboBox x:Name="size" Background="White" HorizontalAlignment="Left"   BorderBrush="Black" materiaDesign:HintAssist.Hint="Size"  FontSize="20" BorderThickness="2,2,2,2" Margin="400,103,0,0"  VerticalAlignment="Top" Width="276" Height="40" FontFamily="Times New Roman"/>
+                        <CheckBox x:Name="Localhost"  IsChecked="False" Content="Use localhost" FontStyle="Italic" Foreground="Black" FontSize="20" HorizontalAlignment="Left" Margin="400,338,0,0" VerticalAlignment="Top" Width="276" Height="50" FontFamily="Times New Roman" FontWeight="Bold"/>
                     </Grid>
                 </Grid>
             </Controls:MetroTabItem>
             <Controls:MetroTabItem Header="View" Margin="197,5,-231,-10" HorizontalAlignment="Left" Width="74">
-                <Grid Background="#FFE5E5E5" Margin="0,20,-4,45">
+                <Grid Background="#FFEEE4D8" Margin="0,20,-4,45">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" MinHeight="12"/>
@@ -106,14 +107,22 @@
                         <ColumnDefinition Width="374*" />
                         <ColumnDefinition Width="374*" />
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="buttonRemoveProxy"  Click="Startall" Content="Start All" Grid.Row="1" Grid.Column="0" Height="Auto"  Margin="112,5,111,0"/>
-                    <DataGrid x:Name="dataGridProxies" Grid.Row="2" Grid.ColumnSpan="4" Margin="0,20,20,10">
-
-
-
-                    </DataGrid>
-                    <Button x:Name="Stop" Content="Stop All"   Click="Stopall" Grid.Row="1" Grid.Column="1" Height="Auto"  Margin="114,5,109,0"/>
-                    <Button x:Name="buttonRemoveProxy_Copy1"  Click="Removeall" Content="Remove All" Grid.Row="1" Grid.Column="2" Height="Auto" Margin="121,5,102,0"/>
+                    <Button x:Name="buttonRemoveProxy"  Click="Startall" Content="Start All" Grid.Row="1" Grid.Column="0" Height="Auto"  Margin="112,5,111,0">
+                        <Button.Background>
+                            <ImageBrush ImageSource="zenb2.png"/>
+                        </Button.Background>
+                    </Button>
+                    <DataGrid x:Name="dataGridProxies" Grid.Row="2" Grid.ColumnSpan="4" Margin="0,20,0,10" Background="#FFEEE4D8"/>
+                    <Button x:Name="Stop" Content="Stop All"   Click="Stopall" Grid.Row="1" Grid.Column="1" Height="Auto"  Margin="114,5,109,0">
+                        <Button.Background>
+                            <ImageBrush ImageSource="zenb2.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="buttonRemoveProxy_Copy1"  Click="Removeall" Content="Remove All" Grid.Row="1" Grid.Column="2" Height="Auto" Margin="121,5,102,0">
+                        <Button.Background>
+                            <ImageBrush ImageSource="zenb2.png"/>
+                        </Button.Background>
+                    </Button>
 
                 </Grid>
 
