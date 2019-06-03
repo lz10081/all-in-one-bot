@@ -239,6 +239,60 @@ namespace WpfApp1
             savelist = em;
             dataGridProxies.ItemsSource = MyList;
         }
+        private void Stopall(object sender, RoutedEventArgs e)
+        {
+            for (int a = 0; a < savelist.Count; a++)
+            {
+                int index = savelist[a];
+
+                var item = MyList.FirstOrDefault(X => X.ID == (index - 1).ToString());
+
+                if (item != null)
+                {
+                    item.Status = "Stoped";
+
+
+                }
+
+                try
+                {
+                    MyList.Remove(MyList.Where(i => i.ID == (index - 1).ToString()).Single());
+                    MyList.Insert((index - 1), item);
+                }
+                catch
+                {
+
+                    Debug.Error("unknow error");
+                }
+            }
+        }
+        private void Startall(object sender, RoutedEventArgs e)
+        {
+            for(int a = 0; a <savelist.Count; a++)
+            {
+                int index = savelist[a];
+             
+                var item = MyList.FirstOrDefault(X => X.ID == (index - 1).ToString());
+               
+                if (item != null)
+                {
+                    item.Status = "Started";
+                   
+
+                }
+              
+                try
+                {
+                    MyList.Remove(MyList.Where(i => i.ID == (index - 1).ToString()).Single());
+                    MyList.Insert((index - 1), item);
+                }
+                catch
+                {
+                   
+                    Debug.Error("unknow error");
+                }
+            }
+        }
 
         private void TaskStartClick(object sender, RoutedEventArgs e)
         {
@@ -278,7 +332,28 @@ namespace WpfApp1
 
         private void TaskStopClick(object sender, RoutedEventArgs e)
         {
+            var x = dataGridProxies.SelectedIndex; // get the current index number
+            int index = savelist[x];
+            
+            var item = MyList.FirstOrDefault(X => X.ID == (index - 1).ToString());
+            
+            if (item != null)
+            {
+                item.Status = "Stoped";
+                
 
+            }
+       
+            try
+            {
+                MyList.Remove(MyList.Where(i => i.ID == (index - 1).ToString()).Single());
+                MyList.Insert((index - 1), item);
+            }
+            catch
+            {
+                // Console.WriteLine(x);
+                Debug.Error("unknow error");
+            }
         }
 
         private void PreviewTextInput(object sender, TextCompositionEventArgs e)
