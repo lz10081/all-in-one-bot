@@ -10,11 +10,16 @@ namespace ZenAIO
     public class FootlockerWebScrapper : WebScrapperBase
     {
 
+        private string query;
+        private Regex regex;
+
         public FootlockerWebScrapper(Product product) : base(product)
         {
+            query = GetProductQuery(ref product);
+            regex = new Regex(query);
         }
 
-        private string GetProductQuery()
+        private static string GetProductQuery(ref Product product)
         {
             StringBuilder builder = new StringBuilder(0x20);
             builder.Append('"');
@@ -30,16 +35,15 @@ namespace ZenAIO
             // "07.0","isDisabled":true
             // "size", "isDisabled":true -> true out-of-stock, false in-stock
 
-            string query = GetProductQuery();
-            Regex regex = new Regex(query);
-
             Match match = regex.Match(content);
 
             if (match.Success)
                 return false;
-            var otherLang = regex.Match(content).Groups[1];
-           // Console.WriteLine("Match result: " + match.Value);
-           // Console.WriteLine(otherLang);
+
+            // var otherLang = regex.Match(content).Groups[1];
+            // Debug.Info("Match result: " + match.Value);
+            // Debug.Info(otherLang);
+
             return true;
         }
 
