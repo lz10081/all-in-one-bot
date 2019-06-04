@@ -316,6 +316,8 @@ namespace WpfApp1
             // var found = MyList.FirstOrDefault(X => X.ID == (index - 1).ToString());
             try
             {
+                Debug.Info("Product???"+ item.Product); // didn't show the proxy info idk y
+                //Console.WriteLine("wtf"+item.Proxy);
                 Product product = new Product(item.Product, int.Parse( item.ID), float.Parse( item.Size, CultureInfo.InvariantCulture.NumberFormat), item.Billing,item.Proxy);
                 IWebScrapper webScrapper = new FootlockerWebScrapper(product);
 

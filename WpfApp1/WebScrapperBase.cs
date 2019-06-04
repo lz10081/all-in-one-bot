@@ -1,8 +1,11 @@
-﻿using RestSharp;
+﻿using Newtonsoft.Json;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -160,6 +163,44 @@ namespace ZenAIO
                 }
             }
         }
+        public class Payload
+        {
+            [JsonProperty("productQuantity")]
+         
+            public int Quantity { get; set; }
+            [JsonProperty("productId")]
+            public string ProductID { get; set; }
+        }
+
+        private async void act()
+        {
+            var payload = new Payload
+            {
+                Quantity = 1,
+                ProductID = "21946329"  //https://www.footlocker.com/product/Nike-LeBron-16---Men-s/I1521001.html
+            };
+
+            var stringPayload = await Task.Run(() => JsonConvert.SerializeObject(payload));
+            Console.WriteLine("here" + stringPayload);
+            // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
+            var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
+
+            using (var httpClient = new HttpClient())
+            {
+
+                // Do the actual request and await the response
+                var httpResponse = await httpClient.PostAsync("https://www.footlocker.com/product/Nike-LeBron-16---Men-s/I1521001.html", httpContent);
+
+                // If the response contains content we want to read it!
+                if (httpResponse.Content != null)
+                {
+                    var responseContent = await httpResponse.Content.ReadAsStringAsync();
+                    Debug.Info("response.here: " , responseContent);
+                    Console.WriteLine("here"+responseContent);
+                    // From here on you could deserialize the ResponseContent back again to a concrete C# type using Json.Net
+                }
+            }
+        }
 
         /// <summary>
         /// Downloads the product from its URL.
@@ -168,6 +209,8 @@ namespace ZenAIO
         /// <returns>True if successfully downloaded, else false.</returns>
         protected bool Download(out string result)
         {
+
+
             if (proxies == null || proxies.Count == 0)
             {
                 HttpWebRequest.DefaultMaximumErrorResponseLength = 1048576;
@@ -184,7 +227,11 @@ namespace ZenAIO
 
             if (!useLocal)
             {
-                proxy = GetRandomProxy();
+                 proxy = GetRandomProxy();
+                //Debug.Info("my proxy", product.CProxy); // test dump
+             //  string[] fields = product.CProxy.Split(':');
+             //   Debug.Info("my proxy", fields[0]);
+                //Proxy proxy = CreateProxy(ref fields);
                 WebProxy webProxy = proxy.GetWebProxy();
                 client.Proxy = webProxy;
 
@@ -203,13 +250,15 @@ namespace ZenAIO
 
             if (!response.IsSuccessful)
             {
-                result = "";
 
+                result = "";
+               
                 if (!useLocal)
                     ReleaseProxy(ref proxy);
 
                 return false;
             }
+            act();
 
             result = response.Content;
 
