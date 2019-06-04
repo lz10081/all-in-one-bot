@@ -23,6 +23,7 @@ using static WpfApp1.profilepage;
 using Newtonsoft.Json;
 using ZenAIO;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace WpfApp1
 {
@@ -315,6 +316,13 @@ namespace WpfApp1
             // var found = MyList.FirstOrDefault(X => X.ID == (index - 1).ToString());
             try
             {
+                Product product = new Product(item.Product, int.Parse( item.ID), float.Parse( item.Size, CultureInfo.InvariantCulture.NumberFormat), item.Billing,item.Proxy);
+                IWebScrapper webScrapper = new FootlockerWebScrapper(product);
+
+                bool result = webScrapper.Available();
+
+                Debug.Info("webScrapper result: " + result);
+
                 MyList.Remove(MyList.Where(i => i.ID == (index - 1).ToString()).Single());
                 MyList.Insert((current), item);
             }

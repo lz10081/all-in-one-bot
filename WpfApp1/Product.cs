@@ -9,20 +9,26 @@ namespace ZenAIO
     public class Product
     {
 
-        public Product(string url, string name, float size, string profile)
+        public Product(string url, int id, float size, string profile, string proxy)
         {
             URL = url;
-            Name = name;
+            Name = id;
             Size = size;
             Profile = profile;
+            CProxy = proxy;
         }
 
         public string URL
         {
             get; private set;
         }
+        public string CProxy
+        {
+            get; private set;
+        }
 
-        public string Name
+
+        public int Name
         {
             get; private set;
         }
@@ -49,6 +55,8 @@ namespace ZenAIO
             builder.Append(Size);
             builder.Append("\", Profile=\"");
             builder.Append(Profile);
+            builder.Append("\"}");
+            builder.Append(CProxy);
             builder.Append("\"}");
 
             return builder.ToString();
@@ -78,7 +86,7 @@ namespace ZenAIO
 
             Product other = obj as Product;
 
-            return URL == other.URL && Name == other.Name && Size == other.Size && Profile == other.Profile;
+            return URL == other.URL && Name == other.Name && Size == other.Size && Profile == other.Profile && CProxy == other.CProxy;
         }
 
     }
