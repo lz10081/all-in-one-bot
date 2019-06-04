@@ -302,6 +302,7 @@ namespace WpfApp1
             // Get the currently selected row using the SelectedRow property.
             var x = dataGridProxies.SelectedIndex; // get the current index number
             int index = savelist[x];
+            int current = savelist.IndexOf(index);
             //  var q = MyList.Where(X => X.ID == x.ToString()).FirstOrDefault(); // can get all the information on the index
             var item = MyList.FirstOrDefault(X => X.ID == (index - 1).ToString());
           //  Debug.Info(item.ID);
@@ -315,7 +316,7 @@ namespace WpfApp1
             try
             {
                 MyList.Remove(MyList.Where(i => i.ID == (index - 1).ToString()).Single());
-                MyList.Insert((index - 1), item);
+                MyList.Insert((current), item);
             }
             catch
             {
@@ -338,9 +339,11 @@ namespace WpfApp1
             savelist.Sort();
             var x = dataGridProxies.SelectedIndex; // get the current index number
             int index = savelist[x];
-            
-            var item = MyList.FirstOrDefault(X => X.ID == (index - 1).ToString());
-            
+            int current = savelist.IndexOf(index);
+           // Console.WriteLine("here"+savelist.IndexOf(index));
+          //  Console.WriteLine(index);
+            var item = MyList.FirstOrDefault(X => X.ID == (index-1).ToString());
+           // Console.WriteLine(item.ID);
             if (item != null)
             {
                 item.Status = "Stoped";
@@ -350,14 +353,14 @@ namespace WpfApp1
        
             try
             {
-                MyList.Remove(MyList.Where(i => i.ID == (index - 1).ToString()).Single());
-                savelist.Remove(index);
-                MyList.Insert((index - 1), item);
-                savelist.Insert(index, index);
+                MyList.Remove(MyList.Where(i => i.ID == (index-1).ToString()).Single());
+                //savelist.Remove(current);
+                MyList.Insert((current), item);
+               // savelist.Insert(index, index);
             }
             catch
             {
-                // Console.WriteLine(x);
+               
                 Debug.Error("unknow error");
             }
         }
