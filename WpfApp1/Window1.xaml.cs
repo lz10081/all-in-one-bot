@@ -313,16 +313,20 @@ namespace WpfApp1
               //  Debug.Info(item.Status);
               
             }
+
+            Debug.Info("Product???" + item.Product); // didn't show the proxy info idk y
+                                                     //Console.WriteLine("wtf"+item.Proxy);
+            Product product = new Product(item.Product, int.Parse(item.ID), float.Parse(item.Size, CultureInfo.InvariantCulture.NumberFormat), item.Billing, item.Proxy);
+            IWebScrapper webScrapper = new FootlockerWebScrapper(product);
+
+            bool result = webScrapper.Available();
+
+            if (result)
+                Task.Run(() => webScrapper.SendPurchaseRequest());
+
             // var found = MyList.FirstOrDefault(X => X.ID == (index - 1).ToString());
             try
             {
-                Debug.Info("Product???"+ item.Product); // didn't show the proxy info idk y
-                //Console.WriteLine("wtf"+item.Proxy);
-                Product product = new Product(item.Product, int.Parse( item.ID), float.Parse( item.Size, CultureInfo.InvariantCulture.NumberFormat), item.Billing,item.Proxy);
-                IWebScrapper webScrapper = new FootlockerWebScrapper(product);
-
-                bool result = webScrapper.Available();
-
                 Debug.Info("webScrapper result: " + result);
 
                 MyList.Remove(MyList.Where(i => i.ID == (index - 1).ToString()).Single());
@@ -518,7 +522,6 @@ namespace WpfApp1
             }
 
         }
-        
 
         public void Footlocker() // will make a other cs file for each site 
         {
@@ -574,7 +577,7 @@ namespace WpfApp1
                 /// <summary>
                 ///  case with use all profile not use range box
                 /// </summary>
-                else if (int.TryParse(Quantity.Text, out quantity) && quantity > 0 && UseallcheckBox.IsChecked == true)
+                else if (quantity > 0 && UseallcheckBox.IsChecked == true)
                 {
                     int Profilesize = Profile.Items.Count;
                     for(var y = 0; y <= Profilesize -1; y++)
@@ -614,7 +617,7 @@ namespace WpfApp1
                     t = true;
                 Random rand = new Random();
 
-                if (int.TryParse(Quantity2.Text, out quantity) && quantity > 0 && UseallcheckBox.IsChecked == false) // hard case 1
+                if (quantity > 0 && UseallcheckBox.IsChecked == false) // hard case 1
                 {
                    
                      
@@ -652,7 +655,7 @@ namespace WpfApp1
                 ///  case use all profile  use range box
                 /// </summary>
                 /// 
-                else if (int.TryParse(Quantity2.Text, out quantity) && quantity > 0 && UseallcheckBox.IsChecked == true)
+                else if (quantity > 0 && UseallcheckBox.IsChecked == true)
                 {
                     int Profilesize = Profile.Items.Count;
                     for (var y = 0; y <= Profilesize - 1; y++)
