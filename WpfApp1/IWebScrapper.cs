@@ -13,7 +13,7 @@ namespace ZenAIO
         /// Checks if the web scrapper found an availbility.
         /// </summary>
         /// <returns>True if in-stock/available, else false.</returns>
-        bool Available();
+        bool Available(out string proxyUsed);
 
         /// <summary>
         /// Sends a web request to purchase the product.

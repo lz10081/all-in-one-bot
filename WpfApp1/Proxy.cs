@@ -60,6 +60,11 @@ namespace ZenAIO
             return proxy;
         }
 
+        public string GetPrettyString()
+        {
+            return URL + ":" + Port;
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == this)

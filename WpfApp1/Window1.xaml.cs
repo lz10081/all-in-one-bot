@@ -31,7 +31,7 @@ namespace WpfApp1
     /// Window1.xaml 的交互逻辑
     /// </summary>
     /// 
-    
+
     public partial class Window1 : Window
     {
 
@@ -46,7 +46,7 @@ namespace WpfApp1
             savelist = new List<Int32>();
             proxylist = new List<String>();
             Main.Content = new profilepage();
-            
+
             if (false)
             {
                 DirectoryInfo d = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);//Assuming Test is your Folder
@@ -62,7 +62,7 @@ namespace WpfApp1
             Additem();
             // add all the site we support
             Sitelist.Items.Add("Footlocker");
-            
+
             string path = Utils.GetPath("Profile.json");
             string path2 = Utils.GetPath("proxy.txt");
             // Checks if a profile exists or not. If not, will create a default profile.
@@ -75,7 +75,7 @@ namespace WpfApp1
 
             #region dataGridProxies Settings
             dataGridProxies.ItemsSource = MyList;
-           
+
             dataGridProxies.AutoGenerateColumns = false;
             dataGridProxies.IsReadOnly = true;
             dataGridProxies.SelectionMode = DataGridSelectionMode.Single;
@@ -121,7 +121,7 @@ namespace WpfApp1
             c.Header = "Status";
             c.Binding = new Binding("Status");
             c.Width = new DataGridLength(0.3, DataGridLengthUnitType.Star);
-          
+
             dataGridProxies.Columns.Add(c);
 
             x = new DataGridTemplateColumn();
@@ -170,7 +170,7 @@ namespace WpfApp1
             public string Size { get; set; }
 
         }
-     
+
         private void ReadProfile(ref string path)
         {
             var lines = File.ReadAllLines(path);
@@ -200,7 +200,7 @@ namespace WpfApp1
                 }
                 else
                 {
-                    
+
                     proxylist.Add(line);
                 }
 
@@ -212,10 +212,10 @@ namespace WpfApp1
 
             for (var a = 3; a <= 18; a++)
             {
-                if(a < 13)
+                if (a < 13)
                 {
                     size.Items.Add(a);
-                    size.Items.Add(a+0.5);
+                    size.Items.Add(a + 0.5);
                     startsize.Items.Add(a);
                     startsize.Items.Add(a + 0.5);
                     endsize.Items.Add(a);
@@ -227,7 +227,7 @@ namespace WpfApp1
                     startsize.Items.Add(a);
                     endsize.Items.Add(a);
                 }
-                   
+
             }
             size.Items.Add("Random");
         }
@@ -271,19 +271,19 @@ namespace WpfApp1
         private void Startall(object sender, RoutedEventArgs e)
         {
             savelist.Sort();
-            for (int a = 0; a <savelist.Count; a++)
+            for (int a = 0; a < savelist.Count; a++)
             {
                 int index = savelist[a];
-             
+
                 var item = MyList.FirstOrDefault(X => X.ID == (index - 1).ToString());
-               
+
                 if (item != null)
                 {
                     item.Status = "Started";
-                   
+
 
                 }
-              
+
                 try
                 {
                     MyList.Remove(MyList.Where(i => i.ID == (index - 1).ToString()).Single());
@@ -291,7 +291,7 @@ namespace WpfApp1
                 }
                 catch
                 {
-                   
+
                     Debug.Error("unknow error");
                 }
             }
@@ -306,12 +306,12 @@ namespace WpfApp1
             int current = savelist.IndexOf(index);
             //  var q = MyList.Where(X => X.ID == x.ToString()).FirstOrDefault(); // can get all the information on the index
             var item = MyList.FirstOrDefault(X => X.ID == (index - 1).ToString());
-          //  Debug.Info(item.ID);
+            //  Debug.Info(item.ID);
             if (item != null)
             {
                 item.Status = "Started";
-              //  Debug.Info(item.Status);
-              
+                //  Debug.Info(item.Status);
+
             }
 
             Debug.Info("Product???" + item.Product); // didn't show the proxy info idk y
@@ -319,7 +319,9 @@ namespace WpfApp1
             Product product = new Product(item.Product, int.Parse(item.ID), float.Parse(item.Size, CultureInfo.InvariantCulture.NumberFormat), item.Billing, item.Proxy);
             IWebScrapper webScrapper = new FootlockerWebScrapper(product);
 
-            bool result = webScrapper.Available();
+            string proxyUsed; // use this variable to get the proxy used...
+            bool result = webScrapper.Available(out proxyUsed);
+            Debug.Info("Proxy used: " + proxyUsed);
 
             if (result)
                 Task.Run(() => webScrapper.SendPurchaseRequest());
@@ -337,13 +339,13 @@ namespace WpfApp1
                 // Console.WriteLine(x);
                 Debug.Error("unknow error");
             }
-            
 
-           // MyList.Insert(MyList.IndexOf(q), item);
+
+            // MyList.Insert(MyList.IndexOf(q), item);
             //MyList.Remove(q);
             //   MyList.IndexOf(); need to fixed the id first
-           // Debug.Info(x.ToString());
-           //Debug.Info(MyList[i].Status);
+            // Debug.Info(x.ToString());
+            //Debug.Info(MyList[i].Status);
             dataGridProxies.ItemsSource = MyList;
 
         }
@@ -354,27 +356,27 @@ namespace WpfApp1
             var x = dataGridProxies.SelectedIndex; // get the current index number
             int index = savelist[x];
             int current = savelist.IndexOf(index);
-           // Console.WriteLine("here"+savelist.IndexOf(index));
-          //  Console.WriteLine(index);
-            var item = MyList.FirstOrDefault(X => X.ID == (index-1).ToString());
-           // Console.WriteLine(item.ID);
+            // Console.WriteLine("here"+savelist.IndexOf(index));
+            //  Console.WriteLine(index);
+            var item = MyList.FirstOrDefault(X => X.ID == (index - 1).ToString());
+            // Console.WriteLine(item.ID);
             if (item != null)
             {
                 item.Status = "Stoped";
-                
+
 
             }
-       
+
             try
             {
-                MyList.Remove(MyList.Where(i => i.ID == (index-1).ToString()).Single());
+                MyList.Remove(MyList.Where(i => i.ID == (index - 1).ToString()).Single());
                 //savelist.Remove(current);
                 MyList.Insert((current), item);
-               // savelist.Insert(index, index);
+                // savelist.Insert(index, index);
             }
             catch
             {
-               
+
                 Debug.Error("unknow error");
             }
         }
@@ -388,24 +390,24 @@ namespace WpfApp1
         private void TaskRemoveClick(object sender, RoutedEventArgs e)
         {
             savelist.Sort();
-          // (savelist).ForEach(Console.WriteLine);
+            // (savelist).ForEach(Console.WriteLine);
             var x = dataGridProxies.SelectedIndex; // get the current index number
             int index = savelist[x];
 
             try
             {
-               // Console.WriteLine("this is inderx" + index);
-              //  Console.WriteLine("this is x" + x);
-                MyList.Remove(MyList.Where(i => i.ID == (index-1).ToString()).Single());
-              
+                // Console.WriteLine("this is inderx" + index);
+                //  Console.WriteLine("this is x" + x);
+                MyList.Remove(MyList.Where(i => i.ID == (index - 1).ToString()).Single());
+
                 savelist.Remove(index);
-               // Console.WriteLine("///////////////////");
-             //   (savelist).ForEach(Console.WriteLine);
+                // Console.WriteLine("///////////////////");
+                //   (savelist).ForEach(Console.WriteLine);
                 //  Console.WriteLine(index);
             }
             catch
             {
-               // Console.WriteLine(x);
+                // Console.WriteLine(x);
                 Debug.Error("unknow error");
             }
         }
@@ -462,11 +464,11 @@ namespace WpfApp1
         /// </summary>
         private void Start(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(url.Text)  || string.IsNullOrWhiteSpace(Sitelist.Text))
+            if (string.IsNullOrWhiteSpace(url.Text) || string.IsNullOrWhiteSpace(Sitelist.Text))
                 MessageBox.Show("You must enter all information");
             else if (SizeruncheckBox.IsChecked == true && string.IsNullOrWhiteSpace(startsize.Text) || SizeruncheckBox.IsChecked == true && string.IsNullOrWhiteSpace(endsize.Text))
                 MessageBox.Show("You must enter start size and end size");
-            else if (SizeruncheckBox.IsChecked == true && (Double.Parse(startsize.Text) >= Double.Parse(endsize.Text)) )
+            else if (SizeruncheckBox.IsChecked == true && (Double.Parse(startsize.Text) >= Double.Parse(endsize.Text)))
                 MessageBox.Show("Start size must less than end size ");
             else if (SizeruncheckBox.IsChecked == true && string.IsNullOrWhiteSpace(Quantity2.Text))
                 MessageBox.Show("You enter quantity ");
@@ -481,7 +483,7 @@ namespace WpfApp1
                 if (Sitelist.Text == "Footlocker")
                     Footlocker();
             }
-            
+
         }
         /// <summary>
         /// Enabled Profile checkbox if IsChecked , if not
@@ -492,11 +494,11 @@ namespace WpfApp1
             if (UseallcheckBox?.IsChecked == true)
             {
                 Profile.IsEnabled = false;
-          
+
             }
             else
             {
-              
+
                 Profile.IsEnabled = true;
             }
 
@@ -535,7 +537,7 @@ namespace WpfApp1
             {
                 Console.WriteLine("running proxy");
             }
-            Console.WriteLine("my proxy"+proxylist.Count);
+            Console.WriteLine("my proxy" + proxylist.Count);
             int quantity = 0;
             if (SizeruncheckBox.IsChecked == false) // easy case 
             {
@@ -552,7 +554,7 @@ namespace WpfApp1
                     for (var x = 1; x <= quantity; x++)
                     {
 
-                       
+
                         int nextVal = rand.Next(proxylist.Count);
 
                         JobTask playerList = new JobTask();
@@ -560,7 +562,7 @@ namespace WpfApp1
                         playerList.Product = url.Text;
                         playerList.Site = Sitelist.Text;
                         playerList.Status = "";
-                        if(t)
+                        if (t)
                             playerList.Proxy = "Localhost";
                         else
                             playerList.Proxy = proxylist[nextVal];
@@ -580,7 +582,7 @@ namespace WpfApp1
                 else if (quantity > 0 && UseallcheckBox.IsChecked == true)
                 {
                     int Profilesize = Profile.Items.Count;
-                    for(var y = 0; y <= Profilesize -1; y++)
+                    for (var y = 0; y <= Profilesize - 1; y++)
                     {
                         for (var x = 1; x <= quantity; x++)
                         {
@@ -602,7 +604,7 @@ namespace WpfApp1
 
                         }
                     }
-                 
+
                 }
             }
             else if (SizeruncheckBox.IsChecked == true)
@@ -619,35 +621,35 @@ namespace WpfApp1
 
                 if (quantity > 0 && UseallcheckBox.IsChecked == false) // hard case 1
                 {
-                   
-                     
-                       // int count = 1;
-                        Double currentsize = Double.Parse(startsize.Text);
+
+
+                    // int count = 1;
+                    Double currentsize = Double.Parse(startsize.Text);
                     while (currentsize - 0.5 != Double.Parse(endsize.Text))
                     {
-                            for (var x = 1; x <= quantity; x++)
-                            {
-                                int nextVal = rand.Next(proxylist.Count);
-                                JobTask playerList = new JobTask();
-                                playerList.ID = MyList.Count.ToString();
-                                playerList.Product = url.Text;
-                                playerList.Site = Sitelist.Text;
-                                playerList.Status = "";
-                                if (t)
-                                    playerList.Proxy = "Localhost";
-                                else
-                                    playerList.Proxy = proxylist[nextVal];
-                                playerList.Billing = Profile.Text;
-                                playerList.Size = currentsize.ToString();
-                                MyList.Add(playerList);
-                                savelist.Add(MyList.Count);
+                        for (var x = 1; x <= quantity; x++)
+                        {
+                            int nextVal = rand.Next(proxylist.Count);
+                            JobTask playerList = new JobTask();
+                            playerList.ID = MyList.Count.ToString();
+                            playerList.Product = url.Text;
+                            playerList.Site = Sitelist.Text;
+                            playerList.Status = "";
+                            if (t)
+                                playerList.Proxy = "Localhost";
+                            else
+                                playerList.Proxy = proxylist[nextVal];
+                            playerList.Billing = Profile.Text;
+                            playerList.Size = currentsize.ToString();
+                            MyList.Add(playerList);
+                            savelist.Add(MyList.Count);
 
 
-                            }
-                            currentsize = currentsize + 0.5;
-                         
                         }
-                        //Debug.Info(count.ToString());
+                        currentsize = currentsize + 0.5;
+
+                    }
+                    //Debug.Info(count.ToString());
 
                     dataGridProxies.ItemsSource = MyList;
                 }
@@ -686,11 +688,11 @@ namespace WpfApp1
 
                         }
                     }
-                 }
+                }
 
             }
             // Only run this code if Quantity.Text is a valid parse.
-          
+
 
             //https://stackoverflow.com/questions/7198005/c-sharp-httpwebrequest-website-sign-in set up CookieContainer 
 
@@ -718,5 +720,5 @@ namespace WpfApp1
 
             return true;
         }
-    }     
+    }
 }

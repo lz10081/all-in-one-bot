@@ -176,10 +176,8 @@ namespace ZenAIO
         /// </summary>
         /// <param name="result">result output.</param>
         /// <returns>True if successfully downloaded, else false.</returns>
-        protected bool Download(out string result)
+        protected bool Download(out string result, out string proxyUsed)
         {
-
-
             if (proxies == null || proxies.Count == 0)
             {
                 HttpWebRequest.DefaultMaximumErrorResponseLength = 1048576;
@@ -197,16 +195,16 @@ namespace ZenAIO
             if (!useLocal)
             {
                 proxy = GetRandomProxy();
-                //Debug.Info("my proxy", product.CProxy); // test dump
-                //  string[] fields = product.CProxy.Split(':');
-                //   Debug.Info("my proxy", fields[0]);
-                //Proxy proxy = CreateProxy(ref fields);
+                proxyUsed = proxy.GetPrettyString();
                 WebProxy webProxy = proxy.GetWebProxy();
                 client.Proxy = webProxy;
 
                 if (proxy.HasAuthentication())
                     client.Proxy.Credentials = new NetworkCredential(proxy.Username, proxy.Password);
             }
+
+            else
+                proxyUsed = "";
 
             RestRequest request = new RestRequest(Method.GET);
 
@@ -269,11 +267,11 @@ namespace ZenAIO
         /// <returns>True if data found, else false.</returns>
         protected abstract bool Scrape(ref string content);
 
-        public virtual bool Available()
+        public virtual bool Available(out string proxyUsed)
         {
             string content;
 
-            if (!Download(out content))
+            if (!Download(out content, out proxyUsed))
                 return false;
 
             return Scrape(ref content);
