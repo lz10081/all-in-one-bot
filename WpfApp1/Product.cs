@@ -9,10 +9,11 @@ namespace ZenAIO
     public class Product
     {
 
-        public Product(string url, int id, float size, string profile, string proxy)
+        public Product(string url, string name, int id, float size, string profile, string proxy)
         {
             URL = url;
-            Name = id;
+            Name = name;
+            ID = id;
             Size = size;
             Profile = profile;
             CProxy = proxy;
@@ -28,7 +29,12 @@ namespace ZenAIO
         }
 
 
-        public int Name
+        public string Name
+        {
+            get; private set;
+        }
+
+        public int ID
         {
             get; private set;
         }

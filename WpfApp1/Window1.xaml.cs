@@ -297,6 +297,86 @@ namespace WpfApp1
             }
         }
 
+        private class WebTask : ITask
+        {
+            private readonly object theLock = new object();
+            private ObservableCollection<JobTask> MyList;
+            private int index;
+            private int current;
+            private DataGrid dataGridProxies;
+            private JobTask item;
+
+            public WebTask(Product product, ref ObservableCollection<JobTask> myList, int index, int current, ref DataGrid dataGridProxies, ref JobTask item)
+            {
+                TheProduct = product;
+                MyList = myList;
+                this.index = index;
+                this.current = current;
+                this.dataGridProxies = dataGridProxies;
+                this.item = item;
+            }
+
+            public Product TheProduct
+            {
+                get;
+                private set;
+            }
+
+            public bool Completed
+            {
+                get;
+                private set;
+            }
+
+            public void Run()
+            {
+                IWebScrapper webScrapper = new FootlockerWebScrapper(TheProduct);
+
+                string proxyUsed; // use this variable to get the proxy used...
+                bool result = webScrapper.Available(out proxyUsed);
+                Debug.Info("Proxy used: " + proxyUsed);
+
+                if (result)
+                {
+                    Task.Run(() => webScrapper.SendPurchaseRequest());
+
+                    lock (theLock)
+                    {
+                        Completed = result;
+                    }
+
+                    Callback();
+                }
+            }
+
+            public void Callback()
+            {
+                // var found = MyList.FirstOrDefault(X => X.ID == (index - 1).ToString());
+                try
+                {
+                    // Debug.Info("webScrapper result: " + result);
+
+                    MyList.Remove(MyList.Where(i => i.ID == (index - 1).ToString()).Single());
+                    MyList.Insert((current), item);
+                }
+                catch
+                {
+                    // Console.WriteLine(x);
+                    Debug.Error("unknow error");
+                }
+
+
+                // MyList.Insert(MyList.IndexOf(q), item);
+                //MyList.Remove(q);
+                //   MyList.IndexOf(); need to fixed the id first
+                // Debug.Info(x.ToString());
+                //Debug.Info(MyList[i].Status);
+                dataGridProxies.ItemsSource = MyList;
+            }
+
+        }
+
+        // TODO: Convert tasks to an ITask object and insert them into the TaskManager
         private void TaskStartClick(object sender, RoutedEventArgs e)
         {
             savelist.Sort();
@@ -316,37 +396,32 @@ namespace WpfApp1
 
             Debug.Info("Product???" + item.Product); // didn't show the proxy info idk y
                                                      //Console.WriteLine("wtf"+item.Proxy);
-            Product product = new Product(item.Product, int.Parse(item.ID), float.Parse(item.Size, CultureInfo.InvariantCulture.NumberFormat), item.Billing, item.Proxy);
-            IWebScrapper webScrapper = new FootlockerWebScrapper(product);
+            Product product = new Product(item.Product, "TODO:GET PRODUCT NAME", int.Parse(item.ID), float.Parse(item.Size, CultureInfo.InvariantCulture.NumberFormat), item.Billing, item.Proxy);
 
-            string proxyUsed; // use this variable to get the proxy used...
-            bool result = webScrapper.Available(out proxyUsed);
-            Debug.Info("Proxy used: " + proxyUsed);
+            WebTask webTask = new WebTask(product, ref MyList, index, current, ref dataGridProxies, ref item);
+            TaskManager.Instance.Add(product.Name, webTask);
 
-            if (result)
-                Task.Run(() => webScrapper.SendPurchaseRequest());
+            //// var found = MyList.FirstOrDefault(X => X.ID == (index - 1).ToString());
+            //try
+            //{
+            //    // Debug.Info("webScrapper result: " + result);
 
-            // var found = MyList.FirstOrDefault(X => X.ID == (index - 1).ToString());
-            try
-            {
-                Debug.Info("webScrapper result: " + result);
-
-                MyList.Remove(MyList.Where(i => i.ID == (index - 1).ToString()).Single());
-                MyList.Insert((current), item);
-            }
-            catch
-            {
-                // Console.WriteLine(x);
-                Debug.Error("unknow error");
-            }
+            //    MyList.Remove(MyList.Where(i => i.ID == (index - 1).ToString()).Single());
+            //    MyList.Insert((current), item);
+            //}
+            //catch
+            //{
+            //    // Console.WriteLine(x);
+            //    Debug.Error("unknow error");
+            //}
 
 
-            // MyList.Insert(MyList.IndexOf(q), item);
-            //MyList.Remove(q);
-            //   MyList.IndexOf(); need to fixed the id first
-            // Debug.Info(x.ToString());
-            //Debug.Info(MyList[i].Status);
-            dataGridProxies.ItemsSource = MyList;
+            //// MyList.Insert(MyList.IndexOf(q), item);
+            ////MyList.Remove(q);
+            ////   MyList.IndexOf(); need to fixed the id first
+            //// Debug.Info(x.ToString());
+            ////Debug.Info(MyList[i].Status);
+            //dataGridProxies.ItemsSource = MyList;
 
         }
 

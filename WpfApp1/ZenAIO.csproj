@@ -254,6 +254,7 @@
     </Compile>
     <Compile Include="Debug.cs" />
     <Compile Include="FootlockerWebScrapper.cs" />
+    <Compile Include="ITask.cs" />
     <Compile Include="IWebScrapper.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="profilepage.xaml.cs">

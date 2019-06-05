@@ -24,7 +24,7 @@ namespace ZenAIO
             jobs = new Dictionary<string, Job>();
         }
 
-        public TaskManager Instance
+        public static TaskManager Instance
         {
             get
             {
@@ -42,8 +42,10 @@ namespace ZenAIO
         /// Add a job to the TaskManager.
         /// </summary>
         /// <param name="job"></param>
-        public void Add(Job job)
+        public void Add(string taskID, ITask task)
         {
+            Job job = new Job(taskID, task);
+
             lock (theLock)
             {
                 // Prime the job
@@ -90,11 +92,13 @@ namespace ZenAIO
             // TODO: Fill in what this class should look like!
 
             private readonly object theLock = new object();
+            private ITask task;
             private bool running;
 
-            public Job(string id)
+            public Job(string id, ITask task)
             {
                 this.ID = id;
+                this.task = task;
                 this.running = false;
             }
 
@@ -128,6 +132,7 @@ namespace ZenAIO
 
                         // Still running, continue processing the request.
                         // Process();
+                        task.Run();
                     }
                 }
             }
