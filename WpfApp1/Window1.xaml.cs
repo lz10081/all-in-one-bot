@@ -24,6 +24,9 @@ using Newtonsoft.Json;
 using ZenAIO;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using RestSharp;
+using System.Net;
+using System.Net.Http;
 
 namespace WpfApp1
 {
@@ -336,17 +339,7 @@ namespace WpfApp1
                 bool result = webScrapper.Available(out proxyUsed);
                 Debug.Info("Proxy used: " + proxyUsed);
 
-                if (result)
-                {
-                    Task.Run(() => webScrapper.SendPurchaseRequest());
-
-                    lock (theLock)
-                    {
-                        Completed = result;
-                    }
-
-                    Callback();
-                }
+             
             }
 
             public void Callback()
@@ -358,6 +351,7 @@ namespace WpfApp1
 
                     MyList.Remove(MyList.Where(i => i.ID == (index - 1).ToString()).Single());
                     MyList.Insert((current), item);
+                    
                 }
                 catch
                 {
@@ -371,7 +365,7 @@ namespace WpfApp1
                 //   MyList.IndexOf(); need to fixed the id first
                 // Debug.Info(x.ToString());
                 //Debug.Info(MyList[i].Status);
-                dataGridProxies.ItemsSource = MyList;
+              //  dataGridProxies.ItemsSource = MyList;
             }
 
         }
@@ -427,6 +421,7 @@ namespace WpfApp1
 
         private void TaskStopClick(object sender, RoutedEventArgs e)
         {
+            SendPurchaseReques();
             savelist.Sort();
             var x = dataGridProxies.SelectedIndex; // get the current index number
             int index = savelist[x];
@@ -444,6 +439,7 @@ namespace WpfApp1
 
             try
             {
+              
                 MyList.Remove(MyList.Where(i => i.ID == (index - 1).ToString()).Single());
                 //savelist.Remove(current);
                 MyList.Insert((current), item);
@@ -461,9 +457,32 @@ namespace WpfApp1
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
+        public  void SendPurchaseReques()
+        {
 
+
+            var client = new RestClient("https://www.solebox.com/mein-konto/");
+            RestRequest request = new RestRequest("/", Method.GET);
+           
+            request.AddHeader("authority", "www.solebox.com");
+            request.AddHeader("scheme", "https");
+            request.AddHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3");
+            request.AddHeader("accept-encoding", "gzip, deflate, br");
+            request.AddHeader("accept-language", "it-IT,it;q=0.9,en-US;q=0.8,en;q=0.7");
+            request.AddHeader("cache-control", "max-age=0");
+            request.AddHeader("upgrade-insecure-requests", "1");
+            request.AddHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36");
+            request.AddHeader("cookie", "cto_lwid=083fed1b-38d9-4fb5-ad3f-17a53f2afbf2; mlid=undefined; displayedCookiesNotification=1; __utmz=1.1557283576.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); sid_key=oxid; px-abgroup=A; px-abper=100; __utmc=1; _fbp=fb.1.1559752431107.1312876194; cto_idcpy=d836f8b2-2cbc-4ab8-b80d-410288d34136; klarnaAddressValidated=0; language=1; __utma=1.1294710284.1557283576.1559758562.1559763477.5; __utmt=1; cto_clc=1; cto_red_atmpt=1; sid=2q7sg85mkhd1fe9vrd8lfraao6; __utmb=1.2.10.1559763477; _px3=b3780d91446af69c8e1d57e6583132a8ade98a4c4b34c84c515a863b6f0257ac:wCMykZK5TCSRg75bdERs3bbh+fRmA0a2GU1FPCOqeuLo8qU/YyoNIG8mG6zMP+dasN/N7MWTJxauftKvvLNV/A==:1000:G6TKS9vchd/M1Xds7ZzDBrStzFgf05Hrup3KHWXhg1qBHAbAOvz7H/2iVa8CCJ9xChfDbLSWVfIzIseD+/apmvLV66bz03QJ3my0K1hE2dwXdOdsGmfy9FP3yjD+KQYIGk2TbGtNDiQccfXkajWtMBJFv0mj1tdR0UCEknT4R8M=");
+            var response = client.Execute(request);
+
+            Debug.Info("response.StatusCode: " + ((int)response.StatusCode));
+            //  result = response.Content;
+            Debug.Info("Content: \n{0}", response.Content);
+
+        }
         private void TaskRemoveClick(object sender, RoutedEventArgs e)
         {
+            
             savelist.Sort();
             // (savelist).ForEach(Console.WriteLine);
             var x = dataGridProxies.SelectedIndex; // get the current index number

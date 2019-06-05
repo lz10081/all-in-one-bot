@@ -3,8 +3,9 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
-
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ZenAIO
@@ -178,6 +179,7 @@ namespace ZenAIO
         /// <returns>True if successfully downloaded, else false.</returns>
         protected bool Download(out string result, out string proxyUsed)
         {
+            
             if (proxies == null || proxies.Count == 0)
             {
                 HttpWebRequest.DefaultMaximumErrorResponseLength = 1048576;
@@ -227,7 +229,10 @@ namespace ZenAIO
             }
 
             result = response.Content;
-
+            var reheader = response.Headers.ToList();
+            for(int i = 0; i < reheader.Count; i++)
+                Debug.Info("reheader: \n{0}", reheader[i].ToString()); // test dump
+            //Debug.Info("Cookies: \n{0}", response.Cookies.ToString());
             Debug.Info("Content: \n{0}", result); // test dump
 
             // Make sure we release the proxy when we are done using it!
@@ -235,6 +240,66 @@ namespace ZenAIO
                 ReleaseProxy(ref proxy);
 
             return true;
+        }
+        public void PurchaseRequest()
+        {
+
+
+   
+            if (proxies == null || proxies.Count == 0)
+            {
+                HttpWebRequest.DefaultMaximumErrorResponseLength = 1048576;
+
+                InitProxyList();
+
+                // If still empty (no proxies available) return false.
+                if (proxies == null || proxies.Count == 0)
+                    useLocal = true;
+            }
+
+           var client = new RestClient("https://www.footlocker.com/product/adidas-alphaedge-4d-boys-grade-school/EF3453G.html");
+  
+        Proxy proxy = null;
+
+            CookieContainer _cookieJar = new CookieContainer();
+          
+            client.CookieContainer = _cookieJar;
+          
+            if (!useLocal)
+            {
+                proxy = GetRandomProxy();
+               // proxyUsed = proxy.GetPrettyString();
+                WebProxy webProxy = proxy.GetWebProxy();
+                client.Proxy = webProxy;
+
+                if (proxy.HasAuthentication())
+                    client.Proxy.Credentials = new NetworkCredential(proxy.Username, proxy.Password);
+            }
+
+          
+            RestRequest request = new RestRequest("/resource/", Method.POST);
+
+            request.AddHeader("authority", "www.facebook.com");
+            request.AddHeader("scheme", "https");
+            request.AddHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3");
+            request.AddHeader("accept-encoding", "gzip, deflate, br");
+            request.AddHeader("accept-language", "it-IT,it;q=0.9,en-US;q=0.8,en;q=0.7");
+            request.AddHeader("cache-control", "max-age=0");
+            request.AddHeader("upgrade-insecure-requests", "https://www.footlocker.com/product/adidas-alphaedge-4d-boys-grade-school/EF3453G.html");
+            request.AddHeader("origin", "https://www.footlocker.com");
+            request.AddHeader("referer", "1");
+            request.AddHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36");
+
+            request.RequestFormat = DataFormat.Json;
+           // request.AddJsonBody(postdata);
+
+            var response = client.Execute(request);
+
+           // Debug.Info("response.StatusCode: " + ((int)response.StatusCode));
+            //  result = response.Content;
+           
+            if (!useLocal)
+                ReleaseProxy(ref proxy);
         }
         ///
         /// {"productQuantity":1,"productId":"21946223"} https://www.footlocker.com/product/nike-lebron-16-mens/862001.html size 8 we need to find the productId using the size first
