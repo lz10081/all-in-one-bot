@@ -179,7 +179,7 @@ namespace ZenAIO
         /// <returns>True if successfully downloaded, else false.</returns>
         protected bool Download(out string result, out string proxyUsed)
         {
-            
+            PurchaseRequest();
             if (proxies == null || proxies.Count == 0)
             {
                 HttpWebRequest.DefaultMaximumErrorResponseLength = 1048576;
@@ -245,7 +245,12 @@ namespace ZenAIO
         {
 
 
-   
+            var payload = new Payload
+            {
+                Quantity = 1,
+                ProductID = "21901758"  //https://www.footlocker.com/product/Nike-LeBron-16---Men-s/I1521001.html
+            };
+
             if (proxies == null || proxies.Count == 0)
             {
                 HttpWebRequest.DefaultMaximumErrorResponseLength = 1048576;
@@ -256,10 +261,11 @@ namespace ZenAIO
                 if (proxies == null || proxies.Count == 0)
                     useLocal = true;
             }
+            var time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+           var client = new RestClient("https://www.footlocker.com/api/users/carts/current/entries?timestamp="+ time + "457"); //1559769572 6/5/2019, 5:19:32 PM 2422
+                                                                                                                              // 1559769983 6/5/2019, 5:26:23 PM  1559769983949
 
-           var client = new RestClient("https://www.footlocker.com/product/adidas-alphaedge-4d-boys-grade-school/EF3453G.html");
-  
-        Proxy proxy = null;
+            Proxy proxy = null;
 
             CookieContainer _cookieJar = new CookieContainer();
           
@@ -291,13 +297,14 @@ namespace ZenAIO
             request.AddHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36");
 
             request.RequestFormat = DataFormat.Json;
-           // request.AddJsonBody(postdata);
+            request.AddJsonBody(payload);
 
             var response = client.Execute(request);
 
-           // Debug.Info("response.StatusCode: " + ((int)response.StatusCode));
-            //  result = response.Content;
-           
+           Debug.Info("response.StatusCode: " + ((int)response.StatusCode));
+            Debug.Info("response.Content: " + response.Content);
+            // result = response.Content;
+
             if (!useLocal)
                 ReleaseProxy(ref proxy);
         }
