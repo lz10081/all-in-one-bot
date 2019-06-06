@@ -421,7 +421,7 @@ namespace WpfApp1
 
         private void TaskStopClick(object sender, RoutedEventArgs e)
         {
-            SendPurchaseReques();
+            WebRequest();
             savelist.Sort();
             var x = dataGridProxies.SelectedIndex; // get the current index number
             int index = savelist[x];
@@ -463,23 +463,55 @@ namespace WpfApp1
 
             var client = new RestClient("https://www.solebox.com/mein-konto/");
             RestRequest request = new RestRequest("/", Method.GET);
-           
+            CookieContainer cookieJar = new CookieContainer();
             request.AddHeader("authority", "www.solebox.com");
             request.AddHeader("scheme", "https");
             request.AddHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3");
             request.AddHeader("accept-encoding", "gzip, deflate, br");
             request.AddHeader("accept-language", "it-IT,it;q=0.9,en-US;q=0.8,en;q=0.7");
             request.AddHeader("cache-control", "max-age=0");
+            request.AddHeader("referer", "https://www.solebox.com/en/home/");
             request.AddHeader("upgrade-insecure-requests", "1");
-            request.AddHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36");
-            request.AddHeader("cookie", "cto_lwid=083fed1b-38d9-4fb5-ad3f-17a53f2afbf2; mlid=undefined; displayedCookiesNotification=1; __utmz=1.1557283576.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); sid_key=oxid; px-abgroup=A; px-abper=100; __utmc=1; _fbp=fb.1.1559752431107.1312876194; cto_idcpy=d836f8b2-2cbc-4ab8-b80d-410288d34136; klarnaAddressValidated=0; language=1; __utma=1.1294710284.1557283576.1559758562.1559763477.5; __utmt=1; cto_clc=1; cto_red_atmpt=1; sid=2q7sg85mkhd1fe9vrd8lfraao6; __utmb=1.2.10.1559763477; _px3=b3780d91446af69c8e1d57e6583132a8ade98a4c4b34c84c515a863b6f0257ac:wCMykZK5TCSRg75bdERs3bbh+fRmA0a2GU1FPCOqeuLo8qU/YyoNIG8mG6zMP+dasN/N7MWTJxauftKvvLNV/A==:1000:G6TKS9vchd/M1Xds7ZzDBrStzFgf05Hrup3KHWXhg1qBHAbAOvz7H/2iVa8CCJ9xChfDbLSWVfIzIseD+/apmvLV66bz03QJ3my0K1hE2dwXdOdsGmfy9FP3yjD+KQYIGk2TbGtNDiQccfXkajWtMBJFv0mj1tdR0UCEknT4R8M=");
+
+            request.AddHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.80 Safari/537.36");
+
+            Debug.Info("Content: \n{0}", request.ToString());
+
+            // :authority: www.solebox.com
+            //  :method: GET
+            // : path: / en / my - account /
+            //  :scheme: https
+            //  accept: text / html,application / xhtml + xml,application / xml; q = 0.9,image / webp,image / apng,*/*;q=0.8
+            //   accept-encoding: gzip, deflate, br
+            // accept-language: en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7
+            //  cache-control: max-age=0
+            //  cookie: cto_lwid=083fed1b-38d9-4fb5-ad3f-17a53f2afbf2; mlid=undefined; displayedCookiesNotification=1; __utmz=1.1557283576.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); sid_key=oxid; px-abgroup=A; px-abper=100; __utmc=1; _fbp=fb.1.1559752431107.1312876194; cto_idcpy=d836f8b2-2cbc-4ab8-b80d-410288d34136; klarnaAddressValidated=0; cto_clc=1; cto_red_atmpt=1; sid=tn45e0dgon5eanntl2av48b9v3; __utma=1.1294710284.1557283576.1559781699.1559784155.7; language=1; __utmt=1; __utmb=1.4.10.1559784155; _px3=140066c0c8488936a8164e111a449aeb7a356a16440e4932ceb97d310edc1904:viqJyp98T/Cqznzu7GNXz94EPUgdt+H1vNpiZ+mvTaKbvLGmO1Id24DAtzUR1a1tgccRD0jLH4COClA0HLwZNw==:1000:jcST2cB0RWvXbNB+lA42GYyJ4tzQ/MXnkZI/7l9PjhEqpzrFtYaWcvMMVDXMMDmPT7nHCNCsXjxmEiBNjVvVxxNFhgkain+5HHPyD/W1ilCnhyXFFsgZtxGzhIICu8cO1rTXv53prjbtadWcjVXU/G75HlhDS9kNFCJOjymyWtA=
+            ///  referer: https://www.solebox.com/
+            //  upgrade-insecure-requests: 1
+            // user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.80 Safari/537.36
+
+            // request.AddHeader("cookie", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.80 Safari/537.36");
+            client.CookieContainer = cookieJar;
+            //   request.AddHeader("cookie", "cto_lwid=083fed1b-38d9-4fb5-ad3f-17a53f2afbf2; mlid=undefined; displayedCookiesNotification=1; __utmz=1.1557283576.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); sid_key=oxid; px-abgroup=A; px-abper=100; __utmc=1; _fbp=fb.1.1559752431107.1312876194; cto_idcpy=d836f8b2-2cbc-4ab8-b80d-410288d34136; klarnaAddressValidated=0; language=1; __utma=1.1294710284.1557283576.1559758562.1559763477.5; __utmt=1; cto_clc=1; cto_red_atmpt=1; sid=2q7sg85mkhd1fe9vrd8lfraao6; __utmb=1.2.10.1559763477; _px3=b3780d91446af69c8e1d57e6583132a8ade98a4c4b34c84c515a863b6f0257ac:wCMykZK5TCSRg75bdERs3bbh+fRmA0a2GU1FPCOqeuLo8qU/YyoNIG8mG6zMP+dasN/N7MWTJxauftKvvLNV/A==:1000:G6TKS9vchd/M1Xds7ZzDBrStzFgf05Hrup3KHWXhg1qBHAbAOvz7H/2iVa8CCJ9xChfDbLSWVfIzIseD+/apmvLV66bz03QJ3my0K1hE2dwXdOdsGmfy9FP3yjD+KQYIGk2TbGtNDiQccfXkajWtMBJFv0mj1tdR0UCEknT4R8M=");
+           // var response = client.Execute(request);
+
+            //Debug.Info("response.StatusCode: " + ((int)response.StatusCode));
+            //  result = response.Content;
+           // Debug.Info("Content: \n{0}", response.Content);
+
+        }
+        private static void WebRequest()
+        {
+            var client = new RestClient("https://www.solebox.com/mein-konto/");
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("postman-token", "8911afe5-f397-4a32-21d5-20b94c27fa55");
+            request.AddHeader("cache-control", "no-cache");
             var response = client.Execute(request);
 
             Debug.Info("response.StatusCode: " + ((int)response.StatusCode));
-            //  result = response.Content;
             Debug.Info("Content: \n{0}", response.Content);
-
         }
+
         private void TaskRemoveClick(object sender, RoutedEventArgs e)
         {
             
