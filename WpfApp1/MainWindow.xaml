@@ -8,7 +8,7 @@
         xmlns:materiaDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:fw ="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
         fw:AcrylicWindow.Enabled="True"
-        fw:AcrylicWindow.ShowTitleBar="False"
+        fw:AcrylicWindow.AcrylicWindowStyle="None"
         Background="WhiteSmoke"
         WindowStartupLocation="CenterScreen"
         Title="Zen Aio" Height="450" Width="800">

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfApp1"
         xmlns:materiaDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:fw ="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
-        fw:AcrylicWindow.ShowTitleBar="False"
+          fw:AcrylicWindow.AcrylicWindowStyle="None"
         mc:Ignorable="d"
         fw:AcrylicWindow.Enabled="True"
          xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
